@@ -1,9 +1,21 @@
 import Link from "next/link";
+import { navLinks } from "@/lib/site-config";
 
 const footerLinks = {
-  Services: ["UI Design", "Branding", "Website", "Marketing"],
-  Company: ["About", "Work", "Process", "Contact"],
-  Social: ["Instagram", "Twitter", "LinkedIn", "Dribbble"],
+  Services: [
+    { label: "UI Design", href: "/services" },
+    { label: "Branding", href: "/services" },
+    { label: "Website", href: "/services" },
+    { label: "Marketing", href: "/services" },
+  ],
+  Company: navLinks.filter((l) =>
+    ["Featured Work", "Design Process", "Why Choose Us", "Contact"].includes(
+      l.label,
+    ),
+  ),
+  Pages: navLinks.filter((l) =>
+    ["Pricing", "Quick Help"].includes(l.label),
+  ),
 };
 
 export default function Footer() {
@@ -18,7 +30,7 @@ export default function Footer() {
               SOMETHING GREAT.
             </h2>
             <Link
-              href="#contact"
+              href="/contact"
               className="text-xs font-semibold tracking-wider text-gray-900 flex items-center gap-1 hover:gap-2 transition-all w-fit"
             >
               START A PROJECT <span>→</span>
@@ -26,25 +38,57 @@ export default function Footer() {
           </section>
 
           <div className="grid grid-cols-3 gap-8">
-            {Object.entries(footerLinks).map(([category, links]) => (
-              <nav key={category}>
-                <h3 className="text-xs font-semibold tracking-wider text-gray-900 mb-4">
-                  {category.toUpperCase()}
-                </h3>
-                <ul className="space-y-2">
-                  {links.map((link) => (
-                    <li key={link}>
-                      <Link
-                        href="#"
-                        className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
-                      >
-                        {link}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-            ))}
+            <nav>
+              <h3 className="text-xs font-semibold tracking-wider text-gray-900 mb-4">
+                SERVICES
+              </h3>
+              <ul className="space-y-2">
+                {footerLinks.Services.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <nav>
+              <h3 className="text-xs font-semibold tracking-wider text-gray-900 mb-4">
+                COMPANY
+              </h3>
+              <ul className="space-y-2">
+                {footerLinks.Company.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+            <nav>
+              <h3 className="text-xs font-semibold tracking-wider text-gray-900 mb-4">
+                MORE
+              </h3>
+              <ul className="space-y-2">
+                {footerLinks.Pages.map((link) => (
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
+                      className="text-xs text-gray-500 hover:text-gray-900 transition-colors"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           </div>
         </div>
 
@@ -53,11 +97,11 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <p>© 2026 Pixiio Design Agency. All rights reserved.</p>
           <nav className="flex gap-6">
-            <Link href="#" className="hover:text-gray-900 transition-colors">
-              Privacy Policy
+            <Link href="/faq" className="hover:text-gray-900 transition-colors">
+              FAQ
             </Link>
-            <Link href="#" className="hover:text-gray-900 transition-colors">
-              Terms of Service
+            <Link href="/contact" className="hover:text-gray-900 transition-colors">
+              Contact
             </Link>
           </nav>
         </div>

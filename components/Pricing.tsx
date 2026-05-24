@@ -1,42 +1,5 @@
 import Link from "next/link";
-
-const plans = [
-  {
-    name: "BASIC",
-    price: "$200",
-    features: [
-      "Landing Page Design",
-      "Mobile Responsive",
-      "2 Revisions",
-      "5 Day Delivery",
-    ],
-    highlighted: false,
-  },
-  {
-    name: "PRO",
-    price: "$500",
-    features: [
-      "Full Website Design",
-      "Brand Guidelines",
-      "Unlimited Revisions",
-      "UI/UX Prototype",
-      "10 Day Delivery",
-    ],
-    highlighted: true,
-  },
-  {
-    name: "ELITE",
-    price: "$1000",
-    features: [
-      "Complete Brand Identity",
-      "Website + Marketing",
-      "Priority Support",
-      "Dedicated Designer",
-      "Custom Timeline",
-    ],
-    highlighted: false,
-  },
-];
+import { pricingPlans } from "@/lib/content";
 
 export default function Pricing() {
   return (
@@ -47,7 +10,7 @@ export default function Pricing() {
         </h2>
 
         <div className="grid md:grid-cols-3 gap-5 mb-8">
-          {plans.map((plan) => (
+          {pricingPlans.map((plan) => (
             <article
               key={plan.name}
               className={`rounded-3xl p-8 border flex flex-col ${
@@ -77,7 +40,7 @@ export default function Pricing() {
               </ul>
 
               <Link
-                href="#contact"
+                href="/contact"
                 className={`block text-center text-xs font-semibold tracking-wider py-3.5 rounded-full transition-colors ${
                   plan.highlighted
                     ? "bg-primary text-white hover:bg-primary-dark"
@@ -101,7 +64,7 @@ export default function Pricing() {
             </p>
           </div>
           <Link
-            href="#contact"
+            href="/contact"
             className="bg-white text-primary text-xs font-semibold tracking-wider px-8 py-3.5 rounded-full hover:bg-gray-100 transition-colors whitespace-nowrap"
           >
             JOIN NOW

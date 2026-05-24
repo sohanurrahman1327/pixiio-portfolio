@@ -3,13 +3,13 @@ export const WHATSAPP_MESSAGE =
   "Hi Pixiio! I'd like to start a new design project.";
 
 export const navLinks = [
-  { label: "Services", href: "#services" },
-  { label: "Featured Work", href: "#work" },
-  { label: "Design Process", href: "#process" },
-  { label: "Why Choose Us", href: "#why-us" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "Quick Help", href: "#faq" },
-  { label: "Contact", href: "#contact" },
+  { label: "Services", href: "/services" },
+  { label: "Featured Work", href: "/work" },
+  { label: "Design Process", href: "/process" },
+  { label: "Why Choose Us", href: "/why-us" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Quick Help", href: "/faq" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export const socialLinks = [

@@ -1,36 +1,5 @@
 import Image from "next/image";
-import { serviceImages } from "@/lib/images";
-
-const services = [
-  {
-    title: "UI DESIGN",
-    description:
-      "Crafting intuitive, beautiful interfaces that users love. We turn complex ideas into seamless digital experiences.",
-    image: serviceImages.uiDesign,
-    bg: "bg-gray-50",
-  },
-  {
-    title: "BRANDING",
-    description:
-      "Building memorable brand identities that stand out. From logos to full brand guidelines, we define who you are.",
-    image: serviceImages.branding,
-    bg: "bg-white",
-  },
-  {
-    title: "WEBSITE",
-    description:
-      "Designing and developing stunning websites that convert. Fast, responsive, and built for performance.",
-    image: serviceImages.website,
-    bg: "bg-white",
-  },
-  {
-    title: "MARKETING",
-    description:
-      "Creating compelling marketing assets that drive engagement. Social media, ads, and campaigns that perform.",
-    image: serviceImages.marketing,
-    bg: "bg-gray-50",
-  },
-];
+import { services } from "@/lib/content";
 
 export default function Services() {
   return (

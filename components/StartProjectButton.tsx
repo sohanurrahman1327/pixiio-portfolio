@@ -6,7 +6,7 @@ type StartProjectButtonProps = {
 };
 
 export default function StartProjectButton({
-  href = "#contact",
+  href = "/contact",
   className = "",
 }: StartProjectButtonProps) {
   return (

@@ -24,7 +24,7 @@ export default function Hero() {
             <div className="flex flex-wrap items-center gap-4">
               <StartProjectButton />
               <Link
-                href="#work"
+                href="/work"
                 className="inline-flex items-center text-xs font-semibold tracking-wider text-[#0f1a3d] bg-white border border-gray-200 px-6 py-3.5 rounded-full hover:border-gray-300 transition-colors"
               >
                 VIEW WORK

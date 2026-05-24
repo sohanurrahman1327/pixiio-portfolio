@@ -11,7 +11,7 @@ export default function FeaturedWork() {
             FEATURED WORK
           </h2>
           <Link
-            href="#"
+            href="/work"
             className="text-xs font-semibold tracking-wider text-gray-900 flex items-center gap-1 hover:gap-2 transition-all"
           >
             VIEW ALL PROJECTS <span>→</span>

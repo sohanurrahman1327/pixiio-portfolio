@@ -8,7 +8,7 @@ export default function CTABanner() {
           LET&apos;S BUILD YOUR DESIGN
         </h2>
         <Link
-          href="#"
+          href="/contact"
           className="inline-block bg-white text-primary text-xs font-semibold tracking-wider px-10 py-4 rounded-full hover:bg-gray-100 transition-colors"
         >
           JOIN NOW
