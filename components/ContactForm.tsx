@@ -5,9 +5,26 @@ import WhatsappButton from "@/components/WhatsappButton";
 
 export default function ContactForm() {
   const [submitted, setSubmitted] = useState(false);
+  const [emailError, setEmailError] = useState("");
 
   function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    const form = e.currentTarget;
+    const emailInput = form.elements.namedItem("email") as HTMLInputElement;
+    if (!emailInput.value.toLowerCase().endsWith("@gmail.com")) {
+      setEmailError("Only @gmail.com addresses are accepted.");
+      return;
+    }
+    setEmailError("");
+    const name = (form.elements.namedItem("name") as HTMLInputElement).value;
+    const project = (form.elements.namedItem("project") as HTMLSelectElement).value;
+    const budget = (form.elements.namedItem("budget") as HTMLSelectElement).value;
+    const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
+    const subject = encodeURIComponent(`New Project Inquiry from ${name}`);
+    const body = encodeURIComponent(
+      `Name: ${name}\nEmail: ${emailInput.value}\nProject: ${project}\nBudget: ${budget}\n\nMessage:\n${message}`
+    );
+    window.location.href = `mailto:agency.pixiio@gmail.com?subject=${subject}&body=${body}`;
     setSubmitted(true);
   }
 
@@ -47,9 +64,13 @@ export default function ContactForm() {
             type="email"
             name="email"
             required
-            className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors"
-            placeholder="you@company.com"
+            onChange={() => setEmailError("")}
+            className={`w-full rounded-xl border px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors ${emailError ? "border-red-400" : "border-gray-200"}`}
+            placeholder="you@gmail.com"
           />
+          {emailError && (
+            <p className="text-red-500 text-xs mt-1">{emailError}</p>
+          )}
         </label>
       </div>
       <label className="block">

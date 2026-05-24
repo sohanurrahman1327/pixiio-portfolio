@@ -1,6 +1,9 @@
-export const WHATSAPP_NUMBER = "8801712345678";
+export const WHATSAPP_NUMBER = "8801346064215";
 export const WHATSAPP_MESSAGE =
   "Hi Pixiio! I'd like to start a new design project.";
+
+export const CONTACT_EMAIL = "agency.pixiio@gmail.com";
+export const CONTACT_PHONE = "+8801346-064215";
 
 export const navLinks = [
   { label: "Services", href: "/services" },
@@ -14,6 +17,11 @@ export const navLinks = [
 
 export const socialLinks = [
   {
+    label: "Facebook",
+    href: "https://facebook.com/agency.pixiio",
+    icon: "facebook",
+  },
+  {
     label: "Instagram",
     href: "https://instagram.com/pixiio",
     icon: "instagram",
@@ -25,8 +33,13 @@ export const socialLinks = [
   },
   {
     label: "Dribbble",
-    href: "https://dribbble.com/pixiio",
+    href: "https://dribbble.com/agency-pixiio",
     icon: "dribbble",
+  },
+  {
+    label: "WhatsApp",
+    href: "https://wa.me/8801346064215",
+    icon: "whatsapp",
   },
   {
     label: "Behance",

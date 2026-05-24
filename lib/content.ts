@@ -209,8 +209,8 @@ export const faqs = [
 ];
 
 export const contactInfo = {
-  email: "hello@pixiio.design",
-  phone: "+880 1712 345678",
+  email: "agency.pixiio@gmail.com",
+  phone: "+8801346-064215",
   address: "Dhaka, Bangladesh",
   hours: "Mon – Sat, 10:00 AM – 8:00 PM (BST)",
 };
