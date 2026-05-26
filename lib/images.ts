@@ -54,69 +54,19 @@ export const featuredWorkImages = [
 
 /** Best UI Work — row 1 scrolls left, row 2 scrolls right */
 export const bestUIWorkRow1 = [
-  {
-    src: unsplash("photo-1618005182384-a83a8bd57fbe", 520, 320),
-    alt: "Bold creative agency landing page design",
-    w: 440,
-  },
-  {
-    src: unsplash("photo-1547658719-da2b51169166", 520, 320),
-    alt: "SaaS platform landing page on laptop",
-    w: 480,
-  },
-  {
-    src: unsplash("photo-1558655146-d09347e92766", 520, 320),
-    alt: "Vibrant product landing page UI",
-    w: 420,
-  },
-  {
-    src: unsplash("photo-1618221195710-dd6b41faaea6", 520, 320),
-    alt: "Premium brand landing page design",
-    w: 460,
-  },
-  {
-    src: unsplash("photo-1555421689-491a97ff2040", 520, 320),
-    alt: "Marketing agency landing page design",
-    w: 430,
-  },
-  {
-    src: pexels(6476589, 520, 320),
-    alt: "UI design team workspace mockup",
-    w: 450,
-  },
+  { src: "/image-01.jpg", alt: "UI design project 1", w: 440 },
+  { src: "/image-02.jpg", alt: "UI design project 2", w: 480 },
+  { src: "/image-03.jpg", alt: "UI design project 3", w: 420 },
+  { src: "/image-04.jpg", alt: "UI design project 4", w: 460 },
+  { src: "/image-05.jpg", alt: "UI design project 5", w: 430 },
 ];
 
 export const bestUIWorkRow2 = [
-  {
-    src: unsplash("photo-1551288049-bebda4e38f71", 520, 320),
-    alt: "Data analytics dashboard UI design",
-    w: 480,
-  },
-  {
-    src: unsplash("photo-1460925895917-afdab827c52f", 520, 320),
-    alt: "Business intelligence landing page UI",
-    w: 460,
-  },
-  {
-    src: unsplash("photo-1551650975-87deedd944c3", 520, 320),
-    alt: "Mobile-first app landing page UI",
-    w: 420,
-  },
-  {
-    src: unsplash("photo-1561070791-2526d30994b5", 520, 320),
-    alt: "Figma website UI design mockup",
-    w: 450,
-  },
-  {
-    src: unsplash("photo-1556742049-0cfed4f6a45d", 520, 320),
-    alt: "E-commerce checkout landing page UI",
-    w: 440,
-  },
-  {
-    src: unsplash("photo-1512941937669-90a1b58e7e9c", 520, 320),
-    alt: "iOS app landing page UI design",
-    w: 430,
-  },
+  { src: "/image-06.jpg", alt: "UI design project 6", w: 480 },
+  { src: "/image-07.jpg", alt: "UI design project 7", w: 460 },
+  { src: "/image-08.jpg", alt: "UI design project 8", w: 420 },
+  { src: "/image-09.jpg", alt: "UI design project 9", w: 450 },
+  { src: "/image-10.jpg", alt: "UI design project 10", w: 440 },
 ];
 
 export const designProcessSteps = [
