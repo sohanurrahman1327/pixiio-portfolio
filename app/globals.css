@@ -49,7 +49,7 @@ body {
 }
 
 .ticker-track {
-  animation: ticker 25s linear infinite;
+  animation: ticker 45s linear infinite;
 }
 
 .ticker-track:hover {
@@ -161,4 +161,29 @@ body {
 .animate-fade-up {
   animation: fade-up 0.4s ease forwards 0.55s;
   opacity: 0;
+}
+
+/* ─── Animated button icon: slides out right, re-enters from left ─── */
+.btn-icon-wrap {
+  display: inline-flex;
+  overflow: hidden;
+  width: 1em;
+  height: 1em;
+}
+
+.btn-icon-wrap svg {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover .btn-icon-wrap svg {
+  transform: translateX(150%);
+}
+
+/* Right-to-left variant */
+.btn-icon-wrap-rtl svg {
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.group:hover .btn-icon-wrap-rtl svg {
+  transform: translateX(-150%);
 }

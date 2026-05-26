@@ -4,61 +4,21 @@ const unsplash = (id: string, w: number, h: number) =>
 const pexels = (id: number, w: number, h: number) =>
   `https://images.pexels.com/photos/${id}/pexels-photo-${id}.jpeg?auto=compress&cs=tinysrgb&w=${w}&h=${h}&fit=crop`;
 
-/** Hero-only — premium landing page & UI mockups (verified URLs) */
+/** Hero-only — local project images */
 export const heroMarqueeImages = {
   left: [
-    {
-      src: unsplash("photo-1551650975-87deedd944c3", 640, 480),
-      alt: "Mobile app landing page UI design",
-      title: "TaskFlow App",
-    },
-    {
-      src: unsplash("photo-1512941937669-90a1b58e7e9c", 640, 480),
-      alt: "iPhone app UI mockup design",
-      title: "HealthTrack",
-    },
-    {
-      src: unsplash("photo-1551288049-bebda4e38f71", 640, 480),
-      alt: "Analytics dashboard UI design",
-      title: "Metric Labs",
-    },
-    {
-      src: unsplash("photo-1558655146-d09347e92766", 640, 480),
-      alt: "Creative agency landing page UI",
-      title: "Prism Studio",
-    },
-    {
-      src: unsplash("photo-1581291518857-4e27b48ff24e", 640, 480),
-      alt: "Modern product landing page UI",
-      title: "Nova Platform",
-    },
+    { src: "/image-01.jpg", alt: "UI design project 1" },
+    { src: "/image-02.jpg", alt: "UI design project 2" },
+    { src: "/image-03.jpg", alt: "UI design project 3" },
+    { src: "/image-04.jpg", alt: "UI design project 4" },
+    { src: "/image-05.jpg", alt: "UI design project 5" },
   ],
   right: [
-    {
-      src: unsplash("photo-1547658719-da2b51169166", 640, 480),
-      alt: "Modern website UI on laptop screen",
-      title: "Aurora Web",
-    },
-    {
-      src: unsplash("photo-1460925895917-afdab827c52f", 640, 480),
-      alt: "Finance dashboard landing page",
-      title: "Finova",
-    },
-    {
-      src: unsplash("photo-1556742049-0cfed4f6a45d", 640, 480),
-      alt: "E-commerce landing page design",
-      title: "ShopWave",
-    },
-    {
-      src: unsplash("photo-1563013544-824ae1b704d3", 640, 480),
-      alt: "Payment platform UI design",
-      title: "PayNest",
-    },
-    {
-      src: unsplash("photo-1555421689-491a97ff2040", 640, 480),
-      alt: "Fintech landing page UI design",
-      title: "VaultPay",
-    },
+    { src: "/image-06.jpg", alt: "UI design project 6" },
+    { src: "/image-07.jpg", alt: "UI design project 7" },
+    { src: "/image-08.jpg", alt: "UI design project 8" },
+    { src: "/image-09.jpg", alt: "UI design project 9" },
+    { src: "/image-10.jpg", alt: "UI design project 10" },
   ],
 };
 
