@@ -1,7 +1,7 @@
 "use client";
 
+import Link from "next/link";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
 import { services } from "@/lib/content";
 
 /* ─── Per-service tags ─── */
@@ -40,71 +40,29 @@ const serviceTags: Record<string, string[]> = {
   ],
 };
 
-interface CardStackProps {
-  service: (typeof services)[0];
-  index: number;
-}
+/* ─── Service background colors ─── */
+const serviceBgColors: Record<string, string> = {
+  "UI DESIGN": "bg-blue-50",
+  BRANDING: "bg-purple-50",
+  WEBSITE: "bg-green-50",
+  MARKETING: "bg-orange-50",
+};
 
-function CardStack({ service, index }: CardStackProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [stackOffsets, setStackOffsets] = useState([0, 0, 0]);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const handleScroll = () => {
-      const rect = container.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      
-      // Calculate how far down the container is in the viewport (0 to 1)
-      const scrollProgress = Math.max(0, Math.min(1, 
-        (viewportHeight - rect.top) / (viewportHeight + rect.height)
-      ));
-
-      // Stack cards as you scroll: they move up and overlap
-      // Card 2 (back) moves first, then card 1, then card 0 (front)
-      const offsets = [
-        Math.max(0, scrollProgress * 60 - 40), // Card 0 (front) - starts moving later
-        Math.max(0, scrollProgress * 60 - 20), // Card 1 (middle)
-        Math.max(0, scrollProgress * 60),      // Card 2 (back) - starts moving first
-      ];
-
-      setStackOffsets(offsets);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll(); // Initial call
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+/* ─── Animated button icon (same as Hero) ─── */
+function ServiceIcon() {
   return (
-    <div
-      ref={containerRef}
-      className="flex-1 min-w-0 h-[400px] relative"
-      style={{ perspective: "1000px" }}
-    >
-      {/* Stack of 3 cards */}
-      {[2, 1, 0].map((offset) => (
-        <div
-          key={offset}
-          className="absolute inset-0 rounded-3xl overflow-hidden border border-gray-100 transition-transform duration-300"
-          style={{
-            transform: `translateY(${stackOffsets[offset]}px) translateX(${offset * 0}px)`,
-            zIndex: 10 - offset,
-          }}
-        >
-          <Image
-            src={service.image}
-            alt={`${service.title} service showcase`}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 100vw, 50vw"
-          />
-        </div>
-      ))}
-    </div>
+    <>
+      <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-in-out group-hover:-translate-x-full">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+      <span className="absolute inset-0 flex items-center justify-center translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0">
+        <svg width="20" height="20" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+          <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      </span>
+    </>
   );
 }
 
@@ -123,49 +81,69 @@ export default function Services() {
           </h2>
         </div>
 
-        {/* ── Alternating Service Items with Scroll-Triggered Stack ── */}
-        <div className="space-y-12">
+        {/* ── Alternating Service Items ── */}
+        <div className="space-y-16">
           {services.map((service, idx) => {
             const tags = serviceTags[service.title] ?? [];
             const isEven = idx % 2 === 0;
-            const row1 = tags.slice(0, 3);
-            const row2 = tags.slice(3, 6);
+            const bgColor = serviceBgColors[service.title] || "bg-gray-50";
 
             return (
               <div
                 key={service.title}
-                className={`flex flex-col ${isEven ? "lg:flex-row" : "lg:flex-row-reverse"} gap-8 lg:gap-12 items-center`}
+                className={`${bgColor} rounded-3xl p-8 md:p-12 lg:p-8 ${
+                  !isEven ? "lg:[direction:rtl]" : ""
+                }`}
               >
-                {/* ── Content (Left or Right) ── */}
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-display text-4xl md:text-5xl text-[#0f1a3d] tracking-wide mb-4 uppercase">
-                    {service.title}
-                  </h3>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                  {/* ── Content Section ── */}
+                  <div className={!isEven ? "lg:[direction:ltr]" : ""}>
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="group inline-block"
+                    >
+                      <h3 className="font-display text-5xl md:text-6xl lg:text-7xl text-[#0f1a3d] tracking-wide mb-6 uppercase font-bold transition-all duration-300 ease-out group-hover:text-primary">
+                        {service.title}
+                      </h3>
+                    </Link>
 
-                  <p className="text-gray-600 text-base leading-relaxed mb-6 max-w-md">
-                    {service.description}
-                  </p>
+                    <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
+                      {service.description}
+                    </p>
 
-                  {/* Tags */}
-                  <div className="space-y-2">
-                    {[row1, row2].map((row, ri) => (
-                      <div key={ri} className="flex flex-wrap gap-2">
-                        {row.map((tag) => (
-                          <span
-                            key={tag}
-                            className="inline-flex items-center gap-1.5 text-[12px] font-medium text-gray-600 bg-gray-50 border border-gray-200 rounded-full px-3 py-1.5"
-                          >
-                            <span className="text-primary text-[10px]">✦</span>
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    ))}
+                    {/* Tags Grid - Larger, Rounded Pills */}
+                    <div className="flex flex-wrap gap-3">
+                      {tags.map((tag) => (
+                        <span
+                          key={tag}
+                          className="inline-flex items-center gap-2 text-sm md:text-base font-medium text-gray-700 bg-white rounded-full px-4 py-2 shadow-sm"
+                        >
+                          <span className="text-primary text-xs">✦</span>
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* ── Image Section ── */}
+                  <div className={`relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-lg group ${!isEven ? "lg:[direction:ltr]" : ""}`}>
+                    <Image
+                      src={service.image}
+                      alt={`${service.title} service showcase`}
+                      fill
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                    />
+                    
+                    {/* ── Icon Circle at Bottom (Hero Button Style) ── */}
+                    <Link
+                      href={`/services/${service.slug}`}
+                      className="group/icon absolute bottom-6 right-6 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center text-primary transition-all duration-300 hover:bg-primary hover:text-white overflow-hidden"
+                    >
+                      <ServiceIcon />
+                    </Link>
                   </div>
                 </div>
-
-                {/* ── Scroll-Triggered Stacked Cards ── */}
-                <CardStack service={service} index={idx} />
               </div>
             );
           })}
