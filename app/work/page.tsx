@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import PageShell from "@/components/PageShell";
 import StartProjectButton from "@/components/StartProjectButton";
@@ -25,32 +26,33 @@ export default function WorkPage() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-8">
             {featuredWorkImages.map((project) => (
-              <article key={project.title} className="group">
-                <figure className="rounded-3xl overflow-hidden mb-5 aspect-[4/3] border border-gray-100 shadow-sm">
-                  <Image
-                    src={project.image}
-                    alt={`${project.subtitle} — ${project.title}`}
-                    width={900}
-                    height={650}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                  />
-                </figure>
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <span className="font-display text-2xl tracking-wider text-gray-900 block">
-                      {project.title}
+              <Link key={project.slug} href={`/work/${project.slug}`}>
+                <article className="group cursor-pointer">
+                  <figure className="rounded-3xl overflow-hidden mb-5 aspect-[4/3] border border-gray-100 shadow-sm">
+                    <Image
+                      src={project.image}
+                      alt={`${project.subtitle} — ${project.title}`}
+                      width={900}
+                      height={650}
+                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </figure>
+                  <div className="flex items-start justify-between gap-4">
+                    <div>
+                      <span className="font-display text-2xl tracking-wider text-gray-900 block group-hover:text-primary transition-colors">
+                        {project.title}
+                      </span>
+                      <span className="text-sm text-gray-500">{project.subtitle}</span>
+                      <p className="text-xs text-gray-400 mt-2 leading-relaxed max-w-sm">
+                        {project.description}
+                      </p>
+                    </div>
+                    <span className="text-gray-300 group-hover:text-primary transition-colors text-xl shrink-0">
+                      →
                     </span>
-                    <span className="text-sm text-gray-500">{project.subtitle}</span>
-                    <p className="text-xs text-gray-400 mt-2 leading-relaxed max-w-sm">
-                      Full-scope design including research, UI screens, and
-                      responsive implementation ready for launch.
-                    </p>
                   </div>
-                  <span className="text-gray-300 group-hover:text-primary transition-colors text-xl">
-                    →
-                  </span>
-                </div>
-              </article>
+                </article>
+              </Link>
             ))}
           </div>
         </div>

@@ -23,32 +23,48 @@ export const heroMarqueeImages = {
 };
 
 export const serviceImages = {
-  uiDesign: pexels(3184292, 900, 560),
-  branding: unsplash("photo-1626785774573-4b799315345d", 900, 560),
-  website: pexels(1181263, 900, 560),
-  marketing: pexels(196644, 900, 560),
+  branding: "/branding.png",
+  uiDesign: "/ui.png",
+  website: "/vibe-coding.png",
+  marketing: "/marketing.png",
 };
 
 export const featuredWorkImages = [
   {
     title: "BRANDING",
     subtitle: "Olivia Studio",
-    image: pexels(3861969, 1000, 720),
+    image: "/image-01.jpg",
+    slug: "olivia-studio-branding",
+    description: "A comprehensive branding project for Olivia Studio, featuring logo design, color palette, and visual identity guidelines.",
+    fullDescription: "We created a complete brand identity for Olivia Studio, a creative design agency. The project included logo design, color palette development, typography selection, and comprehensive brand guidelines to ensure consistency across all touchpoints.",
+    category: "Branding",
   },
   {
     title: "UI DESIGN",
     subtitle: "Train Services Platform",
-    image: unsplash("photo-1551650975-87deedd944c3", 1000, 720),
+    image: "/image-07.jpg",
+    slug: "train-services-platform",
+    description: "User interface design for a modern train services booking platform with intuitive navigation and seamless user experience.",
+    fullDescription: "We designed a comprehensive UI for a train services platform, focusing on user experience and accessibility. The design includes booking flows, payment integration, and real-time tracking features with a modern, clean aesthetic.",
+    category: "UI Design",
   },
   {
     title: "WEB DESIGN",
     subtitle: "Grovallo Agency",
-    image: pexels(574071, 1000, 720),
+    image: "/image-10.jpg",
+    slug: "grovallo-agency-website",
+    description: "Full website design and development for Grovallo Agency, showcasing their portfolio and services with modern web standards.",
+    fullDescription: "We designed and developed a stunning website for Grovallo Agency. The site features a portfolio showcase, service descriptions, client testimonials, and a contact form, all built with responsive design principles.",
+    category: "Web Design",
   },
   {
     title: "LANDING PAGE",
     subtitle: "Design That Sells",
-    image: unsplash("photo-1600607687939-ce8a6c25118c", 1000, 720),
+    image: "/image-02.jpg",
+    slug: "design-that-sells-landing",
+    description: "High-converting landing page design focused on lead generation and user engagement with compelling copy and visuals.",
+    fullDescription: "We created a high-converting landing page for 'Design That Sells', a design course. The page features compelling headlines, benefit-focused copy, social proof elements, and clear call-to-action buttons optimized for conversions.",
+    category: "Landing Page",
   },
 ];
 

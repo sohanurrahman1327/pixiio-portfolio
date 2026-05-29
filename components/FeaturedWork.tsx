@@ -12,34 +12,55 @@ export default function FeaturedWork() {
           </h2>
           <Link
             href="/work"
-            className="text-xs font-semibold tracking-wider text-gray-900 flex items-center gap-1 hover:gap-2 transition-all"
+            className="group inline-flex items-center gap-3 bg-primary text-white text-[13px] font-bold tracking-[0.12em] uppercase pl-2 pr-7 py-2 rounded-full hover:bg-primary-dark transition-colors overflow-hidden"
           >
-            VIEW ALL PROJECTS <span>→</span>
+            <span className="relative flex items-center justify-center w-10 h-10 rounded-full bg-white shrink-0 overflow-hidden">
+              <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-in-out group-hover:-translate-x-full">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 12L12 4M12 4H6M12 4V10" stroke="#5b5fef" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <span className="absolute inset-0 flex items-center justify-center translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0">
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                  <path d="M4 12L12 4M12 4H6M12 4V10" stroke="#5b5fef" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+            </span>
+            VIEW ALL PROJECTS
           </Link>
         </div>
 
         <div className="grid md:grid-cols-2 gap-5">
           {featuredWorkImages.map((project) => (
             <article key={project.title} className="group cursor-pointer">
-              <figure className="rounded-3xl overflow-hidden mb-4 aspect-[4/3] border border-gray-100 shadow-sm">
-                <Image
-                  src={project.image}
-                  alt={`${project.subtitle} ${project.title} landing page design`}
-                  width={900}
-                  height={650}
-                  className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
-                />
-              </figure>
+              <Link href={`/work/${project.slug}`}>
+                <figure className="rounded-3xl overflow-hidden mb-4 aspect-[4/3] border border-gray-100 shadow-sm">
+                  <Image
+                    src={project.image}
+                    alt={`${project.subtitle} ${project.title} landing page design`}
+                    width={900}
+                    height={650}
+                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
+                  />
+                </figure>
+              </Link>
               <header className="flex items-center justify-between">
                 <div>
-                  <span className="font-display text-xl tracking-wider text-gray-900 block">
-                    {project.title}
-                  </span>
-                  <span className="text-xs text-gray-400">{project.subtitle}</span>
+                  <Link href={`/work/${project.slug}`}>
+                    <span className="font-display text-3xl md:text-4xl tracking-wider text-gray-900 block hover:text-primary transition-colors">
+                      {project.title}
+                    </span>
+                  </Link>
+                  <span className="text-sm md:text-base text-gray-400">{project.subtitle}</span>
                 </div>
-                <span className="text-gray-400 group-hover:text-gray-900 transition-colors">
-                  →
-                </span>
+                <Link
+                  href={`/work/${project.slug}`}
+                  className="group/arrow inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary text-white hover:bg-primary-dark transition-colors shrink-0"
+                >
+                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                    <path d="M4 12L12 4M12 4H6M12 4V10" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </Link>
               </header>
             </article>
           ))}

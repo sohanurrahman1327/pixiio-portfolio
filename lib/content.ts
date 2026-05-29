@@ -2,23 +2,6 @@ import { serviceImages } from "@/lib/images";
 
 export const services = [
   {
-    title: "UI DESIGN",
-    slug: "ui-design",
-    description:
-      "Crafting intuitive, beautiful interfaces that users love. We turn complex ideas into seamless digital experiences.",
-    longDescription:
-      "From wireframes to high-fidelity screens, we design interfaces that feel effortless. Every pixel is intentional — built for clarity, conversion, and delight across web and mobile.",
-    image: serviceImages.uiDesign,
-    bg: "bg-gray-50",
-    deliverables: [
-      "User research & personas",
-      "Wireframes & user flows",
-      "High-fidelity UI screens",
-      "Interactive Figma prototype",
-      "Design system & components",
-    ],
-  },
-  {
     title: "BRANDING",
     slug: "branding",
     description:
@@ -33,6 +16,23 @@ export const services = [
       "Brand guidelines PDF",
       "Business card & stationery",
       "Social media brand kit",
+    ],
+  },
+  {
+    title: "UI DESIGN",
+    slug: "ui-design",
+    description:
+      "Crafting intuitive, beautiful interfaces that users love. We turn complex ideas into seamless digital experiences.",
+    longDescription:
+      "From wireframes to high-fidelity screens, we design interfaces that feel effortless. Every pixel is intentional — built for clarity, conversion, and delight across web and mobile.",
+    image: serviceImages.uiDesign,
+    bg: "bg-gray-50",
+    deliverables: [
+      "User research & personas",
+      "Wireframes & user flows",
+      "High-fidelity UI screens",
+      "Interactive Figma prototype",
+      "Design system & components",
     ],
   },
   {
