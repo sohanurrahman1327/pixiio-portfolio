@@ -91,7 +91,7 @@ export const designProcessSteps = [
     title: "LOGO IN ILLUSTRATOR",
     description:
       "Brand identity starts in Adobe Illustrator — crafting a unique logo with color palette, typography, and visual language.",
-    image: unsplash("photo-1626785774573-4b799315345d", 800, 600),
+    image: unsplash("photo-1626785774573-4b799315345d", 400, 500),
     alt: "Logo design process in Adobe Illustrator",
   },
   {
@@ -99,7 +99,7 @@ export const designProcessSteps = [
     title: "PAPER WIREFRAME",
     description:
       "Low-fidelity wireframes sketched on paper to map layout, user flow, and content hierarchy before going digital.",
-    image: unsplash("photo-1586281380349-632531db7ed4", 800, 600),
+    image: unsplash("photo-1586281380349-632531db7ed4", 400, 500),
     alt: "Hand-drawn wireframe sketch on paper",
   },
   {
@@ -107,16 +107,24 @@ export const designProcessSteps = [
     title: "FIGMA SITE DESIGN",
     description:
       "High-fidelity UI designed in Figma — pixel-perfect screens, components, and interactive prototypes ready for review.",
-    image: unsplash("photo-1561070791-2526d30994b5", 800, 600),
+    image: unsplash("photo-1561070791-2526d30994b5", 400, 500),
     alt: "Website UI design in Figma on screen",
   },
   {
     step: "04",
-    title: "WORDPRESS / FRAMER LIVE",
+    title: "WEBSITE LIVE",
     description:
-      "Final design built and deployed on WordPress or Framer — fully responsive, optimized, and live for the world to see.",
-    image: unsplash("photo-1498050108023-c5249f4df085", 800, 600),
-    alt: "Live website deployed on WordPress or Framer",
+      "Final design built and deployed — fully responsive, optimized, and live for the world to see.",
+    image: unsplash("photo-1498050108023-c5249f4df085", 400, 500),
+    alt: "Live website deployed",
+  },
+  {
+    step: "05",
+    title: "TESTING & HANDOVER",
+    description:
+      "Comprehensive testing across devices and browsers, followed by smooth handover with documentation and support.",
+    image: unsplash("photo-1516534775068-bb57e39c1016/v1", 400, 500),
+    alt: "Testing and quality assurance process",
   },
 ];
 
