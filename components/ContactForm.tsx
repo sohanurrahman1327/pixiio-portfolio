@@ -79,7 +79,7 @@ export default function ContactForm() {
         </span>
         <select
           name="project"
-          className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors bg-white"
+          className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors bg-surface-elevated text-gray-900"
         >
           <option>UI / UX Design</option>
           <option>Branding & Logo</option>
@@ -95,7 +95,7 @@ export default function ContactForm() {
         </span>
         <select
           name="budget"
-          className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors bg-white"
+          className="w-full rounded-xl border border-gray-200 px-4 py-3 text-sm focus:outline-none focus:border-primary transition-colors bg-surface-elevated text-gray-900"
         >
           <option>Under $200</option>
           <option>$200 – $500</option>

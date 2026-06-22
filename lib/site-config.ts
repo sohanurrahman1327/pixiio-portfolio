@@ -7,7 +7,9 @@ export const CONTACT_PHONE = "+8801346-064215";
 
 export const navLinks = [
   { label: "Services", href: "/services" },
+  { label: "Library", href: "/library/components" },
   { label: "Featured Work", href: "/work" },
+  { label: "Blog", href: "/blog" },
   { label: "Design Process", href: "/process" },
   { label: "Why Choose Us", href: "/why-us" },
   { label: "Pricing", href: "/pricing" },

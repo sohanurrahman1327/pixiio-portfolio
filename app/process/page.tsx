@@ -69,7 +69,7 @@ export default function ProcessPage() {
             {timeline.map((item) => (
               <article
                 key={item.phase}
-                className="bg-white rounded-3xl p-6 border border-gray-100"
+                className="bg-surface-elevated rounded-3xl p-6 border border-gray-100"
               >
                 <p className="text-[10px] font-bold tracking-widest text-primary mb-2">
                   {item.duration}
@@ -91,7 +91,7 @@ export default function ProcessPage() {
         </div>
       </section>
 
-      <section className="py-16 bg-white border-t border-gray-100">
+      <section className="py-16 bg-background border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <p className="text-gray-500 text-sm mb-6">
             Ready to start your project?

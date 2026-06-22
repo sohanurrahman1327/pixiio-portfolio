@@ -108,7 +108,7 @@ export default function Footer() {
     .filter(Boolean) as typeof socialLinks;
 
   return (
-    <footer className="bg-white border-t border-gray-100">
+    <footer className="bg-surface-elevated border-t border-gray-100">
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-10">
 
         {/* ── Top grid ── */}
@@ -127,19 +127,19 @@ export default function Footer() {
               <SubscribeSuccess />
             ) : (
               <>
-                <form onSubmit={handleNewsletter} className="flex items-center gap-2">
+                <form onSubmit={handleNewsletter} className="flex items-stretch gap-2">
                   <input
                     type="email"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
                     placeholder="Enter email address*"
                     required
-                    className={`flex-1 bg-gray-50 border rounded-lg px-4 py-3 text-sm text-gray-900 placeholder-gray-400 focus:outline-none focus:border-primary transition-colors ${emailError ? "border-red-400" : "border-gray-200"}`}
+                    className={`flex-1 h-11 bg-gray-50 dark:bg-surface-elevated border rounded-lg px-4 text-sm text-gray-900 dark:text-foreground placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary transition-colors ${emailError ? "border-red-400" : "border-gray-200 dark:border-border-subtle"}`}
                   />
                   <button
                     type="submit"
                     aria-label="Subscribe"
-                    className="w-10 h-10 rounded-lg bg-gray-900 text-white flex items-center justify-center hover:bg-primary transition-colors shrink-0"
+                    className="h-11 w-11 rounded-lg bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition-colors shrink-0"
                   >
                     <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
                       <path d="M5 12h14M12 5l7 7-7 7" />
@@ -165,9 +165,16 @@ export default function Footer() {
                   <li key={link.href + link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm font-medium text-gray-900 hover:text-primary transition-colors"
+                      className="group relative inline-block text-sm font-medium text-gray-900"
                     >
-                      {link.label}
+                      <span className="relative overflow-hidden" style={{ display: "inline-block" }}>
+                        <span className="block transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
+                          {link.label}
+                        </span>
+                        <span className="absolute inset-0 text-primary translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+                          {link.label}
+                        </span>
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -178,9 +185,16 @@ export default function Footer() {
                   <li key={link.href + link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm font-medium text-gray-900 hover:text-primary transition-colors"
+                      className="group relative inline-block text-sm font-medium text-gray-900"
                     >
-                      {link.label}
+                      <span className="relative overflow-hidden" style={{ display: "inline-block" }}>
+                        <span className="block transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
+                          {link.label}
+                        </span>
+                        <span className="absolute inset-0 text-primary translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+                          {link.label}
+                        </span>
+                      </span>
                     </Link>
                   </li>
                 ))}
@@ -201,7 +215,7 @@ export default function Footer() {
             </a>
             <a
               href={`mailto:${CONTACT_EMAIL}`}
-              className="block text-base font-bold text-gray-900 hover:text-primary transition-colors mb-8"
+              className="block text-base font-bold text-primary hover:text-primary-dark transition-colors mb-8"
             >
               {CONTACT_EMAIL}
             </a>
@@ -237,11 +251,18 @@ export default function Footer() {
                     rel="noopener noreferrer"
                     className="flex items-center justify-between py-3 group"
                   >
-                    <span className="flex items-center gap-3 text-sm text-gray-600 group-hover:text-primary transition-colors">
-                      <span className="text-gray-400 group-hover:text-primary transition-colors">
+                    <span className="flex items-center gap-3">
+                      <span className="w-8 h-8 rounded-lg bg-gray-50 dark:bg-white/5 flex items-center justify-center text-gray-400 transition-all duration-300 ease-out group-hover:scale-110 group-hover:-rotate-6 group-hover:bg-primary group-hover:text-white">
                         {socialIconMap[social.icon]}
                       </span>
-                      {social.label}
+                      <span className="relative overflow-hidden" style={{ display: "inline-block" }}>
+                        <span className="block text-sm text-gray-600 transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
+                          {social.label}
+                        </span>
+                        <span className="absolute inset-0 text-sm font-medium text-primary translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+                          {social.label}
+                        </span>
+                      </span>
                     </span>
                     <svg
                       width="13"
@@ -250,7 +271,7 @@ export default function Footer() {
                       fill="none"
                       stroke="currentColor"
                       strokeWidth="2"
-                      className="text-gray-300 group-hover:text-primary transition-colors"
+                      className="text-gray-300 group-hover:text-primary group-hover:translate-x-1 transition-all duration-300 ease-out"
                       aria-hidden="true"
                     >
                       <path d="M5 12h14M12 5l7 7-7 7" />
@@ -262,9 +283,9 @@ export default function Footer() {
           </div>
 
           {/* PIXIIO — centered vertically, right-aligned, fills remaining space */}
-          <div className="flex-1 flex items-center justify-end overflow-hidden">
+          <div className="flex-1 min-w-0 flex items-center justify-end overflow-hidden">
             <p
-              className="font-display leading-none select-none text-gray-900"
+              className="font-display leading-none select-none text-gray-900 max-w-full"
               style={{ fontSize: "clamp(3.5rem, 30vw, 24rem)" }}
             >
               PIXIIO
@@ -276,12 +297,32 @@ export default function Footer() {
         <div className="border-t border-gray-100 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-gray-400">
           <p>©2026 Pixiio. All rights reserved.</p>
           <nav className="flex items-center gap-5">
-            <Link href="/privacy" className="hover:text-gray-900 transition-colors">
-              Privacy Policy
+            <Link
+              href="/privacy"
+              className="group relative inline-block hover:text-gray-900 transition-colors"
+            >
+              <span className="relative overflow-hidden" style={{ display: "inline-block" }}>
+                <span className="block transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
+                  Privacy Policy
+                </span>
+                <span className="absolute inset-0 text-gray-900 translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+                  Privacy Policy
+                </span>
+              </span>
             </Link>
             <span className="text-gray-200">·</span>
-            <Link href="/terms" className="hover:text-gray-900 transition-colors">
-              Terms &amp; Conditions
+            <Link
+              href="/terms"
+              className="group relative inline-block hover:text-gray-900 transition-colors"
+            >
+              <span className="relative overflow-hidden" style={{ display: "inline-block" }}>
+                <span className="block transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
+                  Terms &amp; Conditions
+                </span>
+                <span className="absolute inset-0 text-gray-900 translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+                  Terms &amp; Conditions
+                </span>
+              </span>
             </Link>
           </nav>
         </div>

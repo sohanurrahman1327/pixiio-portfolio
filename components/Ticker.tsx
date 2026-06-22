@@ -7,21 +7,19 @@ const items = [
 ];
 
 export default function Ticker() {
-  const repeated = [...items, ...items, ...items, ...items];
+  const repeated = [...items, ...items];
 
   return (
-    <div className="bg-primary overflow-hidden py-6">
-      <div className="ticker-track flex whitespace-nowrap w-max">
+    <div className="bg-background overflow-hidden border-y border-border-subtle transition-colors duration-300">
+      <div className="marquee-left flex whitespace-nowrap w-max items-stretch divide-x divide-border-subtle">
         {repeated.map((item, i) => (
           <span
             key={i}
-            className="inline-flex items-center text-white text-2xl font-bold tracking-[0.18em]"
+            className="group inline-flex items-center gap-6 px-8 py-6 text-navy text-xl font-bold tracking-[0.18em] transition-colors duration-300 hover:text-primary cursor-default"
           >
-            {/* Left gap before text */}
-            <span className="w-12 inline-block" />
+            <span className="text-border-subtle transition-colors duration-300 group-hover:text-primary">✦</span>
             {item}
-            {/* Right gap + icon — same width as left gap so spacing is symmetric */}
-            <span className="w-12 inline-flex items-center justify-center text-white/50">✦</span>
+            <span className="text-border-subtle transition-colors duration-300 group-hover:text-primary">✦</span>
           </span>
         ))}
       </div>

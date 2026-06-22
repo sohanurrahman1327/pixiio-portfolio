@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import Image from "next/image";
 import Link from "next/link";
 import PageHero from "@/components/PageHero";
 import PageShell from "@/components/PageShell";
 import StartProjectButton from "@/components/StartProjectButton";
 import BestUIWork from "@/components/BestUIWork";
+import WorkImageLens from "@/components/WorkImageLens";
 import { featuredWorkImages } from "@/lib/images";
 
 export const metadata: Metadata = {
@@ -22,19 +22,16 @@ export default function WorkPage() {
         description="A selection of branding, UI, and web design projects we've crafted for startups, agencies, and growing brands worldwide."
       />
 
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-8">
             {featuredWorkImages.map((project) => (
-              <Link key={project.slug} href={`/work/${project.slug}`}>
-                <article className="group cursor-pointer">
+              <Link key={project.slug} href={`/work/${project.slug}`} className="block group">
+                <article>
                   <figure className="rounded-3xl overflow-hidden mb-5 aspect-[4/3] border border-gray-100 shadow-sm">
-                    <Image
+                    <WorkImageLens
                       src={project.image}
                       alt={`${project.subtitle} — ${project.title}`}
-                      width={900}
-                      height={650}
-                      className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                     />
                   </figure>
                   <div className="flex items-start justify-between gap-4">

@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
+import WorkImageLens from "@/components/WorkImageLens";
 import { services } from "@/lib/content";
 
 /* ─── Per-service tags ─── */
@@ -42,10 +42,10 @@ const serviceTags: Record<string, string[]> = {
 
 /* ─── Service background colors ─── */
 const serviceBgColors: Record<string, string> = {
-  "UI DESIGN": "bg-blue-50",
-  BRANDING: "bg-purple-50",
-  WEBSITE: "bg-green-50",
-  MARKETING: "bg-orange-50",
+  "UI DESIGN": "bg-blue-50 dark:bg-blue-500/10",
+  BRANDING: "bg-purple-50 dark:bg-purple-500/10",
+  WEBSITE: "bg-green-50 dark:bg-green-500/10",
+  MARKETING: "bg-orange-50 dark:bg-orange-500/10",
 };
 
 /* ─── Animated button icon (same as Hero) ─── */
@@ -68,7 +68,7 @@ function ServiceIcon() {
 
 export default function Services() {
   return (
-    <section id="services" className="bg-white py-20">
+    <section id="services" className="bg-background py-[50px] md:py-[80px] lg:py-30">
       <div className="max-w-7xl mx-auto px-6">
 
         {/* ── Header ── */}
@@ -76,7 +76,7 @@ export default function Services() {
           <p className="text-[11px] font-bold tracking-[0.25em] text-primary mb-3 uppercase">
             Services
           </p>
-          <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-[#0f1a3d] tracking-wide">
+          <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-navy tracking-wide">
             We Help Build Up Brands
           </h2>
         </div>
@@ -102,12 +102,12 @@ export default function Services() {
                       href={`/services/${service.slug}`}
                       className="group inline-block"
                     >
-                      <h3 className="font-display text-5xl md:text-6xl lg:text-7xl text-[#0f1a3d] tracking-wide mb-6 uppercase font-bold transition-all duration-300 ease-out group-hover:text-primary">
+                      <h3 className="font-display text-5xl md:text-6xl lg:text-7xl text-navy tracking-wide mb-6 uppercase font-bold transition-all duration-300 ease-out group-hover:text-primary">
                         {service.title}
                       </h3>
                     </Link>
 
-                    <p className="text-gray-600 text-sm md:text-base leading-relaxed mb-8">
+                    <p className="text-gray-600 dark:text-white/65 text-sm md:text-base leading-relaxed mb-8">
                       {service.description}
                     </p>
 
@@ -116,7 +116,7 @@ export default function Services() {
                       {tags.map((tag) => (
                         <span
                           key={tag}
-                          className="inline-flex items-center gap-2 text-sm md:text-base font-medium text-gray-700 bg-white rounded-full px-4 py-2 shadow-sm"
+                          className="inline-flex items-center gap-2 text-sm md:text-base font-medium text-gray-700 dark:text-white/85 bg-white dark:bg-white/10 rounded-full px-4 py-2 shadow-sm dark:shadow-none border border-gray-100/80 dark:border-white/10"
                         >
                           <span className="text-primary text-xs">✦</span>
                           {tag}
@@ -127,18 +127,17 @@ export default function Services() {
 
                   {/* ── Image Section ── */}
                   <div className={`relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-lg group ${!isEven ? "lg:[direction:ltr]" : ""}`}>
-                    <Image
+                    <WorkImageLens
                       src={service.image}
                       alt={`${service.title} service showcase`}
                       fill
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, 50vw"
                     />
-                    
+
                     {/* ── Icon Circle at Bottom (Hero Button Style) ── */}
                     <Link
                       href={`/services/${service.slug}`}
-                      className="group/icon absolute bottom-6 right-6 w-14 h-14 rounded-full bg-white shadow-lg flex items-center justify-center text-primary transition-all duration-300 hover:bg-primary hover:text-white overflow-hidden"
+                      className="group/icon absolute bottom-6 right-6 z-20 w-14 h-14 rounded-full bg-surface-elevated shadow-lg flex items-center justify-center text-primary transition-all duration-300 hover:bg-primary hover:text-white overflow-hidden"
                     >
                       <ServiceIcon />
                     </Link>

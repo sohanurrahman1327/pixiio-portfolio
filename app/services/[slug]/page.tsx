@@ -148,7 +148,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
   return (
     <PageShell>
       {/* ── Hero Section ── */}
-      <section className="bg-gradient-to-br from-[#eef0fb] to-white py-20">
+      <section className="bg-gradient-to-br from-surface-muted to-white py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Content */}
@@ -156,7 +156,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               <p className="text-[11px] font-bold tracking-[0.25em] text-primary mb-3 uppercase">
                 {service.title}
               </p>
-              <h1 className="font-display text-[clamp(3.8rem,7.5vw,6.5rem)] leading-[0.92] tracking-wide text-[#0f1a3d] mb-6">
+              <h1 className="font-display text-[clamp(3.8rem,7.5vw,6.5rem)] leading-[0.92] tracking-wide text-navy mb-6">
                 {service.longDescription}
               </h1>
               <p className="text-gray-600 text-base leading-relaxed max-w-md mb-8">
@@ -188,13 +188,13 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       </section>
 
       {/* ── Process Section ── */}
-      <section className="bg-white py-20">
+      <section className="bg-background py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <p className="text-[11px] font-bold tracking-[0.25em] text-primary mb-3 uppercase">
               Our Process
             </p>
-            <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-[#0f1a3d] tracking-wide">
+            <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-navy tracking-wide">
               How We Work
             </h2>
           </div>
@@ -204,7 +204,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             {steps.map((step, idx) => (
               <div
                 key={idx}
-                className="group relative bg-gradient-to-br from-[#eef0fb] to-white rounded-2xl p-8 hover:shadow-lg transition-all duration-300"
+                className="group relative bg-gradient-to-br from-surface-muted to-white rounded-2xl p-8 hover:shadow-lg transition-all duration-300"
               >
                 {/* Step Number */}
                 <div className="absolute top-6 right-6 w-12 h-12 rounded-full bg-primary text-white flex items-center justify-center font-bold text-lg">
@@ -215,7 +215,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
                 <div className="text-5xl mb-4">{step.icon}</div>
 
                 {/* Content */}
-                <h3 className="font-display text-2xl text-[#0f1a3d] mb-3 uppercase tracking-wide">
+                <h3 className="font-display text-2xl text-navy mb-3 uppercase tracking-wide">
                   {step.title}
                 </h3>
                 <p className="text-gray-600 text-sm leading-relaxed">
@@ -231,7 +231,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       </section>
 
       {/* ── Deliverables Section ── */}
-      <section className="bg-[#eef0fb] py-20">
+      <section className="bg-surface-muted py-20">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left: Image */}
@@ -250,7 +250,7 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
               <p className="text-[11px] font-bold tracking-[0.25em] text-primary mb-3 uppercase">
                 What You Get
               </p>
-              <h2 className="font-display text-5xl md:text-6xl text-[#0f1a3d] tracking-wide mb-8">
+              <h2 className="font-display text-5xl md:text-6xl text-navy tracking-wide mb-8">
                 Deliverables
               </h2>
 
@@ -278,9 +278,9 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
       </section>
 
       {/* ── CTA Section ── */}
-      <section className="bg-white py-20">
+      <section className="bg-background py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
-          <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-[#0f1a3d] tracking-wide mb-6">
+          <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-navy tracking-wide mb-6">
             Ready to Get Started?
           </h2>
           <p className="text-gray-600 text-base leading-relaxed mb-8 max-w-2xl mx-auto">
@@ -298,13 +298,13 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             </Link>
             <Link
               href="/work"
-              className="group inline-flex items-center gap-3 bg-white text-[#0f1a3d] text-[13px] font-bold tracking-[0.12em] uppercase pl-6 pr-2 py-2 rounded-full border border-gray-200 hover:border-primary transition-colors overflow-hidden"
+              className="group inline-flex items-center gap-3 bg-surface-elevated text-navy text-[13px] font-bold tracking-[0.12em] uppercase pl-6 pr-2 py-2 rounded-full border border-gray-200 hover:border-primary transition-colors overflow-hidden"
             >
               VIEW OUR WORK
               <span className="relative flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 group-hover:border-primary shrink-0 overflow-hidden transition-colors">
                 <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-in-out group-hover:-translate-x-full">
                   <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-                    <path d="M4 12L12 4M12 4H6M12 4V10" stroke="#0f1a3d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                    <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
                   </svg>
                 </span>
                 <span className="absolute inset-0 flex items-center justify-center translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0">

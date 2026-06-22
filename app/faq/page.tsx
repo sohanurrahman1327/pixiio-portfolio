@@ -22,7 +22,7 @@ export default function FaqPage() {
 
       <FAQ showTitle={false} />
 
-      <section className="py-16 bg-white border-t border-gray-100">
+      <section className="py-16 bg-background border-t border-gray-100">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="font-display text-3xl text-gray-900 tracking-wide mb-3">
             STILL HAVE QUESTIONS?

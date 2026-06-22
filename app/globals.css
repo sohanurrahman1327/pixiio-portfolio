@@ -1,10 +1,18 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
   --background: #ffffff;
   --foreground: #111111;
+  --navy: #0f1a3d;
+  --navy-solid: #0f1a3d;
   --primary: #5b5fef;
   --primary-dark: #4a4ed9;
+  --surface-muted: #eef0fb;
+  --surface-elevated: #ffffff;
+  --border-subtle: #d8dcf5;
+  --header-bg: rgba(238, 240, 251, 0.95);
   --gray-50: #f8f8f8;
   --gray-100: #f0f0f0;
   --gray-200: #e5e5e5;
@@ -13,11 +21,35 @@
   --gray-900: #111111;
 }
 
+.dark {
+  --background: #09090f;
+  --foreground: #ededf2;
+  --navy: #e8eaf6;
+  --navy-solid: #1e2240;
+  --primary: #6b6ff5;
+  --primary-dark: #5b5fef;
+  --surface-muted: #12141f;
+  --surface-elevated: #1a1d2e;
+  --border-subtle: #252840;
+  --header-bg: rgba(18, 20, 31, 0.95);
+  --gray-50: #16182a;
+  --gray-100: #1e2135;
+  --gray-200: #2a2d45;
+  --gray-400: #7a7a95;
+  --gray-600: #a0a0b8;
+  --gray-900: #ededf2;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-navy: var(--navy);
+  --color-navy-solid: var(--navy-solid);
   --color-primary: var(--primary);
   --color-primary-dark: var(--primary-dark);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-border-subtle: var(--border-subtle);
   --color-gray-50: var(--gray-50);
   --color-gray-100: var(--gray-100);
   --color-gray-200: var(--gray-200);
@@ -29,10 +61,19 @@
   --font-family-display: var(--font-bebas), sans-serif;
 }
 
+html {
+  /* Remove — conflicts with Lenis smooth scroll */
+  scroll-behavior: auto;
+  overflow-x: clip;
+}
+
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+  width: 100%;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .font-display {
@@ -186,4 +227,189 @@ body {
 
 .group:hover .btn-icon-wrap-rtl svg {
   transform: translateX(-150%);
+}
+
+/* ─── Preloader: slide-up exit (kept for fallback) ─── */
+@keyframes preloader-slide-up {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+
+.preloader-exit {
+  animation: preloader-slide-up 0.85s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+/* ─── Page reveal: content rises up after preloader ─── */
+#page-content {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes page-reveal {
+  0%   { opacity: 0; transform: translateY(24px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.page-revealed {
+  pointer-events: auto;
+  animation: page-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  animation-fill-mode: forwards;
+}
+
+html.preloader-skipped #page-content {
+  opacity: 1 !important;
+  pointer-events: auto;
+}
+
+/* ─── Preloader: sequential 3D text cylinder ─── */
+@keyframes preloader-3d-sequence {
+  0% {
+    transform: perspective(1000px) rotateX(0deg);
+  }
+  100% {
+    transform: perspective(1000px) rotateX(360deg);
+  }
+}
+
+@keyframes preloader-shell-exit {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-100%); }
+}
+
+@keyframes preloader-counter-exit {
+  0%   { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-130%); }
+}
+
+@keyframes preloader-logo-in {
+  0%   { opacity: 0; transform: scale(0.84); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+.preloader-shell {
+  transform: translateY(0);
+}
+
+.preloader-counter {
+  position: absolute;
+  right: clamp(1.25rem, 4vw, 3rem);
+  bottom: clamp(1.25rem, 4vw, 3rem);
+  display: flex;
+  align-items: flex-end;
+  gap: 0.02em;
+  line-height: 0.85;
+  font-family: var(--font-inter), Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: #111111;
+  pointer-events: none;
+}
+
+.preloader-counter__value {
+  font-size: clamp(3.5rem, 12vw, 7.5rem);
+}
+
+.preloader-counter__symbol {
+  font-size: clamp(1.75rem, 5vw, 3.75rem);
+  margin-bottom: 0.12em;
+}
+
+.preloader-counter[data-phase="counter-exiting"],
+.preloader-counter[data-phase="exiting"] {
+  animation: preloader-counter-exit 0.65s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.preloader-shell[data-phase="exiting"] {
+  animation: preloader-shell-exit 0.7s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.preloader-3d-scene {
+  --segment-angle: calc(360deg / var(--segment-count, 5));
+  --cylinder-radius: clamp(88px, 14vw, 132px);
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  height: clamp(120px, 18vw, 200px);
+  margin-inline: auto;
+  transform-style: preserve-3d;
+}
+
+.preloader-3d-cylinder {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  animation: preloader-3d-sequence 5.2s cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
+}
+
+.preloader-3d-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-bebas), sans-serif;
+  font-size: clamp(2.5rem, 6.5vw, 5.5rem);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--navy);
+  text-shadow: 0 1px 0 color-mix(in srgb, var(--primary) 18%, transparent);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  transform: rotateX(calc(var(--i) * var(--segment-angle))) translateZ(var(--cylinder-radius));
+}
+
+.preloader-3d-face--brand {
+  color: var(--primary);
+  text-shadow: 0 0 24px color-mix(in srgb, var(--primary) 35%, transparent);
+}
+
+.preloader-hero-logo {
+  animation: preloader-logo-in 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .preloader-3d-cylinder {
+    animation: none !important;
+    transform: perspective(1000px) rotateX(12deg);
+  }
+
+  .preloader-shell[data-phase="exiting"] {
+    animation: none !important;
+  }
+
+  .preloader-counter[data-phase="counter-exiting"],
+  .preloader-counter[data-phase="exiting"] {
+    animation: none !important;
+  }
+
+  .preloader-hero-logo {
+    animation: none !important;
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes border-spin {
+  0%   { --border-angle: 0deg; }
+  100% { --border-angle: 360deg; }
+}
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+.pricing-glow-border {
+  --border-angle: 0deg;
+  animation: border-spin 3s linear infinite;
+  background:
+    conic-gradient(
+      from var(--border-angle),
+      transparent 70%,
+      #5b5fef 80%,
+      #a5b4fc 85%,
+      #5b5fef 90%,
+      transparent 100%
+    );
 }

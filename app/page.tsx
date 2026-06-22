@@ -4,7 +4,7 @@ import Ticker from "@/components/Ticker";
 import Services from "@/components/Services";
 import FeaturedWork from "@/components/FeaturedWork";
 import BestUIWork from "@/components/BestUIWork";
-import DesignProcess from "@/components/DesignProcess";
+import WorkflowProcess from "@/components/WorkflowProcess";
 import WhyChooseUs from "@/components/WhyChooseUs";
 import Testimonial from "@/components/Testimonial";
 import Pricing from "@/components/Pricing";
@@ -16,17 +16,14 @@ export default function Home() {
   return (
   <>
     <Header />
-    <main>
+    <main className="overflow-x-clip">
       <Hero />
       <Ticker />
       <Services />
-      <Ticker />
       <FeaturedWork />
-      <Ticker />
       <BestUIWork />
-      <DesignProcess />
+      <WorkflowProcess />
       <WhyChooseUs />
-      <Ticker />
       <Testimonial />
       <Pricing />
       <FAQ />

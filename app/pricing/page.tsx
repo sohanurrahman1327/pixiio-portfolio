@@ -34,7 +34,7 @@ export default function PricingPage() {
           <h2 className="font-display text-3xl text-center text-gray-900 tracking-wide mb-10">
             COMPARE PLANS
           </h2>
-          <div className="overflow-x-auto rounded-3xl border border-gray-100 bg-white">
+          <div className="overflow-x-auto rounded-3xl border border-gray-100 bg-surface-elevated">
             <table className="w-full text-sm">
               <thead>
                 <tr className="border-b border-gray-100">

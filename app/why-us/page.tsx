@@ -20,7 +20,7 @@ export default function WhyUsPage() {
         description="We're not just designers — we're partners invested in your brand's success. Here's what sets Pixiio apart from the rest."
       />
 
-      <section className="py-16 bg-white border-b border-gray-100">
+      <section className="py-16 bg-background border-b border-gray-100">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {stats.map((stat) => (
@@ -43,7 +43,7 @@ export default function WhyUsPage() {
             {whyChooseReasons.map((reason) => (
               <article
                 key={reason.title}
-                className="bg-white rounded-3xl p-8 border border-gray-100"
+                className="bg-surface-elevated rounded-3xl p-8 border border-gray-100"
               >
                 <span className="text-primary text-2xl mb-4 block">
                   {reason.icon}
@@ -65,7 +65,7 @@ export default function WhyUsPage() {
 
       <Testimonial />
 
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-background">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h2 className="font-display text-3xl text-gray-900 tracking-wide mb-4">
             LET&apos;S WORK TOGETHER

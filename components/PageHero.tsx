@@ -21,7 +21,7 @@ export default function PageHero({ label, title, description }: PageHeroProps) {
             {label}
           </p>
         )}
-        <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-[#0f1a3d] tracking-wide leading-none mb-5">
+        <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-navy tracking-wide leading-none mb-5">
           {title}
         </h1>
         <p className="text-gray-500 text-sm md:text-base max-w-2xl leading-relaxed">

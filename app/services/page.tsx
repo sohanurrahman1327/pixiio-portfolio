@@ -21,7 +21,7 @@ export default function ServicesPage() {
         description="End-to-end design services — from brand identity and UI design to live websites and marketing assets that help your business grow."
       />
 
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-6 space-y-16">
           {services.map((service, index) => (
             <article

@@ -75,13 +75,13 @@ function AnimatedButton({
   return (
     <Link
       href={href}
-      className="group inline-flex items-center gap-3 bg-white text-[#0f1a3d] text-[13px] font-bold tracking-[0.12em] uppercase pl-6 pr-2 py-2 rounded-full border border-gray-200 hover:border-primary transition-colors overflow-hidden"
+      className="group inline-flex items-center gap-3 bg-surface-elevated text-navy text-[13px] font-bold tracking-[0.12em] uppercase pl-6 pr-2 py-2 rounded-full border border-gray-200 hover:border-primary transition-colors overflow-hidden"
     >
       {children}
       <span className="relative flex items-center justify-center w-10 h-10 rounded-full border border-gray-200 group-hover:border-primary shrink-0 overflow-hidden transition-colors">
         <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-in-out group-hover:-translate-x-full">
           <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-            <path d="M4 12L12 4M12 4H6M12 4V10" stroke="#0f1a3d" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+            <path d="M4 12L12 4M12 4H6M12 4V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
         </span>
         <span className="absolute inset-0 flex items-center justify-center translate-x-full transition-transform duration-300 ease-in-out group-hover:translate-x-0">
@@ -100,7 +100,7 @@ function StatItem({ target, suffix, label }: { target: number; suffix: string; l
   return (
     <div className="flex items-center gap-2">
       <span className="text-primary text-base font-bold">✦</span>
-      <span className="text-[#0f1a3d] text-base font-bold">
+      <span className="text-navy text-base font-bold">
         <span ref={ref}>{count}</span>{suffix}
       </span>
       <span className="text-gray-500 text-base">{label}</span>
@@ -123,7 +123,7 @@ function TrustedBadge() {
         </div>
       </div>
       <div>
-        <p className="text-sm font-semibold text-[#0f1a3d]">Since 2025</p>
+        <p className="text-sm font-semibold text-navy">Since 2025</p>
         <p className="text-sm text-gray-500">Trusted by 10+ Successful Clients.</p>
       </div>
     </div>
@@ -132,7 +132,7 @@ function TrustedBadge() {
 
 export default function Hero() {
   return (
-    <section className="bg-[#eef0fb]">
+    <section className="bg-surface-muted">
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid lg:grid-cols-2 gap-12">
 
@@ -145,10 +145,10 @@ export default function Hero() {
           </div>
 
           {/* ── Right: Content ── drives the row height */}
-          <div className="flex flex-col justify-center py-20">
+          <div className="flex flex-col justify-center py-[100px]">
             <TrustedBadge />
 
-            <h1 className="font-display text-[clamp(3.8rem,7.5vw,6.5rem)] leading-[0.92] tracking-wide text-[#0f1a3d] mb-6">
+            <h1 className="font-display text-[clamp(3.8rem,7.5vw,6.5rem)] leading-[0.92] tracking-wide text-navy mb-6">
               WE DESIGN
               <br />
               BRANDS THAT

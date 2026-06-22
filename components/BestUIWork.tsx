@@ -19,7 +19,7 @@ function HorizontalMarquee({
   const doubled = [...items, ...items];
 
   return (
-    <div className="overflow-hidden">
+    <div className="overflow-x-clip">
       <div
         className={`flex gap-4 w-max ${
           direction === "left" ? "marquee-left" : "marquee-right"
@@ -29,7 +29,7 @@ function HorizontalMarquee({
         {doubled.map((item, i) => (
           <figure
             key={`${item.alt}-${i}`}
-            className="relative shrink-0 rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-white"
+            className="relative shrink-0 rounded-xl overflow-hidden border border-gray-100 shadow-sm bg-surface-elevated"
             style={{ width: item.w }}
           >
             <Image
@@ -48,12 +48,12 @@ function HorizontalMarquee({
 
 export default function BestUIWork() {
   return (
-    <section className="bg-white py-20 overflow-hidden">
+    <section className="bg-background py-[50px] md:py-[80px] lg:py-30 overflow-x-clip">
       <div className="text-center mb-14 px-6">
         <p className="text-[11px] font-bold tracking-[0.25em] text-primary mb-3">
           BEST WORK
         </p>
-        <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-[#0f1a3d] tracking-wide">
+        <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-navy tracking-wide">
           BEST UI WORK
         </h2>
       </div>

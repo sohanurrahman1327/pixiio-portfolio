@@ -1,10 +1,10 @@
-import Image from "next/image";
 import Link from "next/link";
+import WorkImageLens from "@/components/WorkImageLens";
 import { featuredWorkImages } from "@/lib/images";
 
 export default function FeaturedWork() {
   return (
-    <section id="work" className="bg-white py-20">
+    <section id="work" className="bg-surface-muted py-[50px] md:py-[80px] lg:py-30">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between mb-10">
           <h2 className="font-display text-5xl md:text-6xl text-gray-900 tracking-wide">
@@ -32,15 +32,12 @@ export default function FeaturedWork() {
 
         <div className="grid md:grid-cols-2 gap-5">
           {featuredWorkImages.map((project) => (
-            <article key={project.title} className="group cursor-pointer">
-              <Link href={`/work/${project.slug}`}>
+            <article key={project.title} className="group">
+              <Link href={`/work/${project.slug}`} className="block">
                 <figure className="rounded-3xl overflow-hidden mb-4 aspect-[4/3] border border-gray-100 shadow-sm">
-                  <Image
+                  <WorkImageLens
                     src={project.image}
                     alt={`${project.subtitle} ${project.title} landing page design`}
-                    width={900}
-                    height={650}
-                    className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"
                   />
                 </figure>
               </Link>

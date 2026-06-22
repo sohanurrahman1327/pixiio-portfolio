@@ -21,7 +21,7 @@ export default function ContactPage() {
         description="Tell us about your project and we'll respond within 24 hours. Prefer instant chat? Message us on WhatsApp anytime."
       />
 
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16">
             <div>

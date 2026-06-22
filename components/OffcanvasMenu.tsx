@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import PixiioLogo from "@/components/PixiioLogo";
 import WhatsappButton from "@/components/WhatsappButton";
 import { navLinks, socialLinks } from "@/lib/site-config";
 
@@ -61,13 +62,13 @@ const showcaseImages = [
 /* ─── Right panel ─── */
 function RightPanel({ onClose }: { onClose: () => void }) {
   return (
-    <div className="hidden lg:flex flex-col h-full bg-[#eef0fb] rounded-2xl p-6 overflow-hidden">
+    <div className="hidden lg:flex flex-col h-full bg-surface-muted rounded-2xl p-6 overflow-hidden">
       {/* Header text */}
       <div className="mb-4 shrink-0">
         <p className="text-[11px] font-bold tracking-[0.18em] text-primary uppercase mb-1">
           WE CREATE EXPERIENCES
         </p>
-        <h2 className="font-display text-[2.6rem] leading-[0.95] tracking-wide text-[#0f1a3d]">
+        <h2 className="font-display text-[2.6rem] leading-[0.95] tracking-wide text-navy">
           We design brands that
           <br />
           <span className="text-primary">lead &amp; inspire.</span>
@@ -87,7 +88,7 @@ function RightPanel({ onClose }: { onClose: () => void }) {
           </div>
         </div>
         <div>
-          <p className="text-[12px] font-semibold text-[#0f1a3d]">Since 2025</p>
+          <p className="text-[12px] font-semibold text-navy">Since 2025</p>
           <p className="text-[11px] text-gray-500">Trusted by 10+ successful clients worldwide.</p>
         </div>
       </div>
@@ -105,7 +106,7 @@ function RightPanel({ onClose }: { onClose: () => void }) {
             />
             {/* Tag top-left */}
             <div className="absolute top-3 left-3 z-10">
-              <span className="bg-white/90 backdrop-blur-sm text-[#0f1a3d] text-[10px] font-bold tracking-[0.12em] px-2.5 py-1 rounded-full">
+              <span className="bg-surface-elevated/90 backdrop-blur-sm text-navy text-[10px] font-bold tracking-[0.12em] px-2.5 py-1 rounded-full">
                 {img.label}
               </span>
             </div>
@@ -113,7 +114,7 @@ function RightPanel({ onClose }: { onClose: () => void }) {
             <Link
               href="/work"
               onClick={onClose}
-              className="absolute bottom-3 right-3 z-10 w-8 h-8 rounded-full bg-white hover:bg-primary flex items-center justify-center text-[#0f1a3d] hover:text-white transition-all duration-200 shadow-sm"
+              className="absolute bottom-3 right-3 z-10 w-8 h-8 rounded-full bg-surface-elevated hover:bg-primary flex items-center justify-center text-navy hover:text-white transition-all duration-200 shadow-sm"
               aria-label={`View ${img.label} project`}
             >
               <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -125,11 +126,11 @@ function RightPanel({ onClose }: { onClose: () => void }) {
       </div>
 
       {/* CTA banner */}
-      <div className="mt-4 shrink-0 bg-white rounded-xl px-5 py-4 flex items-center justify-between gap-4">
+      <div className="mt-4 shrink-0 bg-surface-elevated rounded-xl px-5 py-4 flex items-center justify-between gap-4">
         <div className="flex items-center gap-3">
           <span className="text-primary text-xl">✦</span>
           <div>
-            <p className="text-sm font-bold text-[#0f1a3d]">Have a project in mind?</p>
+            <p className="text-sm font-bold text-navy">Have a project in mind?</p>
             <p className="text-xs text-gray-500">We&apos;re ready to turn your ideas into reality.</p>
           </div>
         </div>
@@ -183,7 +184,7 @@ export default function OffcanvasMenu() {
 
       {/* Full-screen panel — bg covers viewport, content constrained to page width */}
       <nav
-        className={`fixed inset-0 z-[201] bg-white/80 backdrop-blur-sm transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+        className={`fixed inset-0 z-[201] bg-background/80 backdrop-blur-sm transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           open ? "translate-y-0" : "-translate-y-full"
         }`}
         aria-label="Main menu"
@@ -195,14 +196,14 @@ export default function OffcanvasMenu() {
 
           {/* Top bar — logo left, close button exactly where menu button sits (right edge) */}
           <div className="flex items-center justify-between py-3.5 shrink-0">
-            <Link href="/" onClick={close}>
-              <Image src="/pixiio-logo.svg" alt="pixiio" width={110} height={34} className="h-7 w-auto" />
+            <Link href="/" onClick={close} aria-label="Pixiio home">
+              <PixiioLogo className="h-7 w-auto" />
             </Link>
             {/* Close button — same size/position as the menu trigger */}
             <button
               type="button"
               onClick={close}
-              className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0f1a3d] hover:bg-primary transition-colors shrink-0 group overflow-hidden"
+              className="flex items-center justify-center w-10 h-10 rounded-full bg-navy-solid hover:bg-primary transition-colors shrink-0 group overflow-hidden"
               aria-label="Close menu"
             >
               {/* Animated ✕ — slides out right, re-enters from left on hover */}
@@ -222,7 +223,7 @@ export default function OffcanvasMenu() {
           </div>
 
           {/* Two-column body */}
-          <div className="flex-1 min-h-0 grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[440px_1fr] gap-0 bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-xl mb-4">
+          <div className="flex-1 min-h-0 grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[440px_1fr] gap-0 bg-surface-elevated rounded-2xl overflow-hidden border border-gray-100 shadow-xl mb-4">
 
           {/* ── LEFT: Nav + social ── */}
           <div className="h-full flex flex-col px-6 pt-5 pb-5 border-r border-gray-100">
@@ -243,13 +244,13 @@ export default function OffcanvasMenu() {
                       {String(i + 1).padStart(2, "0")}
                     </span>
                     {/* Icon box */}
-                    <span className="w-9 h-9 rounded-lg bg-[#eef0fb] flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors duration-200">
+                    <span className="w-9 h-9 rounded-lg bg-surface-muted flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors duration-200">
                       <NavIcon index={i} />
                     </span>
                     {/* Text — slides out left, re-enters from right — slowed down */}
                     <span className="flex-1 min-w-0 overflow-hidden">
                       <span className="relative flex">
-                        <span className="block font-display text-4xl leading-tight tracking-wide text-[#0f1a3d] group-hover:text-primary transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
+                        <span className="block font-display text-4xl leading-tight tracking-wide text-navy group-hover:text-primary transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
                           {link.label.toUpperCase()}
                         </span>
                         <span className="absolute inset-0 block font-display text-4xl leading-tight tracking-wide text-primary translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
@@ -312,7 +313,7 @@ export default function OffcanvasMenu() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="flex items-center justify-center w-10 h-10 rounded-full bg-[#0f1a3d] hover:bg-primary transition-colors shrink-0 group overflow-hidden"
+        className="flex items-center justify-center w-10 h-10 rounded-full bg-navy-solid hover:bg-primary transition-colors shrink-0 group overflow-hidden dark:border dark:border-border-subtle"
         aria-label="Open menu"
         aria-expanded={open}
       >

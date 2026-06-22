@@ -101,7 +101,7 @@ export default async function ProjectPage({ params }: Props) {
       </section>
 
       {/* Project Details */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-4xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-12 mb-16">
             <div>
@@ -209,7 +209,7 @@ export default async function ProjectPage({ params }: Props) {
       </section>
 
       {/* CTA Section */}
-      <section className="bg-white py-16">
+      <section className="bg-background py-16">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h2 className="font-display text-3xl text-gray-900 tracking-wide mb-2">

@@ -15,7 +15,7 @@ export default function TermsPage() {
         title="TERMS & CONDITIONS"
         description="Last updated: May 2026"
       />
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-background">
         <div className="max-w-3xl mx-auto px-6 prose prose-gray">
           <h2 className="font-display text-2xl text-gray-900 tracking-wide mb-4">1. Acceptance of Terms</h2>
           <p className="text-gray-600 text-sm leading-relaxed mb-8">

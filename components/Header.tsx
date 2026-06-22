@@ -4,10 +4,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import OffcanvasMenu from "@/components/OffcanvasMenu";
+import PixiioLogo from "@/components/PixiioLogo";
+import ThemeToggle from "@/components/ThemeToggle";
+import { useBooking } from "@/lib/booking-context";
 
 const headerNavLinks = [
   { label: "Services", href: "/services" },
+  { label: "Library", href: "/library/components" },
   { label: "Case Studies", href: "/work" },
+  { label: "Blog", href: "/blog" },
   { label: "About Us", href: "/why-us" },
   { label: "Pricing", href: "/pricing" },
   { label: "Contact Us", href: "/contact" },
@@ -15,32 +20,29 @@ const headerNavLinks = [
 
 export default function Header() {
   const pathname = usePathname();
+  const { open } = useBooking();
 
   return (
-    <header className="sticky top-0 z-50 bg-[#eef0fb]/95 backdrop-blur-md border-b border-[#d8dcf5]">
+    <header className="sticky top-0 z-50 bg-surface-muted/95 backdrop-blur-md border-b border-border-subtle transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 py-3.5 flex items-center justify-between gap-4">
         {/* Logo */}
-        <Link href="/" className="flex items-center shrink-0">
-          <Image
-            src="/pixiio-logo.svg"
-            alt="pixiio design agency"
-            width={110}
-            height={34}
-            priority
-            className="h-7 w-auto"
-          />
+        <Link href="/" className="flex items-center shrink-0" aria-label="Pixiio home">
+          <PixiioLogo className="h-7 w-auto" />
         </Link>
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
           {headerNavLinks.map((link) => {
-            const isActive = pathname === link.href;
+            const isActive =
+              pathname === link.href ||
+              (link.href === "/library/components" &&
+                pathname.startsWith("/library"));
             return (
               <Link
                 key={link.href}
                 href={link.href}
                 className={`group relative flex items-center gap-1.5 px-3 py-2 text-[11px] font-semibold tracking-[0.1em] uppercase transition-all duration-200 overflow-hidden ${
-                  isActive ? "text-[#0f1a3d]" : "text-gray-500"
+                  isActive ? "text-navy dark:text-white" : "text-gray-500 dark:text-white/60 dark:hover:text-white"
                 }`}
               >
                 {/* Star icon — visible when active or on hover */}
@@ -59,7 +61,7 @@ export default function Header() {
                     {link.label}
                   </span>
                   {!isActive && (
-                    <span className="absolute inset-0 text-[#5b5fef] translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+                    <span className="absolute inset-0 text-primary translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
                       {link.label}
                     </span>
                   )}
@@ -71,9 +73,10 @@ export default function Header() {
 
         {/* Right: Let's Talk + Menu */}
         <div className="flex items-center gap-2.5 shrink-0">
+          <ThemeToggle />
           {/* Let's Talk — icon LEFT, text RIGHT. On hover: icon moves right→off, re-enters from left */}
-          <Link
-            href="/contact"
+          <button
+            onClick={open}
             className="hidden sm:inline-flex items-center gap-2 bg-primary text-white text-[11px] font-bold tracking-[0.1em] uppercase pl-1.5 pr-4 py-1.5 rounded-full hover:bg-primary-dark transition-colors group overflow-hidden"
           >
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white shrink-0">
@@ -88,7 +91,7 @@ export default function Header() {
               </span>
             </span>
             LET&apos;S TALK
-          </Link>
+          </button>
 
           {/* Menu icon button */}
           <OffcanvasMenu />
