@@ -184,7 +184,7 @@ export default function OffcanvasMenu() {
 
       {/* Full-screen panel — bg covers viewport, content constrained to page width */}
       <nav
-        className={`fixed inset-0 z-[201] bg-background/80 backdrop-blur-sm transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+        className={`fixed inset-0 z-[201] h-dvh max-h-dvh overflow-hidden bg-background/80 backdrop-blur-sm transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
           open ? "translate-y-0" : "-translate-y-full"
         }`}
         aria-label="Main menu"
@@ -192,7 +192,7 @@ export default function OffcanvasMenu() {
         role="dialog"
       >
         {/* Constrained content — matches page max-w-7xl + px-6 */}
-        <div className="h-full max-w-7xl mx-auto px-6 flex flex-col">
+        <div className="h-full max-w-7xl mx-auto px-6 flex flex-col min-h-0 overflow-hidden">
 
           {/* Top bar — logo left, close button exactly where menu button sits (right edge) */}
           <div className="flex items-center justify-between py-3.5 shrink-0">
@@ -223,10 +223,10 @@ export default function OffcanvasMenu() {
           </div>
 
           {/* Two-column body */}
-          <div className="flex-1 min-h-0 grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[440px_1fr] gap-0 bg-surface-elevated rounded-2xl overflow-hidden border border-gray-100 shadow-xl mb-4">
+          <div className="flex-1 min-h-0 flex flex-col lg:grid lg:grid-cols-[1fr_1fr] xl:grid-cols-[440px_1fr] gap-0 bg-surface-elevated rounded-2xl overflow-hidden border border-gray-100 shadow-xl mb-0 lg:mb-4">
 
           {/* ── LEFT: Nav + social ── */}
-          <div className="h-full flex flex-col px-6 pt-5 pb-5 border-r border-gray-100">
+          <div className="flex-1 min-h-0 flex flex-col px-6 pt-5 pb-5 lg:h-full border-r-0 lg:border-r border-gray-100">
             {/* NAVIGATION label — single instance */}
             <p className="text-[10px] font-bold tracking-[0.2em] text-gray-400 mb-3 shrink-0">NAVIGATION</p>
 
@@ -243,17 +243,17 @@ export default function OffcanvasMenu() {
                     <span className="text-[11px] font-bold text-gray-300 w-5 shrink-0 group-hover:text-primary transition-colors duration-200">
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    {/* Icon box */}
-                    <span className="w-9 h-9 rounded-lg bg-surface-muted flex items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors duration-200">
+                    {/* Icon box — desktop only */}
+                    <span className="hidden lg:flex w-9 h-9 rounded-lg bg-surface-muted items-center justify-center shrink-0 group-hover:bg-primary/10 transition-colors duration-200">
                       <NavIcon index={i} />
                     </span>
                     {/* Text — slides out left, re-enters from right — slowed down */}
                     <span className="flex-1 min-w-0 overflow-hidden">
                       <span className="relative flex">
-                        <span className="block font-display text-4xl leading-tight tracking-wide text-navy group-hover:text-primary transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
+                        <span className="block font-display text-2xl lg:text-4xl leading-tight tracking-wide text-navy group-hover:text-primary transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
                           {link.label.toUpperCase()}
                         </span>
-                        <span className="absolute inset-0 block font-display text-4xl leading-tight tracking-wide text-primary translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+                        <span className="absolute inset-0 block font-display text-2xl lg:text-4xl leading-tight tracking-wide text-primary translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
                           {link.label.toUpperCase()}
                         </span>
                       </span>
@@ -296,8 +296,8 @@ export default function OffcanvasMenu() {
             </div>
           </div>
 
-          {/* ── RIGHT: Showcase panel ── */}
-          <div className="h-full p-5 overflow-hidden">
+          {/* ── RIGHT: Showcase panel — desktop only ── */}
+          <div className="hidden lg:block h-full min-h-0 p-5 overflow-hidden">
             <RightPanel onClose={close} />
           </div>
 
