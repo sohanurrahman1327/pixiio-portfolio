@@ -69,10 +69,10 @@ function ServiceIcon() {
 export default function Services() {
   return (
     <section id="services" className="bg-background py-[50px] md:py-[80px] lg:py-30">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-[25px] lg:gap-[42px]">
 
         {/* ── Header ── */}
-        <div className="text-center mb-16">
+        <div className="text-center">
           <p className="text-[11px] font-bold tracking-[0.25em] text-primary mb-3 uppercase">
             Services
           </p>
@@ -82,7 +82,7 @@ export default function Services() {
         </div>
 
         {/* ── Alternating Service Items ── */}
-        <div className="space-y-16">
+        <div className="space-y-[25px] lg:space-y-16">
           {services.map((service, idx) => {
             const tags = serviceTags[service.title] ?? [];
             const isEven = idx % 2 === 0;
@@ -95,7 +95,7 @@ export default function Services() {
                   !isEven ? "lg:[direction:rtl]" : ""
                 }`}
               >
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-[25px] lg:gap-12 items-center">
                   {/* ── Content Section ── */}
                   <div className={!isEven ? "lg:[direction:ltr]" : ""}>
                     <Link
@@ -111,14 +111,14 @@ export default function Services() {
                       {service.description}
                     </p>
 
-                    {/* Tags Grid - Larger, Rounded Pills */}
-                    <div className="flex flex-wrap gap-3">
+                    {/* Tags — same pill design as desktop; smaller type/padding on mobile only */}
+                    <div className="flex flex-wrap gap-2 sm:gap-3">
                       {tags.map((tag) => (
                         <span
                           key={tag}
-                          className="inline-flex items-center gap-2 text-sm md:text-base font-medium text-gray-700 dark:text-white/85 bg-white dark:bg-white/10 rounded-full px-4 py-2 shadow-sm dark:shadow-none border border-gray-100/80 dark:border-white/10"
+                          className="inline-flex items-center gap-2 text-xs sm:text-sm md:text-base font-medium text-gray-700 dark:text-white/85 bg-white dark:bg-white/10 rounded-full px-3 py-1.5 sm:px-4 sm:py-2 shadow-sm dark:shadow-none border border-gray-100/80 dark:border-white/10"
                         >
-                          <span className="text-primary text-xs">✦</span>
+                          <span className="text-primary text-[10px] sm:text-xs">✦</span>
                           {tag}
                         </span>
                       ))}
@@ -126,17 +126,33 @@ export default function Services() {
                   </div>
 
                   {/* ── Image Section ── */}
-                  <div className={`relative h-64 md:h-80 lg:h-96 rounded-2xl overflow-hidden shadow-lg group ${!isEven ? "lg:[direction:ltr]" : ""}`}>
-                    <WorkImageLens
-                      src={service.image}
-                      alt={`${service.title} service showcase`}
-                      fill
-                      sizes="(max-width: 768px) 100vw, 50vw"
-                    />
+                  <div className={`relative w-full rounded-2xl overflow-hidden shadow-lg group ${!isEven ? "lg:[direction:ltr]" : ""}`}>
+                    {/* Mobile: full width, natural height — no side cropping */}
+                    <div className="lg:hidden">
+                      <WorkImageLens
+                        src={service.image}
+                        alt={`${service.title} service showcase`}
+                        width={900}
+                        height={650}
+                        sizes="100vw"
+                        className="!h-auto object-contain"
+                      />
+                    </div>
+
+                    {/* Desktop: fixed height with cover fill */}
+                    <div className="hidden lg:block relative h-96">
+                      <WorkImageLens
+                        src={service.image}
+                        alt={`${service.title} service showcase`}
+                        fill
+                        sizes="50vw"
+                      />
+                    </div>
 
                     {/* ── Icon Circle at Bottom (Hero Button Style) ── */}
                     <Link
                       href={`/services/${service.slug}`}
+                      aria-label={`View ${service.title} service details`}
                       className="group/icon absolute bottom-6 right-6 z-20 w-14 h-14 rounded-full bg-surface-elevated shadow-lg flex items-center justify-center text-primary transition-all duration-300 hover:bg-primary hover:text-white overflow-hidden"
                     >
                       <ServiceIcon />

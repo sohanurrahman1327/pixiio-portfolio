@@ -9,7 +9,7 @@ export default function FAQ({ showTitle = true }: { showTitle?: boolean }) {
 
   return (
     <section id="faq" className="bg-background py-[50px] md:py-[80px] lg:py-30">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-[50px] md:gap-[80px]">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-[30px] lg:gap-[42px]">
         {showTitle && (
           <div className="text-center">
             <p className="text-primary text-sm font-bold tracking-widest uppercase mb-3">

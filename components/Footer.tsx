@@ -282,10 +282,11 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* PIXIIO — centered vertically, right-aligned, fills remaining space */}
-          <div className="flex-1 min-w-0 flex items-center justify-end overflow-hidden">
+          {/* PIXIIO — scales within content width, same layout on all breakpoints */}
+          <div className="relative w-full lg:flex-1 lg:min-w-0">
             <p
-              className="font-display leading-none select-none text-gray-900 max-w-full"
+              aria-label="PIXIIO"
+              className="font-display leading-[0.85] select-none text-gray-900 w-full text-center"
               style={{ fontSize: "clamp(3.5rem, 30vw, 24rem)" }}
             >
               PIXIIO

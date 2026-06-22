@@ -64,9 +64,9 @@ export default function DesignProcess() {
 
   return (
     <section id="process" className="bg-background py-20">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-[30px] lg:gap-[42px]">
         {/* Header */}
-        <div className="text-center mb-16">
+        <div className="text-center">
           <p className="text-[10px] font-bold tracking-[0.25em] text-primary mb-3">
             DESIGN PROCESS
           </p>

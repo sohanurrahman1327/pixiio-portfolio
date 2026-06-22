@@ -48,8 +48,8 @@ function HorizontalMarquee({
 
 export default function BestUIWork() {
   return (
-    <section className="bg-background py-[50px] md:py-[80px] lg:py-30 overflow-x-clip">
-      <div className="text-center mb-14 px-6">
+    <section className="bg-background py-[50px] md:py-[80px] lg:py-30 overflow-x-clip flex flex-col gap-[30px] lg:gap-[42px]">
+      <div className="text-center px-6">
         <p className="text-[11px] font-bold tracking-[0.25em] text-primary mb-3">
           BEST WORK
         </p>

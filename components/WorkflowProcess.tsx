@@ -108,10 +108,10 @@ export default function WorkflowProcess() {
   return (
     <section className="bg-gray-50 dark:bg-surface-muted py-[50px] md:py-[80px] lg:py-30 transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6">
-        <div className="lg:grid lg:grid-cols-[1fr_1fr] lg:gap-20 items-start">
+        <div className="flex flex-col gap-[30px] lg:grid lg:grid-cols-[1fr_1fr] lg:gap-[42px] items-start">
 
           {/* ── Left sticky ──────────────────────────────────────────── */}
-          <div className="lg:sticky lg:top-28 mb-16 lg:mb-0 self-start">
+          <div className="lg:sticky lg:top-28 self-start">
             <p className="text-[11px] font-bold tracking-[0.25em] text-primary uppercase mb-4">
               Our Process
             </p>

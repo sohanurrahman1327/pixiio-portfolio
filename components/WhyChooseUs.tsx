@@ -67,9 +67,9 @@ export default function WhyChooseUs() {
   const { open } = useBooking();
   return (
     <section id="why-us" className="bg-gray-50 py-[50px] md:py-[80px] lg:py-30">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-[30px] lg:gap-[42px]">
 
-        <h2 className="font-display text-5xl md:text-6xl text-center text-gray-900 tracking-wide mb-14">
+        <h2 className="font-display text-5xl md:text-6xl text-center text-gray-900 tracking-wide">
           WHY CHOOSE US
         </h2>
 

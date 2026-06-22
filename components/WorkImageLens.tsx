@@ -82,7 +82,11 @@ export default function WorkImageLens({
     setPos({ x: e.clientX - rect.left, y: e.clientY - rect.top });
   }, []);
 
-  const imageClass = `object-cover ${fill ? "absolute inset-0 w-full h-full" : "w-full h-full"} ${className}`;
+  const autoHeight = /\bh-auto\b/.test(className);
+
+  const imageClass = autoHeight
+    ? `w-full h-auto object-contain ${className}`
+    : `object-cover ${fill ? "absolute inset-0 w-full h-full" : "w-full h-full"} ${className}`;
   const imageProps = fill
     ? { fill: true as const, sizes }
     : { width, height };
@@ -94,7 +98,7 @@ export default function WorkImageLens({
         alt={alt}
         priority={priority}
         {...imageProps}
-        className={`${imageClass} group-hover:scale-105 transition-transform duration-500`}
+        className={`${imageClass}${autoHeight ? "" : " group-hover:scale-105 transition-transform duration-500"}`}
       />
     );
   }
@@ -102,8 +106,8 @@ export default function WorkImageLens({
   return (
     <div
       ref={ref}
-      className={`${fill ? "absolute inset-0" : "relative w-full h-full"} overflow-hidden transition-transform duration-500 ${
-        hovering ? "scale-105 cursor-none" : "scale-100"
+      className={`${fill ? "absolute inset-0" : autoHeight ? "relative w-full" : "relative w-full h-full"} overflow-hidden transition-transform duration-500 ${
+        hovering && !autoHeight ? "scale-105 cursor-none" : "scale-100"
       }`}
       onMouseEnter={() => setHovering(true)}
       onMouseLeave={() => setHovering(false)}

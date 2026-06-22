@@ -145,7 +145,7 @@ export default function Hero() {
           </div>
 
           {/* ── Right: Content ── drives the row height */}
-          <div className="flex flex-col justify-center py-[100px]">
+          <div className="flex flex-col justify-center py-[50px] md:py-[80px] lg:py-[100px]">
             <TrustedBadge />
 
             <h1 className="font-display text-[clamp(3.8rem,7.5vw,6.5rem)] leading-[0.92] tracking-wide text-navy mb-6">

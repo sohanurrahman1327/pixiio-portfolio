@@ -74,15 +74,19 @@ function Toggle({
   enabled,
   onToggle,
   highlighted,
+  label = "Enable No-code Development add-on",
 }: {
   enabled: boolean;
   onToggle: () => void;
   highlighted?: boolean;
+  label?: string;
 }) {
   return (
     <button
+      type="button"
       role="switch"
       aria-checked={enabled}
+      aria-label={label}
       onClick={onToggle}
       className={`relative inline-flex h-6 w-11 shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-1
         ${enabled
@@ -274,16 +278,18 @@ function RegularCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
 export default function Pricing() {
   return (
     <section id="pricing" className="bg-gray-50 py-[50px] md:py-[80px] lg:py-30">
-      <div className="max-w-7xl mx-auto px-6">
+      <div className="max-w-7xl mx-auto px-6 flex flex-col gap-[30px] lg:gap-[42px]">
 
-        <h2 className="font-display text-5xl md:text-6xl text-center text-gray-900 tracking-wide mb-4">
-          SELECT PACKAGE
-        </h2>
-        <p className="text-center text-gray-500 text-sm mb-14 max-w-md mx-auto">
-          Transparent pricing with no hidden fees. Pick the plan that fits your project scope.
-        </p>
+        <div className="text-center">
+          <h2 className="font-display text-5xl md:text-6xl text-center text-gray-900 tracking-wide mb-4">
+            SELECT PACKAGE
+          </h2>
+          <p className="text-center text-gray-500 text-sm max-w-md mx-auto">
+            Transparent pricing with no hidden fees. Pick the plan that fits your project scope.
+          </p>
+        </div>
 
-        <div className="grid md:grid-cols-3 gap-5 items-stretch mb-8">
+        <div className="grid md:grid-cols-3 gap-5 items-stretch">
           {pricingPlans.map((plan) =>
             plan.highlighted ? (
               <HighlightedCard key={plan.name} plan={plan} />

@@ -4,8 +4,8 @@ import { testimonialAvatar } from "@/lib/images";
 export default function Testimonial() {
   return (
     <section className="bg-navy-solid py-[50px] md:py-[80px] lg:py-24">
-      <div className="max-w-4xl mx-auto px-6 text-center">
-        <blockquote className="font-display text-2xl md:text-3xl lg:text-4xl text-white leading-snug tracking-wide mb-10">
+      <div className="max-w-4xl mx-auto px-6 text-center flex flex-col gap-[30px] lg:gap-[42px]">
+        <blockquote className="font-display text-2xl md:text-3xl lg:text-4xl text-white leading-snug tracking-wide">
           &ldquo;THEY HAVE TRANSFORMED OUR DIGITAL PRESENCE. THEIR ATTENTION TO
           DETAIL AND DESIGN-LED APPROACH IS TRULY UNMATCHED IN THE INDUSTRY
           TODAY.&rdquo;

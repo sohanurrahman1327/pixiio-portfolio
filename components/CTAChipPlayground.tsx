@@ -194,6 +194,67 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
     });
     Matter.Composite.add(engine.world, mouseConstraint);
 
+    let draggedBody: Matter.Body | null = null;
+    let dragOffset = { x: 0, y: 0 };
+
+    function touchPos(touch: Touch) {
+      const rect = sectionEl.getBoundingClientRect();
+      return {
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
+      };
+    }
+
+    function findBodyAtPoint(x: number, y: number) {
+      const bodies = [...bodiesRef.current.values()];
+      const hit = Matter.Query.point(bodies, { x, y });
+      if (hit.length) return hit[0];
+      const region = Matter.Query.region(bodies, {
+        min: { x: x - 14, y: y - 14 },
+        max: { x: x + 14, y: y + 14 },
+      });
+      return region[0];
+    }
+
+    function bringChipToFront(body: Matter.Body) {
+      const chipId = (body as Matter.Body & { chipId?: number }).chipId;
+      if (!chipId) return;
+      const el = chipElsRef.current.get(chipId);
+      if (el?.parentElement) el.parentElement.appendChild(el);
+    }
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length !== 1) return;
+      const pos = touchPos(e.touches[0]);
+      const body = findBodyAtPoint(pos.x, pos.y);
+      if (!body) return;
+      draggedBody = body;
+      dragOffset = { x: pos.x - body.position.x, y: pos.y - body.position.y };
+      bringChipToFront(body);
+      e.preventDefault();
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (!draggedBody || e.touches.length !== 1) return;
+      const pos = touchPos(e.touches[0]);
+      Matter.Body.setPosition(draggedBody, {
+        x: pos.x - dragOffset.x,
+        y: pos.y - dragOffset.y,
+      });
+      Matter.Body.setVelocity(draggedBody, { x: 0, y: 0 });
+      Matter.Body.setAngularVelocity(draggedBody, 0);
+      e.preventDefault();
+    };
+
+    const onTouchEnd = () => {
+      draggedBody = null;
+    };
+
+    sectionEl.addEventListener("touchstart", onTouchStart, { passive: false });
+    sectionEl.addEventListener("touchmove", onTouchMove, { passive: false });
+    sectionEl.addEventListener("touchend", onTouchEnd);
+    sectionEl.addEventListener("touchcancel", onTouchEnd);
+
     Matter.Events.on(mouseConstraint, "startdrag", () => {
       const body = mouseConstraint.body as
         | (Matter.Body & { chipId?: number })
@@ -258,6 +319,10 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
       spawnTimersRef.current.forEach(clearTimeout);
       spawnTimersRef.current = [];
       ro.disconnect();
+      sectionEl.removeEventListener("touchstart", onTouchStart);
+      sectionEl.removeEventListener("touchmove", onTouchMove);
+      sectionEl.removeEventListener("touchend", onTouchEnd);
+      sectionEl.removeEventListener("touchcancel", onTouchEnd);
       Matter.Events.off(mouseConstraint, "startdrag");
       Matter.Composite.remove(engine.world, mouseConstraint);
       Matter.Engine.clear(engine);
@@ -279,7 +344,7 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
               if (el) chipElsRef.current.set(chip.id, el);
               else chipElsRef.current.delete(chip.id);
             }}
-            className={`absolute top-0 left-0 opacity-0 pointer-events-none touch-pan-y cursor-grab active:cursor-grabbing select-none will-change-transform rounded-full font-bold text-sm md:text-base tracking-wide whitespace-nowrap inline-flex items-center justify-center shadow-lg shadow-black/25 ${chip.className}${"hideBelowMd" in chip && chip.hideBelowMd ? " max-md:hidden" : ""}`}
+            className={`absolute top-0 left-0 opacity-0 pointer-events-auto cursor-grab active:cursor-grabbing select-none will-change-transform rounded-full font-bold text-sm md:text-base tracking-wide whitespace-nowrap inline-flex items-center justify-center shadow-lg shadow-black/25 ${chip.className}${"hideBelowMd" in chip && chip.hideBelowMd ? " max-md:hidden" : ""}`}
             style={{
               boxSizing: "border-box",
               padding: `${CHIP_PY}px ${CHIP_PX}px`,
