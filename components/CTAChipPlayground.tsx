@@ -169,20 +169,22 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
 
     buildWalls(sectionEl.clientWidth, sectionEl.clientHeight);
 
-    const mouse = Matter.Mouse.create(sectionEl);
+    // Detached mouse element — never bind Matter to the section so wheel/touch
+    // scroll can pass through to Lenis on the full page.
+    const mouse = Matter.Mouse.create(document.createElement("div"));
     const mouseHandlers = mouse as Matter.Mouse & {
       mousewheel: EventListener;
       mousemove: EventListener;
       mousedown: EventListener;
       mouseup: EventListener;
     };
-    // Matter.js registers `wheel` (not legacy mousewheel) and calls preventDefault,
-    // which blocks Lenis / native scroll while the pointer is over this section.
     mouse.element.removeEventListener("wheel", mouseHandlers.mousewheel);
-    // Touch handlers also preventDefault on move — detach so the page can scroll.
     mouse.element.removeEventListener("touchmove", mouseHandlers.mousemove);
     mouse.element.removeEventListener("touchstart", mouseHandlers.mousedown);
     mouse.element.removeEventListener("touchend", mouseHandlers.mouseup);
+    mouse.element.removeEventListener("mousemove", mouseHandlers.mousemove);
+    mouse.element.removeEventListener("mousedown", mouseHandlers.mousedown);
+    mouse.element.removeEventListener("mouseup", mouseHandlers.mouseup);
 
     const mouseConstraint = Matter.MouseConstraint.create(engine, {
       mouse,
@@ -197,12 +199,22 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
     let draggedBody: Matter.Body | null = null;
     let dragOffset = { x: 0, y: 0 };
 
-    function touchPos(touch: Touch) {
+    function pointerPos(clientX: number, clientY: number) {
       const rect = sectionEl.getBoundingClientRect();
       return {
-        x: touch.clientX - rect.left,
-        y: touch.clientY - rect.top,
+        x: clientX - rect.left,
+        y: clientY - rect.top,
       };
+    }
+
+    function syncMousePosition(clientX: number, clientY: number) {
+      const rect = sectionEl.getBoundingClientRect();
+      const scaleX = sectionEl.clientWidth / rect.width || 1;
+      const scaleY = sectionEl.clientHeight / rect.height || 1;
+      mouse.absolute.x = (clientX - rect.left) * scaleX;
+      mouse.absolute.y = (clientY - rect.top) * scaleY;
+      mouse.position.x = mouse.absolute.x * mouse.scale.x + mouse.offset.x;
+      mouse.position.y = mouse.absolute.y * mouse.scale.y + mouse.offset.y;
     }
 
     function findBodyAtPoint(x: number, y: number) {
@@ -223,37 +235,61 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
       if (el?.parentElement) el.parentElement.appendChild(el);
     }
 
-    const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length !== 1) return;
-      const pos = touchPos(e.touches[0]);
+    function startDrag(clientX: number, clientY: number) {
+      const pos = pointerPos(clientX, clientY);
       const body = findBodyAtPoint(pos.x, pos.y);
-      if (!body) return;
+      if (!body) return false;
       draggedBody = body;
       dragOffset = { x: pos.x - body.position.x, y: pos.y - body.position.y };
       bringChipToFront(body);
-      e.preventDefault();
-    };
+      syncMousePosition(clientX, clientY);
+      return true;
+    }
 
-    const onTouchMove = (e: TouchEvent) => {
-      if (!draggedBody || e.touches.length !== 1) return;
-      const pos = touchPos(e.touches[0]);
+    function moveDrag(clientX: number, clientY: number) {
+      if (!draggedBody) return;
+      const pos = pointerPos(clientX, clientY);
       Matter.Body.setPosition(draggedBody, {
         x: pos.x - dragOffset.x,
         y: pos.y - dragOffset.y,
       });
       Matter.Body.setVelocity(draggedBody, { x: 0, y: 0 });
       Matter.Body.setAngularVelocity(draggedBody, 0);
+      syncMousePosition(clientX, clientY);
+    }
+
+    function endDrag() {
+      draggedBody = null;
+    }
+
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.pointerType === "mouse" && e.button !== 0) return;
+      const chip = (e.target as HTMLElement).closest("[data-chip]");
+      if (!chip) return;
+      if (startDrag(e.clientX, e.clientY)) {
+        chip.setPointerCapture(e.pointerId);
+        e.preventDefault();
+      }
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!draggedBody) return;
+      moveDrag(e.clientX, e.clientY);
       e.preventDefault();
     };
 
-    const onTouchEnd = () => {
-      draggedBody = null;
+    const onPointerUp = (e: PointerEvent) => {
+      if (!draggedBody) return;
+      (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
+      endDrag();
     };
 
-    sectionEl.addEventListener("touchstart", onTouchStart, { passive: false });
-    sectionEl.addEventListener("touchmove", onTouchMove, { passive: false });
-    sectionEl.addEventListener("touchend", onTouchEnd);
-    sectionEl.addEventListener("touchcancel", onTouchEnd);
+    const onPointerCancel = () => endDrag();
+
+    layer.addEventListener("pointerdown", onPointerDown);
+    layer.addEventListener("pointermove", onPointerMove);
+    layer.addEventListener("pointerup", onPointerUp);
+    layer.addEventListener("pointercancel", onPointerCancel);
 
     Matter.Events.on(mouseConstraint, "startdrag", () => {
       const body = mouseConstraint.body as
@@ -314,15 +350,21 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
     });
     ro.observe(sectionEl);
 
+    const onSpawned = () => window.dispatchEvent(new Event("lenis:resize"));
+    const spawnDoneTimer = reducedMotion
+      ? window.setTimeout(onSpawned, 0)
+      : window.setTimeout(onSpawned, 280 + activeChips.length * 115 + 200);
+
     return () => {
       cancelAnimationFrame(rafRef.current);
       spawnTimersRef.current.forEach(clearTimeout);
       spawnTimersRef.current = [];
+      window.clearTimeout(spawnDoneTimer);
       ro.disconnect();
-      sectionEl.removeEventListener("touchstart", onTouchStart);
-      sectionEl.removeEventListener("touchmove", onTouchMove);
-      sectionEl.removeEventListener("touchend", onTouchEnd);
-      sectionEl.removeEventListener("touchcancel", onTouchEnd);
+      layer.removeEventListener("pointerdown", onPointerDown);
+      layer.removeEventListener("pointermove", onPointerMove);
+      layer.removeEventListener("pointerup", onPointerUp);
+      layer.removeEventListener("pointercancel", onPointerCancel);
       Matter.Events.off(mouseConstraint, "startdrag");
       Matter.Composite.remove(engine.world, mouseConstraint);
       Matter.Engine.clear(engine);
@@ -340,6 +382,7 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
       {serviceChips.map((chip) => (
           <div
             key={chip.id}
+            data-chip
             ref={(el) => {
               if (el) chipElsRef.current.set(chip.id, el);
               else chipElsRef.current.delete(chip.id);

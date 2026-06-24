@@ -338,7 +338,7 @@ html.preloader-skipped #page-content {
   position: absolute;
   inset: 0;
   transform-style: preserve-3d;
-  animation: preloader-3d-sequence 5.2s cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
+  animation: preloader-3d-sequence 2.4s cubic-bezier(0.45, 0.05, 0.2, 1) forwards;
 }
 
 .preloader-3d-face {

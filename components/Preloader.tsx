@@ -3,11 +3,11 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 
 const SESSION_KEY = "pixiio-preloader-seen";
-const ROTATION_MS = 5200;
-const HOLD_MS = 450;
-const LOGO_MS = 900;
-const EXIT_MS = 700;
-const COUNTER_EXIT_MS = 650;
+const ROTATION_MS = 2400;
+const HOLD_MS = 250;
+const LOGO_MS = 500;
+const EXIT_MS = 450;
+const COUNTER_EXIT_MS = 400;
 const TEXT_MS = ROTATION_MS + HOLD_MS;
 const TOTAL_MS = TEXT_MS + LOGO_MS;
 

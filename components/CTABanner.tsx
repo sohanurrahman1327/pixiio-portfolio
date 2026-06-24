@@ -63,13 +63,20 @@ export default function CTABanner() {
   const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    window.dispatchEvent(new Event("lenis:resize"));
+    const notify = () => window.dispatchEvent(new Event("lenis:resize"));
+    notify();
+    const t1 = window.setTimeout(notify, 150);
+    const t2 = window.setTimeout(notify, 1200);
+    return () => {
+      window.clearTimeout(t1);
+      window.clearTimeout(t2);
+    };
   }, []);
 
   return (
     <section
       ref={sectionRef}
-      className="relative bg-navy-solid overflow-hidden min-h-[700px] h-[700px] md:h-[720px] touch-pan-y"
+      className="relative bg-navy-solid overflow-hidden min-h-[700px] h-[700px] md:h-[720px]"
     >
       {/* Content — pointer-events-none so chips can be grabbed over the full section */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-[50px] md:pt-[80px] pb-10 md:py-28 flex flex-col items-center justify-start md:justify-center text-center pointer-events-none h-full">

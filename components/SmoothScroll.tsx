@@ -3,22 +3,26 @@
 import { useEffect, useRef } from "react";
 import Lenis from "lenis";
 
+function scheduleResize(lenis: Lenis) {
+  requestAnimationFrame(() => {
+    lenis.resize();
+    requestAnimationFrame(() => lenis.resize());
+  });
+}
+
 /**
  * Lenis smooth scroll — global singleton.
  *
- * Fixes applied:
- * 1. RAF loop with proper cleanup
- * 2. syncToNative via manual scroll event dispatch — keeps window.scroll
- *    listeners (WorkflowProcess etc.) in sync with Lenis virtual scroll
- * 3. Recalculates scroll dimensions after page-reveal animation completes
- * 4. touchMultiplier restored for mobile
- * 5. html scroll-behavior:auto set in globals.css to avoid CSS/JS conflict
+ * Uses document.body as scroll content so full page height (incl. footer
+ * outside <main>) is measured correctly. Re-measures on layout shifts,
+ * preloader reveal, and explicit lenis:resize events.
  */
 export default function SmoothScroll() {
   const lenisRef = useRef<Lenis | null>(null);
 
   useEffect(() => {
     const lenis = new Lenis({
+      content: document.body,
       duration: 0.9,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
@@ -29,15 +33,6 @@ export default function SmoothScroll() {
     lenisRef.current = lenis;
     (window as Window & { __lenis?: Lenis }).__lenis = lenis;
 
-    // Keep native scroll events in sync so all window.addEventListener("scroll")
-    // listeners receive updates (WorkflowProcess, etc.)
-    lenis.on("scroll", ({ scroll }: { scroll: number }) => {
-      // Manually sync window.scrollY via a native scroll event
-      // Note: we can't set window.scrollY directly, but dispatching the event
-      // ensures listeners that read getBoundingClientRect() fire at the right time
-      void scroll; // used to satisfy TS, scroll value managed by Lenis
-    });
-
     // RAF loop
     let rafId: number;
     const raf = (time: number) => {
@@ -46,31 +41,39 @@ export default function SmoothScroll() {
     };
     rafId = requestAnimationFrame(raf);
 
-    // After preloader finishes (page-reveal ~800ms + preloader ~2600+850ms)
-    // Resize Lenis so it picks up the full document height correctly
-    const resizeTimer = setTimeout(() => {
-      lenis.resize();
-    }, 4000);
+    scheduleResize(lenis);
 
-    // Also resize on page-content class change (MutationObserver)
+    const resizeTimers = [100, 400, 900, 1800, 3500].map((ms) =>
+      window.setTimeout(() => scheduleResize(lenis), ms)
+    );
+
+    const handleLenisResize = () => scheduleResize(lenis);
+    window.addEventListener("lenis:resize", handleLenisResize);
+    window.addEventListener("load", handleLenisResize);
+    document.fonts?.ready.then(handleLenisResize);
+
     const pageContent = document.getElementById("page-content");
-    let mutObs: MutationObserver | null = null;
+    let classObs: MutationObserver | null = null;
     if (pageContent) {
-      mutObs = new MutationObserver(() => {
-        // Small delay so the animation has started and layout is settled
-        setTimeout(() => lenis.resize(), 100);
+      classObs = new MutationObserver(() => {
+        window.setTimeout(() => scheduleResize(lenis), 100);
       });
-      mutObs.observe(pageContent, { attributes: true, attributeFilter: ["class"] });
+      classObs.observe(pageContent, {
+        attributes: true,
+        attributeFilter: ["class"],
+      });
     }
 
-    const handleLenisResize = () => lenis.resize();
-    window.addEventListener("lenis:resize", handleLenisResize);
+    const bodyObs = new ResizeObserver(() => scheduleResize(lenis));
+    bodyObs.observe(document.body);
 
     return () => {
       cancelAnimationFrame(rafId);
-      clearTimeout(resizeTimer);
-      mutObs?.disconnect();
+      resizeTimers.forEach(clearTimeout);
+      classObs?.disconnect();
+      bodyObs.disconnect();
       window.removeEventListener("lenis:resize", handleLenisResize);
+      window.removeEventListener("load", handleLenisResize);
       delete (window as Window & { __lenis?: Lenis }).__lenis;
       lenis.destroy();
       lenisRef.current = null;
