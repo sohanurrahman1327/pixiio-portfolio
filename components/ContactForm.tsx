@@ -2,12 +2,15 @@
 
 import { useState } from "react";
 import WhatsappButton from "@/components/WhatsappButton";
+import { mailtoContactInquiry } from "@/lib/mailto";
 
 export default function ContactForm() {
-  const [submitted, setSubmitted] = useState(false);
+  const [status, setStatus] = useState<"idle" | "success" | "mailto" | "error">("idle");
   const [emailError, setEmailError] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const form = e.currentTarget;
     const emailInput = form.elements.namedItem("email") as HTMLInputElement;
@@ -16,19 +19,43 @@ export default function ContactForm() {
       return;
     }
     setEmailError("");
+
     const name = (form.elements.namedItem("name") as HTMLInputElement).value;
     const project = (form.elements.namedItem("project") as HTMLSelectElement).value;
     const budget = (form.elements.namedItem("budget") as HTMLSelectElement).value;
     const message = (form.elements.namedItem("message") as HTMLTextAreaElement).value;
-    const subject = encodeURIComponent(`New Project Inquiry from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${emailInput.value}\nProject: ${project}\nBudget: ${budget}\n\nMessage:\n${message}`
-    );
-    window.location.href = `mailto:agency.pixiio@gmail.com?subject=${subject}&body=${body}`;
-    setSubmitted(true);
+
+    const payload = { name, email: emailInput.value, project, budget, message };
+    setSubmitting(true);
+    setSubmitError("");
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setStatus("success");
+        return;
+      }
+      if (data.fallback === "mailto") {
+        window.location.href = mailtoContactInquiry(payload);
+        setStatus("mailto");
+        return;
+      }
+      setStatus("error");
+      setSubmitError(data.error || "Could not send message. Please try again.");
+    } catch {
+      window.location.href = mailtoContactInquiry(payload);
+      setStatus("mailto");
+    } finally {
+      setSubmitting(false);
+    }
   }
 
-  if (submitted) {
+  if (status === "success") {
     return (
       <div className="rounded-3xl border border-primary/20 bg-primary/5 p-10 text-center">
         <p className="font-display text-3xl text-gray-900 tracking-wide mb-3">
@@ -36,6 +63,19 @@ export default function ContactForm() {
         </p>
         <p className="text-gray-600 text-sm">
           Thanks for reaching out. We&apos;ll get back to you within 24 hours.
+        </p>
+      </div>
+    );
+  }
+
+  if (status === "mailto") {
+    return (
+      <div className="rounded-3xl border border-amber-200 bg-amber-50 p-10 text-center">
+        <p className="font-display text-2xl text-gray-900 tracking-wide mb-3">
+          OPEN YOUR EMAIL APP
+        </p>
+        <p className="text-gray-600 text-sm">
+          Your message is ready — click <strong>Send</strong> in your email app to deliver it to us.
         </p>
       </div>
     );
@@ -116,11 +156,15 @@ export default function ContactForm() {
           placeholder="Tell us about your project, goals, and timeline..."
         />
       </label>
+      {submitError && (
+        <p className="text-red-500 text-xs text-center">{submitError}</p>
+      )}
       <button
         type="submit"
-        className="w-full bg-primary text-white text-xs font-semibold tracking-wider py-4 rounded-full hover:bg-primary-dark transition-colors"
+        disabled={submitting}
+        className="w-full bg-primary text-white text-xs font-semibold tracking-wider py-4 rounded-full hover:bg-primary-dark transition-colors disabled:opacity-60"
       >
-        SEND MESSAGE
+        {submitting ? "SENDING…" : "SEND MESSAGE"}
       </button>
       <p className="text-center text-xs text-gray-400">or reach us instantly</p>
       <WhatsappButton className="w-full justify-center py-3" />

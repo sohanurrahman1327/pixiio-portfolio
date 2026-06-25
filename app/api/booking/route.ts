@@ -1,39 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import {
+  agencyEmailHtml,
+  getEmailConfigError,
+  isEmailConfigured,
+  sendAgencyEmail,
+  sendClientConfirmation,
+} from "@/lib/email";
+import { bookingRespondActionsHtml } from "@/lib/booking-email";
+import { createBookingToken } from "@/lib/booking-token";
+import { createBooking, dateKeyFromIso, updateBookingRespondToken } from "@/lib/booking-store";
+import { CONTACT_EMAIL, GOOGLE_MEET_LINK } from "@/lib/site-config";
+import { getSiteUrl } from "@/lib/site-url";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { name, email, service, notes, guests, date, slot, timezone } = body;
+    const {
+      name,
+      email,
+      phone,
+      service,
+      notes,
+      guests,
+      date,
+      slot,
+      slotKey,
+      timezone,
+      meetLink: submittedMeetLink,
+    } = body;
 
-    /* ── Basic validation ── */
-    if (!name || !email || !service) {
+    if (!name || !email || !phone || !service || !slotKey) {
       return NextResponse.json(
-        { error: "Name, email and service are required." },
+        { error: "Name, email, phone, service and time slot are required." },
         { status: 400 }
       );
     }
 
-    /* ── Check env vars are configured ── */
-    if (!process.env.GMAIL_USER || !process.env.GMAIL_APP_PASSWORD ||
-        process.env.GMAIL_APP_PASSWORD === "your_16_char_app_password_here") {
+    if (!isEmailConfigured()) {
       console.warn("[booking] Gmail credentials not configured in .env.local");
       return NextResponse.json(
-        { error: "Email service is not configured yet. Please contact us directly at agency.pixiio@gmail.com" },
+        { error: getEmailConfigError(), fallback: "mailto" },
         { status: 503 }
       );
     }
-
-    /* ── Nodemailer via Gmail SMTP ── */
-    const transporter = nodemailer.createTransport({
-      host: "smtp.gmail.com",
-      port: 465,
-      secure: true,
-      auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD,
-      },
-    });
 
     const bookingDate = date
       ? new Date(date).toLocaleDateString("en-US", {
@@ -46,38 +56,102 @@ export async function POST(req: NextRequest) {
       ? guests.join(", ")
       : "None";
 
-    /* ── Email to agency ── */
-    await transporter.sendMail({
-      from: `"Pixiio Booking" <${process.env.GMAIL_USER}>`,
-      to: "agency.pixiio@gmail.com",
-      replyTo: email,
-      subject: `📅 New Booking — ${name} · ${service}`,
-      html: `
-        <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#111;">
-          <div style="background:#5b5fef;padding:24px 32px;border-radius:12px 12px 0 0;">
-            <h1 style="color:#fff;margin:0;font-size:22px;">New Booking Request</h1>
-            <p style="color:rgba(255,255,255,0.8);margin:4px 0 0;font-size:14px;">Pixiio Design Agency</p>
-          </div>
-          <div style="background:#f8f9fa;padding:32px;border-radius:0 0 12px 12px;border:1px solid #e5e7eb;border-top:none;">
-            <table style="width:100%;border-collapse:collapse;font-size:14px;">
-              <tr><td style="padding:8px 0;color:#6b7280;width:140px;">Name</td><td style="padding:8px 0;font-weight:600;">${name}</td></tr>
-              <tr><td style="padding:8px 0;color:#6b7280;">Email</td><td style="padding:8px 0;font-weight:600;"><a href="mailto:${email}" style="color:#5b5fef;">${email}</a></td></tr>
-              <tr><td style="padding:8px 0;color:#6b7280;">Service</td><td style="padding:8px 0;font-weight:600;">${service}</td></tr>
-              <tr><td style="padding:8px 0;color:#6b7280;">Date</td><td style="padding:8px 0;font-weight:600;">${bookingDate}</td></tr>
-              <tr><td style="padding:8px 0;color:#6b7280;">Time</td><td style="padding:8px 0;font-weight:600;">${slot ?? "Not specified"} (${timezone ?? "Asia/Dhaka"})</td></tr>
-              <tr><td style="padding:8px 0;color:#6b7280;">Guests</td><td style="padding:8px 0;">${guestList}</td></tr>
-              ${notes ? `<tr><td style="padding:8px 0;color:#6b7280;vertical-align:top;">Notes</td><td style="padding:8px 0;">${notes}</td></tr>` : ""}
-            </table>
-          </div>
-        </div>
-      `,
+    const meetLink =
+      typeof submittedMeetLink === "string" && submittedMeetLink.trim()
+        ? submittedMeetLink.trim()
+        : GOOGLE_MEET_LINK.trim();
+
+    const dateKey = date ? dateKeyFromIso(date) : "unknown";
+    const slotLabel = slot ?? slotKey;
+
+    const respondToken = createBookingToken({
+      bookingId: "pending",
+      name,
+      email,
+      phone,
+      service,
+      notes: notes ?? "",
+      guests: guestList,
+      dateLabel: bookingDate,
+      slot: slotLabel,
+      timezone: timezone ?? "Asia/Dhaka",
+      meetLink,
     });
 
-    /* ── Confirmation email to client ── */
-    await transporter.sendMail({
-      from: `"Pixiio Design Agency" <${process.env.GMAIL_USER}>`,
+    let booking;
+    try {
+      booking = await createBooking({
+        name,
+        email,
+        phone,
+        service,
+        notes: notes ?? "",
+        guests: guestList,
+        dateKey,
+        dateLabel: bookingDate,
+        slotKey,
+        slotLabel,
+        timezone: timezone ?? "Asia/Dhaka",
+        meetLink,
+        respondToken,
+      });
+    } catch (err) {
+      if (err instanceof Error && err.message === "SLOT_TAKEN") {
+        return NextResponse.json(
+          { error: "This time slot has already been booked. Please choose another time." },
+          { status: 409 }
+        );
+      }
+      throw err;
+    }
+
+    const finalToken = createBookingToken({
+      bookingId: booking.id,
+      name,
+      email,
+      phone,
+      service,
+      notes: notes ?? "",
+      guests: guestList,
+      dateLabel: bookingDate,
+      slot: slotLabel,
+      timezone: timezone ?? "Asia/Dhaka",
+      meetLink,
+    });
+
+    await updateBookingRespondToken(booking.id, finalToken);
+
+    const rows = [
+      { label: "Name", value: name },
+      { label: "Email", value: `<a href="mailto:${email}" style="color:#5b5fef;">${email}</a>` },
+      { label: "Phone", value: phone },
+      { label: "Service", value: service },
+      { label: "Date", value: bookingDate },
+      { label: "Time", value: `${slotLabel} (${timezone ?? "Asia/Dhaka"})` },
+      { label: "Guests", value: guestList },
+    ];
+    if (notes) rows.push({ label: "Notes", value: notes.replace(/\n/g, "<br>") });
+    if (meetLink) {
+      rows.push({
+        label: "Google Meet",
+        value: `<a href="${meetLink}" style="color:#5b5fef;">${meetLink}</a>`,
+      });
+    }
+
+    const respondUrl = `${getSiteUrl()}/admin/bookings/respond?token=${encodeURIComponent(finalToken)}`;
+    const dashboardUrl = `${getSiteUrl()}/admin/bookings`;
+
+    await sendAgencyEmail({
+      subject: `📅 Meeting Schedule Requested — ${name} · ${service}`,
+      html:
+        agencyEmailHtml("Meeting Schedule Requested", rows) +
+        bookingRespondActionsHtml(respondUrl, dashboardUrl),
+      replyTo: email,
+    });
+
+    await sendClientConfirmation({
       to: email,
-      subject: `✅ Booking received — Pixiio Design Agency`,
+      subject: "✅ Booking received — Pixiio Design Agency",
       html: `
         <div style="font-family:sans-serif;max-width:600px;margin:0 auto;color:#111;">
           <div style="background:#5b5fef;padding:24px 32px;border-radius:12px 12px 0 0;">
@@ -94,11 +168,12 @@ export async function POST(req: NextRequest) {
               <p style="margin:0 0 10px;font-size:13px;color:#6b7280;font-weight:600;text-transform:uppercase;letter-spacing:0.05em;">Your booking details</p>
               <p style="margin:4px 0;font-size:14px;"><strong>Service:</strong> ${service}</p>
               <p style="margin:4px 0;font-size:14px;"><strong>Date:</strong> ${bookingDate}</p>
-              <p style="margin:4px 0;font-size:14px;"><strong>Time:</strong> ${slot ?? "To be confirmed"} <span style="color:#6b7280;">(${timezone ?? "Asia/Dhaka"})</span></p>
+              <p style="margin:4px 0;font-size:14px;"><strong>Time:</strong> ${slotLabel} <span style="color:#6b7280;">(${timezone ?? "Asia/Dhaka"})</span></p>
+              ${meetLink ? `<p style="margin:4px 0;font-size:14px;"><strong>Google Meet:</strong> <a href="${meetLink}" style="color:#5b5fef;">${meetLink}</a></p>` : ""}
             </div>
             <p style="font-size:14px;color:#374151;line-height:1.6;">
               Have questions? Reply to this email or message us on
-              <a href="https://wa.me/8801346064215" style="color:#5b5fef;">WhatsApp</a>.
+              <a href="${buildWhatsAppUrl()}" style="color:#5b5fef;">WhatsApp</a>.
             </p>
             <p style="font-size:14px;color:#374151;margin-top:24px;">— The Pixiio Team</p>
           </div>
@@ -106,12 +181,11 @@ export async function POST(req: NextRequest) {
       `,
     });
 
-    return NextResponse.json({ success: true });
-
+    return NextResponse.json({ success: true, bookingId: booking.id });
   } catch (err) {
     console.error("[booking/route] error:", err);
     return NextResponse.json(
-      { error: "Failed to send email. Please contact us directly at agency.pixiio@gmail.com" },
+      { error: `Failed to send email. Please contact us directly at ${CONTACT_EMAIL}`, fallback: "mailto" },
       { status: 500 }
     );
   }

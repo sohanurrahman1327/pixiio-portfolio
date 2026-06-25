@@ -77,7 +77,7 @@ export default function Header() {
           {/* Let's Talk — icon LEFT, text RIGHT. On hover: icon moves right→off, re-enters from left */}
           <button
             onClick={open}
-            className="hidden sm:inline-flex items-center gap-2 bg-primary text-white text-[11px] font-bold tracking-[0.1em] uppercase pl-1.5 pr-4 py-1.5 rounded-full hover:bg-primary-dark transition-colors group overflow-hidden"
+            className="inline-flex items-center gap-2 bg-primary text-white text-[11px] font-bold tracking-[0.1em] uppercase pl-1.5 pr-4 py-1.5 rounded-full hover:bg-primary-dark transition-colors group overflow-hidden"
           >
             <span className="flex items-center justify-center w-7 h-7 rounded-full bg-white shrink-0">
               {/* Icon slides: starts left, on hover exits right, re-enters from left */}

@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { WHATSAPP_MESSAGE, WHATSAPP_NUMBER } from "@/lib/site-config";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 type WhatsappButtonProps = {
   className?: string;
 };
 
 export default function WhatsappButton({ className = "" }: WhatsappButtonProps) {
-  const href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`;
+  const href = buildWhatsAppUrl();
 
   return (
     <Link

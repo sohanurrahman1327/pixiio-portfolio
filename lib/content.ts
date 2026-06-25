@@ -1,4 +1,5 @@
 import { serviceImages } from "@/lib/images";
+import { CONTACT_EMAIL, CONTACT_PHONE } from "@/lib/site-config";
 
 export const services = [
   {
@@ -213,8 +214,8 @@ export const faqs = [
 ];
 
 export const contactInfo = {
-  email: "agency.pixiio@gmail.com",
-  phone: "+8801346-064215",
+  email: CONTACT_EMAIL,
+  phone: CONTACT_PHONE,
   address: "Dhaka, Bangladesh",
   hours: "Mon – Sat, 10:00 AM – 8:00 PM (BST)",
 };

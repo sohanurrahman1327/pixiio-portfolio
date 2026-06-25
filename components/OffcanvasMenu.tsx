@@ -185,7 +185,7 @@ export default function OffcanvasMenu() {
       {/* Full-screen panel — bg covers viewport, content constrained to page width */}
       <nav
         className={`fixed inset-0 z-[201] h-dvh max-h-dvh overflow-hidden bg-background/80 backdrop-blur-sm transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
-          open ? "translate-y-0" : "-translate-y-full"
+          open ? "translate-y-0 visible" : "-translate-y-full pointer-events-none invisible"
         }`}
         aria-label="Main menu"
         aria-modal="true"

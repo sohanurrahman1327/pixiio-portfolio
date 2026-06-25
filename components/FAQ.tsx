@@ -3,6 +3,8 @@
 import { useState } from "react";
 import Link from "next/link";
 import { faqs } from "@/lib/content";
+import { mailtoLinks } from "@/lib/mailto";
+import { whatsappLinks } from "@/lib/whatsapp";
 
 export default function FAQ({ showTitle = true }: { showTitle?: boolean }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -75,8 +77,9 @@ export default function FAQ({ showTitle = true }: { showTitle?: boolean }) {
 
                 {/* Chat on WhatsApp */}
                 <Link
-                  href="https://wa.me/1234567890"
+                  href={whatsappLinks.support()}
                   target="_blank"
+                  rel="noopener noreferrer"
                   className="flex items-center justify-between p-4 bg-surface-elevated rounded-xl border border-gray-200 hover:border-green-500 hover:shadow-md transition-all group"
                 >
                   <div className="flex items-center gap-3">
@@ -97,7 +100,7 @@ export default function FAQ({ showTitle = true }: { showTitle?: boolean }) {
 
                 {/* Prefer email */}
                 <Link
-                  href="mailto:hello@pixiio.com"
+                  href={mailtoLinks.faq()}
                   className="flex items-center justify-between p-4 bg-surface-elevated rounded-xl border border-gray-200 hover:border-primary hover:shadow-md transition-all group"
                 >
                   <div className="flex items-center gap-3">

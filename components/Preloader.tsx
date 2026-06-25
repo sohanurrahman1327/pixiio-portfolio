@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 
 const SESSION_KEY = "pixiio-preloader-seen";
 const ROTATION_MS = 2400;
@@ -14,9 +14,12 @@ const TOTAL_MS = TEXT_MS + LOGO_MS;
 const TEXT_PARTS = ["Agency", "Creative", "Led", "Design", "Pixiio"] as const;
 const SEGMENT_COUNT = TEXT_PARTS.length;
 
+import { isSharedPreviewHost } from "@/lib/network";
+
 type PreloaderPhase = "playing" | "logo" | "counter-exiting" | "exiting" | "hidden";
 
 function revealPage() {
+  document.documentElement.classList.remove("preloader-pending");
   document.documentElement.classList.add("preloader-skipped");
   document.getElementById("page-content")?.classList.add("page-revealed");
 }
@@ -84,11 +87,19 @@ export default function Preloader() {
     }, COUNTER_EXIT_MS);
   }, [finishAndReveal]);
 
+  useLayoutEffect(() => {
+    if (isSharedPreviewHost() || sessionStorage.getItem(SESSION_KEY)) {
+      revealPage();
+      if (isSharedPreviewHost()) {
+        sessionStorage.setItem(SESSION_KEY, "1");
+      }
+    }
+  }, []);
+
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    if (sessionStorage.getItem(SESSION_KEY)) {
-      revealPage();
+    if (isSharedPreviewHost() || sessionStorage.getItem(SESSION_KEY)) {
       return;
     }
 

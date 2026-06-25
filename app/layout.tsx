@@ -6,6 +6,7 @@ import Preloader from "@/components/Preloader";
 import { BookingProvider } from "@/lib/booking-context";
 import { ThemeProvider } from "@/lib/theme-context";
 import BookingModal from "@/components/BookingModal";
+import { getSiteUrl } from "@/lib/site-url";
 
 const bebasNeue = Bebas_Neue({
   variable: "--font-bebas",
@@ -19,6 +20,7 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(getSiteUrl()),
   title: "Pixiio — Design-Led Creative Agency",
   description:
     "We help build up brands with UI design, branding, website design, and marketing.",
@@ -46,7 +48,7 @@ export default function RootLayout({
       <head>
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("pixiio-theme");var d=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(d){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}if(sessionStorage.getItem("pixiio-preloader-seen")){document.documentElement.classList.add("preloader-skipped")}}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem("pixiio-theme");var d=t==="dark"||(t!=="light"&&window.matchMedia("(prefers-color-scheme: dark)").matches);if(d){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}function reveal(){document.documentElement.classList.remove("preloader-pending");document.documentElement.classList.add("preloader-skipped")}function isSharedPreview(){var h=location.hostname;return h!=="localhost"&&h!=="127.0.0.1"&&h!=="[::1]"}if(isSharedPreview()||sessionStorage.getItem("pixiio-preloader-seen")){reveal()}else{document.documentElement.classList.add("preloader-pending");setTimeout(function(){if(document.documentElement.classList.contains("preloader-pending")){reveal();try{sessionStorage.setItem("pixiio-preloader-seen","1")}catch(e){}}},12000)}}catch(e){}})();`,
           }}
         />
       </head>

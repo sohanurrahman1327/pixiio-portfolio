@@ -2,7 +2,10 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import PixiioLogo from "@/components/PixiioLogo";
 import { navLinks, CONTACT_EMAIL, CONTACT_PHONE, socialLinks } from "@/lib/site-config";
+import { mailtoLinks, mailtoNewsletterSubscription } from "@/lib/mailto";
+import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 /* ── Icons ─────────────────────────────────────────────────────────── */
 function FacebookIcon() {
@@ -88,15 +91,33 @@ export default function Footer() {
   const [emailError, setEmailError] = useState("");
   const [subscribed, setSubscribed] = useState(false);
 
-  function handleNewsletter(e: React.FormEvent<HTMLFormElement>) {
+  async function handleNewsletter(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email.toLowerCase().endsWith("@gmail.com")) {
       setEmailError("Only @gmail.com addresses are accepted.");
       return;
     }
     setEmailError("");
-    window.location.href = `mailto:agency.pixiio@gmail.com?subject=Newsletter%20Subscription&body=Please%20subscribe%20me%3A%20${encodeURIComponent(email)}`;
-    setSubscribed(true);
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: "newsletter", email }),
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        if (data.fallback === "mailto") {
+          window.location.href = mailtoNewsletterSubscription(email);
+        } else {
+          throw new Error(data.error || "Failed");
+        }
+      }
+      setSubscribed(true);
+    } catch {
+      window.location.href = mailtoNewsletterSubscription(email);
+      setSubscribed(true);
+    }
   }
 
   // All 7 nav links — col1: first 4, col2: last 3
@@ -208,13 +229,15 @@ export default function Footer() {
               Get in touch
             </h3>
             <a
-              href={`tel:${CONTACT_PHONE.replace(/[^+\d]/g, "")}`}
-              className="block text-base font-bold text-gray-900 hover:text-primary transition-colors mb-1"
+              href={buildWhatsAppUrl()}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-base font-bold text-gray-900 hover:text-[#25D366] transition-colors mb-1"
             >
               {CONTACT_PHONE}
             </a>
             <a
-              href={`mailto:${CONTACT_EMAIL}`}
+              href={mailtoLinks.general()}
               className="block text-base font-bold text-primary hover:text-primary-dark transition-colors mb-8"
             >
               {CONTACT_EMAIL}
@@ -282,15 +305,15 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* PIXIIO — scales within content width, same layout on all breakpoints */}
-          <div className="relative w-full lg:flex-1 lg:min-w-0">
-            <p
-              aria-label="PIXIIO"
-              className="font-display leading-[0.85] select-none text-gray-900 w-full text-center"
-              style={{ fontSize: "clamp(3.5rem, 30vw, 24rem)" }}
+          {/* Brand logo — same mark as navbar, scaled for footer */}
+          <div className="relative w-full lg:flex-1 lg:min-w-0 flex justify-center">
+            <Link
+              href="/"
+              aria-label="Pixiio home"
+              className="inline-flex max-w-full"
             >
-              PIXIIO
-            </p>
+              <PixiioLogo className="w-[clamp(14rem,52vw,38rem)] h-auto select-none" />
+            </Link>
           </div>
         </div>
 

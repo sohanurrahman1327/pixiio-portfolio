@@ -1,0 +1,163 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import { cookies } from "next/headers";
+import BookingRespondForm from "@/components/BookingRespondForm";
+import PageShell from "@/components/PageShell";
+import { verifyAdminSessionToken } from "@/lib/booking-admin";
+import { canRespondToBooking, storedBookingToPayload } from "@/lib/booking-respond";
+import { getBookingById, getBookingByToken } from "@/lib/booking-store";
+import { verifyBookingToken } from "@/lib/booking-token";
+
+export const metadata: Metadata = {
+  title: "Respond to Booking — Pixiio",
+  robots: { index: false, follow: false },
+};
+
+function ClosedState({
+  title,
+  description,
+}: {
+  title: string;
+  description: string;
+}) {
+  return (
+    <PageShell>
+      <section className="py-24">
+        <div className="mx-auto max-w-xl px-6 text-center">
+          <h1 className="font-display text-3xl tracking-wide text-gray-900">{title}</h1>
+          <p className="mt-4 text-sm text-gray-600">{description}</p>
+          <Link
+            href="/admin/bookings"
+            className="mt-6 inline-flex items-center rounded-lg bg-primary px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+          >
+            Back to dashboard
+          </Link>
+        </div>
+      </section>
+    </PageShell>
+  );
+}
+
+export default async function BookingRespondPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ token?: string; id?: string }>;
+}) {
+  const { token, id } = await searchParams;
+  const adminSession = (await cookies()).get("booking-admin-session")?.value;
+  const isAdmin = verifyAdminSessionToken(adminSession);
+
+  if (id && isAdmin) {
+    const stored = await getBookingById(id);
+    if (!stored) {
+      return (
+        <ClosedState
+          title="Booking not found"
+          description="This booking no longer exists in the dashboard."
+        />
+      );
+    }
+    if (!canRespondToBooking(stored.status)) {
+      return (
+        <ClosedState
+          title={stored.status === "declined" ? "Already declined" : "Booking closed"}
+          description={
+            stored.status === "declined"
+              ? "This request was already declined. Use Message on the dashboard if you need to contact the client."
+              : "This meeting is already completed. Respond is no longer available."
+          }
+        />
+      );
+    }
+
+    const booking = storedBookingToPayload(stored);
+    return (
+      <PageShell>
+        <section className="bg-background py-16 md:py-20">
+          <div className="mx-auto max-w-6xl px-6">
+            <div className="mb-10 flex flex-wrap items-end justify-between gap-4 max-w-2xl">
+              <div>
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">Admin</p>
+                <h1 className="mt-2 font-display text-4xl tracking-wide text-gray-900">Meeting schedule request</h1>
+                <p className="mt-3 text-sm text-gray-600">
+                  Review the booking details and send an accept, decline, or custom message to the client.
+                </p>
+              </div>
+              <Link
+                href="/admin/bookings"
+                className="inline-flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:border-primary/30 hover:text-primary"
+              >
+                Open dashboard
+              </Link>
+            </div>
+
+            <BookingRespondForm bookingId={stored.id} booking={booking} />
+          </div>
+        </section>
+      </PageShell>
+    );
+  }
+
+  if (!token) {
+    return (
+      <ClosedState
+        title="Invalid link"
+        description="Open this page from the booking notification email or the admin dashboard."
+      />
+    );
+  }
+
+  const storedByToken = await getBookingByToken(token);
+  if (storedByToken && !canRespondToBooking(storedByToken.status)) {
+    return (
+      <ClosedState
+        title={storedByToken.status === "declined" ? "Already declined" : "Booking closed"}
+        description={
+          storedByToken.status === "declined"
+            ? "This request was already declined. No further response is needed."
+            : "This meeting is already completed."
+        }
+      />
+    );
+  }
+
+  let booking = verifyBookingToken(token);
+  if (!booking && storedByToken && canRespondToBooking(storedByToken.status)) {
+    booking = storedBookingToPayload(storedByToken);
+  }
+
+  if (!booking) {
+    return (
+      <ClosedState
+        title="Link expired or invalid"
+        description="Open the latest booking email or use Respond from the admin dashboard."
+      />
+    );
+  }
+
+  return (
+    <PageShell>
+      <section className="bg-background py-16 md:py-20">
+        <div className="mx-auto max-w-6xl px-6">
+          <div className="mb-10 flex flex-wrap items-end justify-between gap-4 max-w-2xl">
+            <div>
+              <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">Admin</p>
+              <h1 className="mt-2 font-display text-4xl tracking-wide text-gray-900">Meeting schedule request</h1>
+              <p className="mt-3 text-sm text-gray-600">
+                Review the booking details and send an accept, decline, or custom message to the client.
+              </p>
+            </div>
+            <Link
+              href="/admin/bookings"
+              className="inline-flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm font-semibold text-gray-700 transition-colors hover:border-primary/30 hover:text-primary"
+            >
+              Open dashboard
+            </Link>
+          </div>
+
+          <BookingRespondForm token={token} bookingId={booking.bookingId} booking={booking} />
+        </div>
+      </section>
+    </PageShell>
+  );
+}

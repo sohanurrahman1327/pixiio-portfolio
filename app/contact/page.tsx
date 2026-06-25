@@ -4,6 +4,8 @@ import PageShell from "@/components/PageShell";
 import ContactForm from "@/components/ContactForm";
 import WhatsappButton from "@/components/WhatsappButton";
 import { contactInfo } from "@/lib/content";
+import { mailtoLinks } from "@/lib/mailto";
+import { whatsappLinks } from "@/lib/whatsapp";
 import { socialLinks } from "@/lib/site-config";
 
 export const metadata: Metadata = {
@@ -42,7 +44,7 @@ export default function ContactPage() {
                       EMAIL
                     </p>
                     <a
-                      href={`mailto:${contactInfo.email}`}
+                      href={mailtoLinks.contact()}
                       className="text-sm text-gray-900 hover:text-primary transition-colors"
                     >
                       {contactInfo.email}
@@ -52,7 +54,14 @@ export default function ContactPage() {
                     <p className="text-[10px] font-bold tracking-widest text-gray-400 mb-1">
                       PHONE / WHATSAPP
                     </p>
-                    <p className="text-sm text-gray-900">{contactInfo.phone}</p>
+                    <a
+                      href={whatsappLinks.phone()}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm text-gray-900 hover:text-[#25D366] transition-colors"
+                    >
+                      {contactInfo.phone}
+                    </a>
                   </li>
                   <li>
                     <p className="text-[10px] font-bold tracking-widest text-gray-400 mb-1">

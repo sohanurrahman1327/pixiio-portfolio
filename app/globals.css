@@ -241,6 +241,11 @@ body {
 
 /* ─── Page reveal: content rises up after preloader ─── */
 #page-content {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+html.preloader-pending #page-content {
   opacity: 0;
   pointer-events: none;
 }
@@ -259,6 +264,17 @@ body {
 html.preloader-skipped #page-content {
   opacity: 1 !important;
   pointer-events: auto;
+  transform: none;
+}
+
+html.preloader-skipped .preloader-shell {
+  display: none !important;
+  pointer-events: none !important;
+}
+
+.preloader-shell[data-phase="counter-exiting"],
+.preloader-shell[data-phase="exiting"] {
+  pointer-events: none;
 }
 
 /* ─── Preloader: sequential 3D text cylinder ─── */
@@ -412,4 +428,276 @@ html.preloader-skipped #page-content {
       #5b5fef 90%,
       transparent 100%
     );
+}
+
+/* CTA physics chips — muted by default, flat full accent on hover/active */
+.cta-chip {
+  --chip-accent: #5b5fef;
+  background-color: color-mix(in srgb, var(--chip-accent) 16%, transparent);
+  color: rgb(255 255 255 / 0.8);
+  outline: 1px solid color-mix(in srgb, var(--chip-accent) 42%, transparent);
+  transition:
+    background-color 0.28s ease,
+    color 0.28s ease,
+    outline-color 0.28s ease;
+}
+
+.cta-chip:hover,
+.cta-chip:active {
+  background-color: var(--chip-accent);
+  color: #ffffff;
+  outline-color: color-mix(in srgb, var(--chip-accent) 85%, white);
+}
+
+/* Booking modal — squircle calendar days */
+.booking-cal-weekdays,
+.booking-cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--booking-cal-gap, 0.75rem);
+  width: 100%;
+  transition: gap 0.25s ease;
+}
+
+.booking-cal-weekdays {
+  margin-bottom: 0.5rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--gray-200) 80%, transparent);
+  padding-bottom: 0.75rem;
+}
+
+.booking-cal--expanded {
+  --booking-cal-gap: clamp(0.625rem, 1.4vw, 1rem);
+}
+
+.booking-cal--expanded .booking-cal-weekdays,
+.booking-cal--expanded .booking-cal-grid {
+  grid-template-columns: repeat(7, 2.75rem);
+  justify-content: center;
+  width: 100%;
+}
+
+.booking-cal--expanded .booking-cal-cell {
+  width: 2.75rem;
+  height: 2.75rem;
+  aspect-ratio: auto;
+}
+
+.booking-cal--expanded .booking-cal-day {
+  width: 2.75rem;
+  height: 2.75rem;
+  max-width: 2.75rem;
+  max-height: 2.75rem;
+}
+
+.booking-cal--compact {
+  --booking-cal-gap: 0.5rem;
+}
+
+.booking-cal--compact .booking-cal-weekdays,
+.booking-cal--compact .booking-cal-grid {
+  grid-template-columns: repeat(7, 2.65rem);
+  justify-content: center;
+  width: 100%;
+}
+
+.booking-cal-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  aspect-ratio: 1;
+  transition: width 0.25s ease, height 0.25s ease;
+}
+
+.booking-cal--compact .booking-cal-cell {
+  width: 2.65rem;
+  height: 2.65rem;
+  aspect-ratio: auto;
+}
+
+.booking-cal-day {
+  width: 100%;
+  height: 100%;
+  max-width: 3.75rem;
+  max-height: 3.75rem;
+  flex-shrink: 0;
+  border-radius: 28%;
+  transition:
+    width 0.25s ease,
+    height 0.25s ease,
+    max-width 0.25s ease,
+    max-height 0.25s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.booking-cal--compact .booking-cal-day {
+  width: 2.65rem;
+  height: 2.65rem;
+  max-width: 2.65rem;
+  max-height: 2.65rem;
+}
+
+.booking-cal-day--active {
+  background-color: var(--primary);
+  color: #ffffff;
+  box-shadow: 0 4px 14px color-mix(in srgb, var(--primary) 38%, transparent);
+}
+
+.booking-cal-day--available {
+  background-color: color-mix(in srgb, var(--surface-elevated) 92%, var(--primary) 8%);
+  color: var(--gray-900);
+}
+
+.booking-cal-day--available:hover:not(:disabled) {
+  background-color: color-mix(in srgb, var(--primary) 14%, var(--surface-elevated));
+  color: var(--primary);
+}
+
+.booking-cal-day--unavailable {
+  background-color: #fdf0f0;
+  color: #d4a0a0;
+  cursor: default;
+}
+
+.dark .booking-cal-day--unavailable {
+  background-color: color-mix(in srgb, #e57373 14%, var(--surface-elevated));
+  color: #c48888;
+}
+
+/* Booking modal — time slot cards */
+.booking-time-slot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.625rem 0.75rem;
+  border-radius: 0.75rem;
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.booking-time-slot--available {
+  border: 1px solid var(--gray-100);
+  background: var(--surface-elevated);
+  color: var(--gray-900);
+}
+
+.booking-time-slot--available:hover:not(:disabled) {
+  border-color: color-mix(in srgb, var(--primary) 35%, transparent);
+  background: color-mix(in srgb, var(--primary) 6%, var(--surface-elevated));
+}
+
+.booking-time-slot--selected {
+  border: none;
+  background: linear-gradient(
+    135deg,
+    var(--primary) 0%,
+    color-mix(in srgb, var(--primary) 70%, #a36bff) 100%
+  );
+  color: #ffffff;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--primary) 30%, transparent);
+}
+
+.booking-time-slot--booked {
+  border: none;
+  background: #fdf0f0;
+  color: #d4a0a0;
+  cursor: default;
+}
+
+.dark .booking-time-slot--booked {
+  background: color-mix(in srgb, #e57373 14%, var(--surface-elevated));
+  color: #c48888;
+}
+
+/* Booking modal (Let's Talk) — custom thin scrollbars */
+.booking-scroll-native {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.booking-scroll-native::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.booking-scroll-rail {
+  width: 2px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--primary) 10%, transparent);
+  z-index: 2;
+}
+
+.booking-scroll-rail--border-end {
+  right: -1px;
+  transform: translateX(50%);
+}
+
+.booking-scroll-rail--border-start {
+  left: -1px;
+  transform: translateX(-50%);
+}
+
+.booking-scroll-rail--inline {
+  right: 0;
+}
+
+.booking-scroll-thumb {
+  width: 2px;
+  border-radius: 999px;
+  background: var(--primary);
+}
+
+@media (max-width: 767px) {
+  .booking-scroll-rail--border-start,
+  .booking-scroll-rail--border-end {
+    left: auto;
+    right: 0;
+    transform: none;
+  }
+
+  .booking-cal--expanded .booking-cal-weekdays,
+  .booking-cal--expanded .booking-cal-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.375rem;
+    justify-content: stretch;
+  }
+
+  .booking-cal--expanded .booking-cal-cell {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1;
+  }
+
+  .booking-cal--expanded .booking-cal-day {
+    width: 100%;
+    height: 100%;
+    max-width: none;
+    max-height: none;
+    font-size: 0.8125rem;
+  }
+
+  .booking-cal--compact .booking-cal-weekdays,
+  .booking-cal--compact .booking-cal-grid {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    gap: 0.375rem;
+    justify-content: stretch;
+    width: 100%;
+  }
+
+  .booking-cal--compact .booking-cal-cell,
+  .booking-cal--compact .booking-cal-day {
+    width: 100%;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    aspect-ratio: 1;
+  }
 }

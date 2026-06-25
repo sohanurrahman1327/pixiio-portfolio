@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import PageShell from "@/components/PageShell";
 import PageHero from "@/components/PageHero";
+import { mailtoLinks } from "@/lib/mailto";
+import { CONTACT_EMAIL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions — Pixiio Design Agency",
@@ -65,8 +67,8 @@ export default function TermsPage() {
           <h2 className="font-display text-2xl text-gray-900 tracking-wide mb-4">10. Contact</h2>
           <p className="text-gray-600 text-sm leading-relaxed">
             Questions about these terms? Email us at{" "}
-            <a href="mailto:agency.pixiio@gmail.com" className="text-primary hover:underline">
-              agency.pixiio@gmail.com
+            <a href={mailtoLinks.legal()} className="text-primary hover:underline">
+              {CONTACT_EMAIL}
             </a>.
           </p>
         </div>

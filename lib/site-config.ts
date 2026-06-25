@@ -5,6 +5,10 @@ export const WHATSAPP_MESSAGE =
 export const CONTACT_EMAIL = "agency.pixiio@gmail.com";
 export const CONTACT_PHONE = "+8801346-064215";
 
+/** Permanent Google Meet room — set in .env.local as NEXT_PUBLIC_GOOGLE_MEET_LINK */
+export const GOOGLE_MEET_LINK =
+  process.env.NEXT_PUBLIC_GOOGLE_MEET_LINK ?? "";
+
 export const navLinks = [
   { label: "Services", href: "/services" },
   { label: "Library", href: "/library/components" },
@@ -40,7 +44,7 @@ export const socialLinks = [
   },
   {
     label: "WhatsApp",
-    href: "https://wa.me/8801346064215",
+    href: `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`,
     icon: "whatsapp",
   },
   {

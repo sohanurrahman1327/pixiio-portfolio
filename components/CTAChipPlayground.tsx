@@ -3,20 +3,28 @@
 import { useEffect, useRef } from "react";
 import Matter from "matter-js";
 
+const DRAG_HISTORY_MS = 80;
+const MAX_THROW_SPEED = 22;
+
 export const serviceChips = [
-  { id: 1, label: "Pay as you Go", className: "bg-[#5b5fef] text-white ring-1 ring-white/20" },
-  { id: 2, label: "eCOMMERCEDEV", className: "bg-[#7b83f7] text-white ring-1 ring-white/15", hideBelowMd: true },
-  { id: 3, label: "Figma to Webflow", className: "bg-white/95 text-[#0f1a3d] ring-1 ring-white/40 dark:bg-white/10 dark:text-white dark:ring-white/20" },
-  { id: 4, label: "Web Animation", className: "bg-[#a5b4fc] text-[#0f1a3d] ring-1 ring-white/10 dark:bg-primary/30 dark:text-white dark:ring-primary/30" },
-  { id: 5, label: "Migration", className: "bg-[#6366f1] text-white ring-1 ring-white/15" },
-  { id: 6, label: "Motion Design", className: "bg-surface-muted text-[#0f1a3d] ring-1 ring-[#5b5fef]/20 dark:bg-white/10 dark:text-white dark:ring-white/20" },
-  { id: 7, label: "White Label", className: "bg-[#4a4ed9] text-white ring-1 ring-white/15" },
-  { id: 8, label: "Webflow Development", className: "bg-[#c7d2fe] text-[#0f1a3d] ring-1 ring-white/10 dark:bg-primary/25 dark:text-white dark:ring-primary/25", hideBelowMd: true },
-  { id: 9, label: "Integration", className: "bg-[#8b8ff2] text-white ring-1 ring-white/15" },
-  { id: 10, label: "WordPress to Webflow", className: "bg-[#dde1ff] text-[#0f1a3d] ring-1 ring-[#5b5fef]/15 dark:bg-primary/20 dark:text-white dark:ring-primary/20", hideBelowMd: true },
-  { id: 11, label: "UI/UX Design", className: "bg-[#9498f5] text-white ring-1 ring-white/15" },
-  { id: 12, label: "SaaS", className: "bg-white/80 text-[#0f1a3d] ring-1 ring-white/30 dark:bg-white/10 dark:text-white dark:ring-white/20" },
-  { id: 13, label: "Webflow Library", className: "bg-[#6d71f0] text-white ring-1 ring-white/15" },
+  { id: 1, label: "Pay As You Go", accent: "#5b5fef" },
+  { id: 2, label: "Ecommerce Dev", accent: "#d62976", hideBelowMd: true },
+  { id: 3, label: "Figma To Webflow", accent: "#3a8a6d" },
+  { id: 4, label: "Web Animation", accent: "#8b5cf6" },
+  { id: 5, label: "Migration", accent: "#6b7cff" },
+  { id: 6, label: "Motion Design", accent: "#4292b5" },
+  { id: 7, label: "White Label", accent: "#e84393" },
+  { id: 8, label: "Webflow Development", accent: "#20a884", hideBelowMd: true },
+  { id: 9, label: "Integration", accent: "#7c3aed" },
+  { id: 10, label: "WordPress To Webflow", accent: "#4f8ef7", hideBelowMd: true },
+  { id: 11, label: "UI/UX Design", accent: "#5b7cfa" },
+  { id: 12, label: "SaaS", accent: "#ec4899" },
+  { id: 13, label: "Webflow Library", accent: "#9b5de5" },
+  { id: 14, label: "Landing Pages", accent: "#2eb88a" },
+  { id: 15, label: "Branding", accent: "#f472b6", hideBelowMd: true },
+  { id: 16, label: "SEO", accent: "#38bdf8" },
+  { id: 17, label: "Next.js", accent: "#6366f1", hideBelowMd: true },
+  { id: 18, label: "App Development", accent: "#14b8a6" },
 ] as const;
 
 type ServiceChip = (typeof serviceChips)[number];
@@ -31,8 +39,8 @@ function getActiveChips(): ServiceChip[] {
 const CHIP_PY = 10;
 /** Horizontal padding — double the vertical */
 const CHIP_PX = CHIP_PY * 2;
-/** Section edge inset (matches px-6) */
-const CHIP_EDGE = 24;
+/** Section edge inset for walls — 0 so chips bounce flush with section bounds */
+const CHIP_EDGE = 0;
 
 type ChipDims = { w: number; h: number };
 
@@ -76,28 +84,106 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
     const engine = Matter.Engine.create({
       gravity: { x: 0, y: reducedMotion ? 0 : 1.4, scale: 0.001 },
     });
-    engine.positionIterations = 10;
+    engine.positionIterations = 12;
     engine.velocityIterations = 10;
+    engine.enableSleeping = true;
 
     const WALL = 80;
+    const SIDE_BOUNCE = 0.38;
+    const TOP_BOUNCE = 0.32;
+    const BOTTOM_BOUNCE = 0.22;
+
+    function bodyHalfWidth(body: Matter.Body) {
+      const chipId = (body as Matter.Body & { chipId?: number }).chipId;
+      if (chipId) {
+        const dim = chipDims.get(chipId);
+        if (dim) return dim.w / 2;
+      }
+      return (body.bounds.max.x - body.bounds.min.x) / 2;
+    }
+
+    function bodyHalfHeight(body: Matter.Body) {
+      const chipId = (body as Matter.Body & { chipId?: number }).chipId;
+      if (chipId) {
+        const dim = chipDims.get(chipId);
+        if (dim) return dim.h / 2;
+      }
+      return (body.bounds.max.y - body.bounds.min.y) / 2;
+    }
+
+    /** Rotated chip footprint — keeps pills inside edges when tilted */
+    function bodyExtents(body: Matter.Body) {
+      const hw = bodyHalfWidth(body);
+      const hh = bodyHalfHeight(body);
+      const c = Math.abs(Math.cos(body.angle));
+      const s = Math.abs(Math.sin(body.angle));
+      return { ex: hw * c + hh * s, ey: hw * s + hh * c };
+    }
+
+    function clampBodyBounds(
+      body: Matter.Body,
+      sectionW: number,
+      sectionH: number,
+      bounce = false
+    ) {
+      const { ex, ey } = bodyExtents(body);
+      const minX = CHIP_EDGE + ex;
+      const maxX = sectionW - CHIP_EDGE - ex;
+      const minY = CHIP_EDGE + ey;
+      const maxY = sectionH - CHIP_EDGE - ey;
+      let { x, y } = body.position;
+      let moved = false;
+
+      if (x < minX) {
+        x = minX;
+        if (bounce) body.velocity.x = Math.abs(body.velocity.x) * SIDE_BOUNCE;
+        moved = true;
+      } else if (x > maxX) {
+        x = maxX;
+        if (bounce) body.velocity.x = -Math.abs(body.velocity.x) * SIDE_BOUNCE;
+        moved = true;
+      }
+
+      if (y < minY) {
+        if (body === draggedBody || (bounce && body.velocity.y < 0)) {
+          y = minY;
+          if (bounce && body.velocity.y < 0) {
+            body.velocity.y = Math.abs(body.velocity.y) * TOP_BOUNCE;
+          }
+          moved = true;
+        }
+      } else if (y > maxY) {
+        y = maxY;
+        if (bounce) body.velocity.y = -Math.abs(body.velocity.y) * BOTTOM_BOUNCE;
+        moved = true;
+      }
+
+      if (moved) Matter.Body.setPosition(body, { x, y });
+      return moved;
+    }
 
     function buildWalls(w: number, h: number) {
       wallsRef.current.forEach((wall) =>
         Matter.Composite.remove(engine.world, wall)
       );
+      const leftWallX = CHIP_EDGE - WALL / 2;
+      const rightWallX = w - CHIP_EDGE + WALL / 2;
+      const bottomWallY = h - CHIP_EDGE + WALL / 2;
       const walls = [
-        Matter.Bodies.rectangle(w / 2, h + WALL / 2, w + WALL * 2, WALL, {
+        Matter.Bodies.rectangle(w / 2, bottomWallY, w + WALL * 2, WALL, {
           isStatic: true,
           friction: 0.85,
-          restitution: 0.22,
+          restitution: BOTTOM_BOUNCE,
         }),
-        Matter.Bodies.rectangle(-WALL / 2, h / 2, WALL, h * 3, {
+        Matter.Bodies.rectangle(leftWallX, h / 2, WALL, h * 3, {
           isStatic: true,
-          restitution: 0.35,
+          friction: 0.6,
+          restitution: SIDE_BOUNCE,
         }),
-        Matter.Bodies.rectangle(w + WALL / 2, h / 2, WALL, h * 3, {
+        Matter.Bodies.rectangle(rightWallX, h / 2, WALL, h * 3, {
           isStatic: true,
-          restitution: 0.35,
+          friction: 0.6,
+          restitution: SIDE_BOUNCE,
         }),
       ];
       wallsRef.current = walls;
@@ -169,35 +255,10 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
 
     buildWalls(sectionEl.clientWidth, sectionEl.clientHeight);
 
-    // Detached mouse element — never bind Matter to the section so wheel/touch
-    // scroll can pass through to Lenis on the full page.
-    const mouse = Matter.Mouse.create(document.createElement("div"));
-    const mouseHandlers = mouse as Matter.Mouse & {
-      mousewheel: EventListener;
-      mousemove: EventListener;
-      mousedown: EventListener;
-      mouseup: EventListener;
-    };
-    mouse.element.removeEventListener("wheel", mouseHandlers.mousewheel);
-    mouse.element.removeEventListener("touchmove", mouseHandlers.mousemove);
-    mouse.element.removeEventListener("touchstart", mouseHandlers.mousedown);
-    mouse.element.removeEventListener("touchend", mouseHandlers.mouseup);
-    mouse.element.removeEventListener("mousemove", mouseHandlers.mousemove);
-    mouse.element.removeEventListener("mousedown", mouseHandlers.mousedown);
-    mouse.element.removeEventListener("mouseup", mouseHandlers.mouseup);
-
-    const mouseConstraint = Matter.MouseConstraint.create(engine, {
-      mouse,
-      constraint: {
-        stiffness: 0.14,
-        damping: 0.09,
-        render: { visible: false },
-      },
-    });
-    Matter.Composite.add(engine.world, mouseConstraint);
-
     let draggedBody: Matter.Body | null = null;
     let dragOffset = { x: 0, y: 0 };
+    let activePointerId: number | null = null;
+    const pointerHistory: { x: number; y: number; t: number }[] = [];
 
     function pointerPos(clientX: number, clientY: number) {
       const rect = sectionEl.getBoundingClientRect();
@@ -207,23 +268,13 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
       };
     }
 
-    function syncMousePosition(clientX: number, clientY: number) {
-      const rect = sectionEl.getBoundingClientRect();
-      const scaleX = sectionEl.clientWidth / rect.width || 1;
-      const scaleY = sectionEl.clientHeight / rect.height || 1;
-      mouse.absolute.x = (clientX - rect.left) * scaleX;
-      mouse.absolute.y = (clientY - rect.top) * scaleY;
-      mouse.position.x = mouse.absolute.x * mouse.scale.x + mouse.offset.x;
-      mouse.position.y = mouse.absolute.y * mouse.scale.y + mouse.offset.y;
-    }
-
     function findBodyAtPoint(x: number, y: number) {
       const bodies = [...bodiesRef.current.values()];
       const hit = Matter.Query.point(bodies, { x, y });
       if (hit.length) return hit[0];
       const region = Matter.Query.region(bodies, {
-        min: { x: x - 14, y: y - 14 },
-        max: { x: x + 14, y: y + 14 },
+        min: { x: x - 18, y: y - 18 },
+        max: { x: x + 18, y: y + 18 },
       });
       return region[0];
     }
@@ -235,86 +286,135 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
       if (el?.parentElement) el.parentElement.appendChild(el);
     }
 
-    function startDrag(clientX: number, clientY: number) {
-      const pos = pointerPos(clientX, clientY);
-      const body = findBodyAtPoint(pos.x, pos.y);
-      if (!body) return false;
-      draggedBody = body;
-      dragOffset = { x: pos.x - body.position.x, y: pos.y - body.position.y };
-      bringChipToFront(body);
-      syncMousePosition(clientX, clientY);
-      return true;
+    function recordPointerSample(x: number, y: number) {
+      const now = performance.now();
+      pointerHistory.push({ x, y, t: now });
+      while (
+        pointerHistory.length > 1 &&
+        now - pointerHistory[0].t > DRAG_HISTORY_MS
+      ) {
+        pointerHistory.shift();
+      }
     }
 
-    function moveDrag(clientX: number, clientY: number) {
+    function releaseVelocity() {
+      if (pointerHistory.length < 2) return { x: 0, y: 0 };
+      const first = pointerHistory[0];
+      const last = pointerHistory[pointerHistory.length - 1];
+      const dt = last.t - first.t;
+      if (dt <= 0) return { x: 0, y: 0 };
+      const scale = 1000 / dt;
+      const vx = Math.max(-MAX_THROW_SPEED, Math.min(MAX_THROW_SPEED, (last.x - first.x) * scale * 0.06));
+      const vy = Math.max(-MAX_THROW_SPEED, Math.min(MAX_THROW_SPEED, (last.y - first.y) * scale * 0.06));
+      return { x: vx, y: vy };
+    }
+
+    function setDraggedPosition(clientX: number, clientY: number) {
       if (!draggedBody) return;
       const pos = pointerPos(clientX, clientY);
       Matter.Body.setPosition(draggedBody, {
         x: pos.x - dragOffset.x,
         y: pos.y - dragOffset.y,
       });
-      Matter.Body.setVelocity(draggedBody, { x: 0, y: 0 });
-      Matter.Body.setAngularVelocity(draggedBody, 0);
-      syncMousePosition(clientX, clientY);
+      clampBodyBounds(
+        draggedBody,
+        sectionEl.clientWidth,
+        sectionEl.clientHeight
+      );
+      recordPointerSample(clientX, clientY);
+    }
+
+    function startDrag(clientX: number, clientY: number, pointerId: number) {
+      const pos = pointerPos(clientX, clientY);
+      const body = findBodyAtPoint(pos.x, pos.y);
+      if (!body) return false;
+
+      draggedBody = body;
+      activePointerId = pointerId;
+      dragOffset = { x: pos.x - body.position.x, y: pos.y - body.position.y };
+      pointerHistory.length = 0;
+      recordPointerSample(clientX, clientY);
+
+      Matter.Sleeping.set(body, false);
+      Matter.Body.setStatic(body, true);
+      Matter.Body.setVelocity(body, { x: 0, y: 0 });
+      Matter.Body.setAngularVelocity(body, 0);
+      bringChipToFront(body);
+      setDraggedPosition(clientX, clientY);
+
+      window.addEventListener("pointermove", onWindowPointerMove, {
+        passive: false,
+      });
+      window.addEventListener("pointerup", onWindowPointerUp);
+      window.addEventListener("pointercancel", onWindowPointerUp);
+      return true;
     }
 
     function endDrag() {
+      if (!draggedBody) return;
+
+      const body = draggedBody;
+      const velocity = releaseVelocity();
+
+      Matter.Body.setStatic(body, false);
+      clampBodyBounds(body, sectionEl.clientWidth, sectionEl.clientHeight);
+      Matter.Body.setVelocity(body, velocity);
+      if (Math.abs(velocity.x) + Math.abs(velocity.y) > 0.4) {
+        Matter.Body.setAngularVelocity(
+          body,
+          (Math.random() - 0.5) * 0.04 + velocity.x * 0.008
+        );
+      }
+
       draggedBody = null;
+      activePointerId = null;
+      pointerHistory.length = 0;
+
+      window.removeEventListener("pointermove", onWindowPointerMove);
+      window.removeEventListener("pointerup", onWindowPointerUp);
+      window.removeEventListener("pointercancel", onWindowPointerUp);
+    }
+
+    function onWindowPointerMove(e: PointerEvent) {
+      if (!draggedBody || e.pointerId !== activePointerId) return;
+
+      const events =
+        e.getCoalescedEvents?.().length ? e.getCoalescedEvents() : [e];
+      for (const ev of events) {
+        setDraggedPosition(ev.clientX, ev.clientY);
+      }
+      e.preventDefault();
+    }
+
+    function onWindowPointerUp(e: PointerEvent) {
+      if (!draggedBody || e.pointerId !== activePointerId) return;
+      endDrag();
     }
 
     const onPointerDown = (e: PointerEvent) => {
       if (e.pointerType === "mouse" && e.button !== 0) return;
       const chip = (e.target as HTMLElement).closest("[data-chip]");
       if (!chip) return;
-      if (startDrag(e.clientX, e.clientY)) {
+      if (startDrag(e.clientX, e.clientY, e.pointerId)) {
         chip.setPointerCapture(e.pointerId);
         e.preventDefault();
       }
     };
 
-    const onPointerMove = (e: PointerEvent) => {
-      if (!draggedBody) return;
-      moveDrag(e.clientX, e.clientY);
-      e.preventDefault();
-    };
-
-    const onPointerUp = (e: PointerEvent) => {
-      if (!draggedBody) return;
-      (e.target as HTMLElement).releasePointerCapture?.(e.pointerId);
-      endDrag();
-    };
-
-    const onPointerCancel = () => endDrag();
-
     layer.addEventListener("pointerdown", onPointerDown);
-    layer.addEventListener("pointermove", onPointerMove);
-    layer.addEventListener("pointerup", onPointerUp);
-    layer.addEventListener("pointercancel", onPointerCancel);
 
-    Matter.Events.on(mouseConstraint, "startdrag", () => {
-      const body = mouseConstraint.body as
-        | (Matter.Body & { chipId?: number })
-        | null;
-      if (!body?.chipId) return;
-      const el = chipElsRef.current.get(body.chipId);
-      if (el?.parentElement) el.parentElement.appendChild(el);
-    });
-
-    // Soft ceiling — bounce back when flung upward, without blocking the initial drop-in
+    // Keep chips inside section on all four sides
     Matter.Events.on(engine, "beforeUpdate", () => {
-      const maxH = Math.max(
-        ...[...chipDims.values()].map((d) => d.h),
-        CHIP_PY * 2 + 16
-      );
-      const ceiling = maxH / 2 + CHIP_PY;
+      const sectionW = sectionEl.clientWidth;
+      const sectionH = sectionEl.clientHeight;
       bodiesRef.current.forEach((body) => {
-        if (body.position.y < ceiling && body.velocity.y < 0) {
-          Matter.Body.setPosition(body, {
-            x: body.position.x,
-            y: ceiling,
-          });
-          body.velocity.y *= -0.32;
-        }
+        if (body.isStatic && body !== draggedBody) return;
+        clampBodyBounds(
+          body,
+          sectionW,
+          sectionH,
+          body !== draggedBody
+        );
       });
     });
 
@@ -329,8 +429,11 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
       });
     }
 
-    const tick = () => {
-      Matter.Engine.update(engine, 1000 / 60);
+    let lastFrame = performance.now();
+    const tick = (now: number) => {
+      const delta = Math.min(now - lastFrame, 32);
+      lastFrame = now;
+      Matter.Engine.update(engine, delta);
       bodiesRef.current.forEach((body, id) => {
         const el = chipElsRef.current.get(id);
         if (!el) return;
@@ -362,11 +465,10 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
       window.clearTimeout(spawnDoneTimer);
       ro.disconnect();
       layer.removeEventListener("pointerdown", onPointerDown);
-      layer.removeEventListener("pointermove", onPointerMove);
-      layer.removeEventListener("pointerup", onPointerUp);
-      layer.removeEventListener("pointercancel", onPointerCancel);
-      Matter.Events.off(mouseConstraint, "startdrag");
-      Matter.Composite.remove(engine.world, mouseConstraint);
+      window.removeEventListener("pointermove", onWindowPointerMove);
+      window.removeEventListener("pointerup", onWindowPointerUp);
+      window.removeEventListener("pointercancel", onWindowPointerUp);
+      Matter.Events.off(engine, "beforeUpdate");
       Matter.Engine.clear(engine);
       wallsRef.current = [];
       bodiesRef.current.clear();
@@ -387,10 +489,12 @@ export default function CTAChipPlayground({ sectionRef }: Props) {
               if (el) chipElsRef.current.set(chip.id, el);
               else chipElsRef.current.delete(chip.id);
             }}
-            className={`absolute top-0 left-0 opacity-0 pointer-events-auto cursor-grab active:cursor-grabbing select-none will-change-transform rounded-full font-bold text-sm md:text-base tracking-wide whitespace-nowrap inline-flex items-center justify-center shadow-lg shadow-black/25 ${chip.className}${"hideBelowMd" in chip && chip.hideBelowMd ? " max-md:hidden" : ""}`}
+            className={`cta-chip absolute top-0 left-0 opacity-0 pointer-events-auto cursor-grab active:cursor-grabbing select-none touch-none will-change-transform rounded-full font-bold text-sm md:text-base tracking-wide whitespace-nowrap inline-flex items-center justify-center${"hideBelowMd" in chip && chip.hideBelowMd ? " max-md:hidden" : ""}`}
             style={{
               boxSizing: "border-box",
               padding: `${CHIP_PY}px ${CHIP_PX}px`,
+              touchAction: "none",
+              ["--chip-accent" as string]: chip.accent,
             }}
           >
             {chip.label}
