@@ -684,7 +684,7 @@ export default function BookingAdminDashboard() {
           </button>
         </form>
         <p className="mt-4 text-xs text-gray-400">
-          Tip: set <code className="rounded bg-gray-100 px-1 py-0.5">BOOKING_ADMIN_SECRET=your-password</code> in `.env.local` and use that password here.
+          Tip: set <code className="rounded bg-gray-100 px-1 py-0.5">BOOKING_ADMIN_SECRET=your-password</code> in `.env.local` (or Vercel env) and use that password here. For live bookings, also add Upstash Redis or Vercel KV.
         </p>
       </div>
     );

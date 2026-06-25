@@ -2,6 +2,11 @@ import { randomUUID } from "crypto";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
 
+import {
+  isOnlineBookingStoreEnabled,
+  readBookingsFromRedis,
+  writeBookingsToRedis,
+} from "@/lib/booking-redis";
 import type { BookingStatus, StoredBooking } from "@/lib/booking-types";
 
 export type { BookingStatus, StoredBooking } from "@/lib/booking-types";
@@ -15,19 +20,49 @@ const BOOKINGS_FILE = path.join(DATA_DIR, "bookings.json");
 
 const ACTIVE_STATUSES: BookingStatus[] = ["pending", "accepted", "completed"];
 
-async function readAll(): Promise<BookingsFile> {
+function normalizeBookings(raw: unknown[]): StoredBooking[] {
+  return raw.filter((item): item is StoredBooking => {
+    if (!item || typeof item !== "object") return false;
+    const b = item as Partial<StoredBooking>;
+    return typeof b.id === "string" && typeof b.email === "string";
+  });
+}
+
+async function readAllFromFile(): Promise<BookingsFile> {
   try {
     const raw = await readFile(BOOKINGS_FILE, "utf8");
     const parsed = JSON.parse(raw) as BookingsFile;
-    return { bookings: Array.isArray(parsed.bookings) ? parsed.bookings : [] };
+    return { bookings: normalizeBookings(Array.isArray(parsed.bookings) ? parsed.bookings : []) };
   } catch {
     return { bookings: [] };
   }
 }
 
-async function writeAll(data: BookingsFile) {
+async function writeAllToFile(data: BookingsFile) {
   await mkdir(DATA_DIR, { recursive: true });
   await writeFile(BOOKINGS_FILE, JSON.stringify(data, null, 2), "utf8");
+}
+
+async function readAll(): Promise<BookingsFile> {
+  if (isOnlineBookingStoreEnabled()) {
+    const bookings = normalizeBookings(await readBookingsFromRedis());
+    return { bookings };
+  }
+
+  return readAllFromFile();
+}
+
+async function writeAll(data: BookingsFile) {
+  if (isOnlineBookingStoreEnabled()) {
+    await writeBookingsToRedis(data.bookings);
+    return;
+  }
+
+  await writeAllToFile(data);
+}
+
+export function getBookingStoreMode(): "redis" | "file" {
+  return isOnlineBookingStoreEnabled() ? "redis" : "file";
 }
 
 export function dateKeyFromIso(iso: string, timezone = "Asia/Dhaka") {
