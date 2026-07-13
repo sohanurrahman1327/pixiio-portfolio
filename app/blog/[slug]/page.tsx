@@ -180,6 +180,7 @@ export default async function BlogPostPage({ params }: Props) {
             <div className="lg:sticky lg:top-24">
               <div className="flex flex-col gap-6" aria-label="Sidebar">
                 {/* Related Articles */}
+                {related.length > 0 && (
                 <div className="bg-surface-elevated rounded-2xl border border-gray-100 p-5">
                   <h2 className="text-[13px] font-bold text-navy uppercase tracking-wider mb-4">
                     Related Articles
@@ -214,6 +215,7 @@ export default async function BlogPostPage({ params }: Props) {
                     ))}
                   </ul>
                 </div>
+                )}
 
                 {/* Categories */}
                 <div className="bg-surface-elevated rounded-2xl border border-gray-100 p-5">

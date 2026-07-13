@@ -1,9 +1,30 @@
-/** Critical CSS — first paint never shows page until `.preloader-skipped`. */
+/**
+ * Boot preloader (currently DISABLED — not imported/used anywhere).
+ *
+ * Kept here so it can be dropped back into `app/layout.tsx` on request:
+ *   import { BOOT_PRELOADER_SCRIPT, BOOT_PRELOADER_STYLES } from "@/components/BootPreloader";
+ *   // in <head>:
+ *   <style dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_STYLES }} />
+ *   <script dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_SCRIPT }} />
+ *
+ * Also remove the standalone THEME_INIT_SCRIPT from layout.tsx if re-enabling
+ * this, since BOOT_PRELOADER_SCRIPT already handles theme init + sets
+ * `preloader-skipped` on completion (which components like SmoothScroll wait
+ * on before starting).
+ */
+
+/**
+ * Critical CSS — first paint never shows page until it fades in.
+ * #page-content uses opacity only (never visibility/display), so the browser
+ * can paint it in the background the whole time the preloader is up. That
+ * makes the eventual reveal a cheap compositor-only fade instead of a big
+ * layout+paint burst (which was the cause of the "white screen" pause).
+ */
 export const BOOT_PRELOADER_STYLES = `
-html:not(.preloader-skipped) #page-content{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+#page-content{opacity:0;transform:translateY(18px);pointer-events:none;transition:opacity .7s cubic-bezier(0.16,1,0.3,1),transform .7s cubic-bezier(0.16,1,0.3,1)}
+#page-content.page-revealed{opacity:1;transform:translateY(0);pointer-events:auto}
 html:not(.preloader-skipped)::before{content:"";position:fixed;inset:0;z-index:9998;background:#ffffff}
 html.dark:not(.preloader-skipped)::before{background:#09090f}
-html.preloader-skipped #page-content{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
 html.preloader-skipped::before{display:none!important;content:none!important}
 html.preloader-skipped #boot-preloader{display:none!important;pointer-events:none!important}
 #boot-preloader{position:fixed;inset:0;z-index:9999;overflow:hidden;background:#ffffff;color:#111111;transform:translateY(0);will-change:transform}
@@ -57,15 +78,19 @@ var t=localStorage.getItem("pixiio-theme");
 if(t==="dark"){root.classList.add("dark");root.style.colorScheme="dark"}
 else{root.classList.remove("dark");root.style.colorScheme="light"}
 
+function fadeInPage(){
+  var page=document.getElementById("page-content");
+  if(page)page.classList.add("page-revealed");
+}
+
 function reveal(){
   if(revealed)return;
   revealed=true;
+  fadeInPage();
   root.classList.remove("preloader-pending");
   root.classList.add("preloader-skipped");
   var shell=document.getElementById("boot-preloader");
   if(shell)shell.remove();
-  var page=document.getElementById("page-content");
-  if(page)page.classList.add("page-revealed");
   try{sessionStorage.setItem(KEY,"1")}catch(e){}
 }
 
@@ -143,6 +168,10 @@ function start(){
     if(liveCount)liveCount.textContent="100";
     liveShell.setAttribute("data-phase","counter-exiting");
     if(counter)counter.setAttribute("data-phase","counter-exiting");
+    // Start the page fade-in now, in parallel with the shell's exit
+    // animation, so the design is already faded in (or nearly there) by
+    // the time the opaque shell finishes sliding away — no gap, no flash.
+    fadeInPage();
     setTimeout(function(){
       if(revealed)return;
       var s=document.getElementById("boot-preloader");

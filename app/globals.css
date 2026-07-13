@@ -239,42 +239,11 @@ body {
   transform: translateX(-150%);
 }
 
-/* ─── Boot preloader page reveal (shell styles are inline in head) ─── */
-@keyframes page-reveal {
-  0%   { opacity: 0; transform: translateY(24px); }
-  100% { opacity: 1; transform: translateY(0); }
-}
-
-/* Never show page content until explicitly unlocked */
-#page-content {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-html.preloader-pending #page-content {
-  opacity: 0;
-  visibility: hidden;
-  pointer-events: none;
-}
-
-.page-revealed {
-  pointer-events: auto;
-  animation: page-reveal 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  animation-fill-mode: forwards;
-}
-
-html.preloader-skipped #page-content {
-  opacity: 1 !important;
-  visibility: visible !important;
-  pointer-events: auto;
-  transform: none;
-}
-
-html.preloader-skipped #boot-preloader {
-  display: none !important;
-  pointer-events: none !important;
-}
+/*
+ * Boot preloader is currently disabled (see components/BootPreloader.ts).
+ * Its CSS lives there too so re-enabling it is a single import + two lines
+ * in app/layout.tsx — no styles are needed here while it's off.
+ */
 
 @keyframes border-spin {
   0%   { --border-angle: 0deg; }

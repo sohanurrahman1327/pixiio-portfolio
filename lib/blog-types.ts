@@ -22,7 +22,12 @@ export type BlogSection =
   | { type: "heading"; level: 2 | 3; text: string; id: string }
   | { type: "list"; items: string[]; ordered?: boolean }
   | { type: "callout"; title: string; text: string }
-  | { type: "image"; src: string; alt: string; caption?: string };
+  | { type: "image"; src: string; alt: string; caption?: string }
+  | {
+      type: "table";
+      headers: string[];
+      rows: string[][];
+    };
 
 export type TocItem = {
   id: string;

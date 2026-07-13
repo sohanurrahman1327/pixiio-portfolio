@@ -6,7 +6,7 @@ import { BookingProvider } from "@/lib/booking-context";
 import { ThemeProvider } from "@/lib/theme-context";
 import BookingModal from "@/components/BookingModal";
 import WhatsAppLiveChat from "@/components/WhatsAppLiveChat";
-import { BOOT_PRELOADER_SCRIPT, BOOT_PRELOADER_STYLES } from "@/lib/boot-preloader";
+import { THEME_INIT_SCRIPT } from "@/lib/theme-init";
 import { getSiteUrl } from "@/lib/site-url";
 
 const bebasNeue = Bebas_Neue({
@@ -47,9 +47,8 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <style dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_STYLES }} />
-        {/* Single sync script — never rely on next/script ordering */}
-        <script dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_SCRIPT }} />
+        {/* Blocking: apply stored theme before first paint to avoid a flash */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body className="min-h-full flex flex-col overflow-x-clip bg-background text-foreground">
         <ThemeProvider>

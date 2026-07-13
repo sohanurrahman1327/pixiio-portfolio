@@ -73,6 +73,43 @@ export default function BlogArticleBody({ sections }: Props) {
               </div>
             );
 
+          case "table":
+            return (
+              <div
+                key={i}
+                className="my-6 overflow-x-auto rounded-xl border border-gray-100"
+              >
+                <table className="w-full border-collapse text-sm">
+                  <thead className="bg-gray-50">
+                    <tr>
+                      {section.headers.map((header) => (
+                        <th
+                          key={header}
+                          className="border border-gray-100 px-4 py-3 text-left font-semibold text-navy"
+                        >
+                          {header}
+                        </th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {section.rows.map((row, rowIndex) => (
+                      <tr key={rowIndex}>
+                        {row.map((cell, cellIndex) => (
+                          <td
+                            key={cellIndex}
+                            className="border border-gray-100 px-4 py-3 text-[#3c4d6b] dark:text-gray-600"
+                          >
+                            {cell}
+                          </td>
+                        ))}
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            );
+
           default:
             return null;
         }
