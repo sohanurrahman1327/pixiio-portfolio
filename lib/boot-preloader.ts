@@ -1,8 +1,11 @@
-/** Critical CSS — paints with first HTML, before the full CSS bundle. */
+/** Critical CSS — first paint never shows page content until `.preloader-skipped`. */
 export const BOOT_PRELOADER_STYLES = `
-html.preloader-pending #page-content{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+html:not(.preloader-skipped) #page-content{opacity:0!important;visibility:hidden!important;pointer-events:none!important}
+html:not(.preloader-skipped)::before{content:"";position:fixed;inset:0;z-index:9998;background:#ffffff;pointer-events:none}
+html.dark:not(.preloader-skipped)::before{background:#09090f}
 html.preloader-skipped #page-content{opacity:1!important;visibility:visible!important;pointer-events:auto!important}
-html.preloader-skipped #boot-preloader{display:none!important}
+html.preloader-skipped::before{display:none!important;content:none!important}
+html.preloader-skipped #boot-preloader{display:none!important;pointer-events:none!important}
 #boot-preloader{position:fixed;inset:0;z-index:9999;overflow:hidden;background:#ffffff;color:#111111;transform:translateY(0);will-change:transform}
 html.dark #boot-preloader{background:#09090f;color:#ededf2}
 #boot-preloader .boot-preloader-center{position:relative;z-index:10;display:flex;height:100%;flex-direction:column;align-items:center;justify-content:center;padding:0 1.5rem;user-select:none;pointer-events:none}
@@ -37,8 +40,56 @@ html.dark #boot-preloader .preloader-counter{color:#ededf2}
 `.replace(/\n/g, "");
 
 /**
- * Runs before React. Injects its own DOM so hydration cannot reset the counter.
- * Waits for animation + window load, then reveals the page.
+ * Tiny blocking head script — decides pending vs skipped BEFORE body paints.
+ * Also injects the preloader shell at the earliest possible moment (body ready).
+ */
+export const BOOT_PRELOADER_BOOTSTRAP = `(function(){try{
+var KEY="pixiio-preloader-seen";
+var root=document.documentElement;
+var t=localStorage.getItem("pixiio-theme");
+if(t==="dark"){root.classList.add("dark");root.style.colorScheme="dark"}
+else{root.classList.remove("dark");root.style.colorScheme="light"}
+var skip=/^\\d{1,3}(?:\\.\\d{1,3}){3}$/.test(location.hostname)
+  ||!!sessionStorage.getItem(KEY)
+  ||(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
+root.classList.remove("preloader-pending","preloader-skipped");
+if(skip){
+  root.classList.add("preloader-skipped");
+  try{sessionStorage.setItem(KEY,"1")}catch(e){}
+  return;
+}
+root.classList.add("preloader-pending");
+var HTML='<div id="boot-preloader" data-phase="playing" aria-hidden="true">'
++'<div class="boot-preloader-center">'
++'<div class="preloader-3d-scene" data-boot-cylinder>'
++'<div class="preloader-3d-cylinder" aria-hidden="true">'
++'<span class="preloader-3d-face" style="--i:0">Agency</span>'
++'<span class="preloader-3d-face" style="--i:1">Creative</span>'
++'<span class="preloader-3d-face" style="--i:2">Led</span>'
++'<span class="preloader-3d-face" style="--i:3">Design</span>'
++'<span class="preloader-3d-face preloader-3d-face--brand" style="--i:4">Pixiio</span>'
++'</div></div>'
++'<div class="preloader-hero-logo" data-boot-logo>'
++'<div class="boot-preloader-logo-mark">'
++'<svg width="64" height="64" viewBox="30.5 24.8 39 50.4" fill="none" aria-hidden="true"><path d="M67.9385 55.7363C68.5411 55.1955 69.4997 55.6229 69.5 56.4326V68.3936C69.5 72.129 66.4718 75.1572 62.7363 75.1572C62.5496 75.1572 62.3984 75.0061 62.3984 74.8193V61.1592C62.3984 60.8754 62.5185 60.6047 62.7295 60.415L67.9385 55.7363ZM59.0947 24.8428C59.3599 24.8428 59.6142 24.9483 59.8018 25.1357L69.207 34.541C69.3945 34.7285 69.5 34.9829 69.5 35.248V47.7559C69.5 48.0355 69.3825 48.3028 69.1768 48.4922L59.7871 57.1338C59.6079 57.2987 59.3744 57.3933 59.1309 57.3984L51.3818 57.5615C50.8217 57.5731 50.3615 57.1228 50.3613 56.5625V49.1943C50.3615 48.6422 50.8091 48.1943 51.3613 48.1943H55.3984C55.713 48.1942 56.0094 48.0466 56.1982 47.7949L59.3096 43.6465C59.4392 43.4735 59.5087 43.263 59.5088 43.0469V39.4609C59.5088 39.1959 59.4041 38.9414 59.2168 38.7539L56.1914 35.7285C56.004 35.5411 55.7494 35.4357 55.4844 35.4355H42.5742C42.0219 35.4355 41.5742 35.8833 41.5742 36.4355V51.6855L49.707 59.8184C49.8945 60.0059 50 60.2602 50 60.5254V72.7432C50 73.6341 48.9229 74.0802 48.293 73.4502L41.7471 66.9043C41.5596 66.7168 41.4542 66.4624 41.4541 66.1973V51.5654L30.793 40.9043C30.6055 40.7168 30.5 40.4624 30.5 40.1973V25.8428C30.5 25.2905 30.9477 24.8428 31.5 24.8428H59.0947Z" fill="white"/></svg>'
++'</div></div></div>'
++'<div class="preloader-counter" data-boot-counter aria-hidden="true"><span class="preloader-counter__value" data-boot-count>0</span><span class="preloader-counter__symbol">%</span></div>'
++'</div>';
+function inject(){
+  if(document.getElementById("boot-preloader")||!document.body)return false;
+  document.body.insertAdjacentHTML("afterbegin",HTML);
+  return true;
+}
+if(!inject()){
+  new MutationObserver(function(muts,obs){
+    if(inject())obs.disconnect();
+  }).observe(root,{childList:true});
+}
+}catch(e){try{document.documentElement.classList.add("preloader-skipped")}catch(_){}}})();`;
+
+/**
+ * Runs after bootstrap. Injects the animated shell once, waits for anim + load, then reveals.
+ * Never reveals content early — CSS keeps #page-content hidden until .preloader-skipped.
  */
 export const BOOT_PRELOADER_SCRIPT = `(function(){try{
 if(window.__pixiioBootPreloader)return;
@@ -46,7 +97,7 @@ window.__pixiioBootPreloader=true;
 var KEY="pixiio-preloader-seen";
 var TEXT_MS=2650,LOGO_MS=500,COUNTER_EXIT_MS=400,EXIT_MS=700,MAX_WAIT_MS=16000;
 var TOTAL_MS=TEXT_MS+LOGO_MS;
-var HTML='<div id="boot-preloader" class="preloader-shell" data-phase="playing" aria-hidden="true">'
+var HTML='<div id="boot-preloader" data-phase="playing" aria-hidden="true">'
 +'<div class="boot-preloader-center">'
 +'<div class="preloader-3d-scene" data-boot-cylinder>'
 +'<div class="preloader-3d-cylinder" aria-hidden="true">'
@@ -63,31 +114,19 @@ var HTML='<div id="boot-preloader" class="preloader-shell" data-phase="playing" 
 +'<div class="preloader-counter" data-boot-counter aria-hidden="true"><span class="preloader-counter__value" data-boot-count>0</span><span class="preloader-counter__symbol">%</span></div>'
 +'</div>';
 
-var t=localStorage.getItem("pixiio-theme");
-if(t==="dark"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}
-else{document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}
-
 function reveal(){
-  document.documentElement.classList.remove("preloader-pending");
-  document.documentElement.classList.add("preloader-skipped");
+  var root=document.documentElement;
+  root.classList.remove("preloader-pending");
+  root.classList.add("preloader-skipped");
   var shell=document.getElementById("boot-preloader");
   if(shell)shell.remove();
   var page=document.getElementById("page-content");
   if(page)page.classList.add("page-revealed");
 }
-function isShared(){return/^\\d{1,3}(?:\\.\\d{1,3}){3}$/.test(location.hostname)}
-function shouldSkip(){
-  return isShared()||!!sessionStorage.getItem(KEY)||(window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches);
-}
 
-if(shouldSkip()){
-  document.documentElement.classList.remove("preloader-pending");
-  document.documentElement.classList.add("preloader-skipped");
-  try{sessionStorage.setItem(KEY,"1")}catch(e){}
+if(!document.documentElement.classList.contains("preloader-pending")){
   return;
 }
-
-document.documentElement.classList.add("preloader-pending");
 
 function ensureShell(){
   var existing=document.getElementById("boot-preloader");
@@ -104,6 +143,15 @@ function start(){
     reveal();
     return;
   }
+
+  // If React hydration removes the shell, put it back while pending.
+  var guard=new MutationObserver(function(){
+    if(!document.documentElement.classList.contains("preloader-pending")){guard.disconnect();return}
+    if(!document.getElementById("boot-preloader")&&document.body){
+      document.body.insertAdjacentHTML("afterbegin",HTML);
+    }
+  });
+  guard.observe(document.body,{childList:true});
 
   var countEl=shell.querySelector("[data-boot-count]");
   var counter=shell.querySelector("[data-boot-counter]");
@@ -131,12 +179,7 @@ function start(){
 
   function onReady(){pageReady=true;tryFinish()}
   if(pageReady)onReady();
-  else{
-    window.addEventListener("load",onReady,{once:true});
-    if(document.readyState==="interactive"){
-      setTimeout(function(){if(!pageReady){pageReady=true;tryFinish()}},2500);
-    }
-  }
+  else window.addEventListener("load",onReady,{once:true});
   setTimeout(function(){pageReady=true;tryFinish()},MAX_WAIT_MS);
 
   function tryFinish(){
