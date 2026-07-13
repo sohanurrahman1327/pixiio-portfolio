@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
+import Script from "next/script";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import BootPreloader from "@/components/BootPreloader";
 import { BookingProvider } from "@/lib/booking-context";
 import { ThemeProvider } from "@/lib/theme-context";
 import BookingModal from "@/components/BookingModal";
@@ -49,10 +49,13 @@ export default function RootLayout({
     >
       <head>
         <style dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_STYLES }} />
-        <script dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_SCRIPT }} />
       </head>
       <body className="min-h-full flex flex-col overflow-x-clip bg-background text-foreground">
-        <BootPreloader />
+        <Script
+          id="pixiio-boot-preloader"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_SCRIPT }}
+        />
         <ThemeProvider>
           <BookingProvider>
             <BookingModal />
