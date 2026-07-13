@@ -2,11 +2,12 @@ import type { Metadata } from "next";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
-import Preloader from "@/components/Preloader";
+import BootPreloader from "@/components/BootPreloader";
 import { BookingProvider } from "@/lib/booking-context";
 import { ThemeProvider } from "@/lib/theme-context";
 import BookingModal from "@/components/BookingModal";
 import WhatsAppLiveChat from "@/components/WhatsAppLiveChat";
+import { BOOT_PRELOADER_SCRIPT, BOOT_PRELOADER_STYLES } from "@/lib/boot-preloader";
 import { getSiteUrl } from "@/lib/site-url";
 
 const bebasNeue = Bebas_Neue({
@@ -47,19 +48,16 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem("pixiio-theme");if(t==="dark"){document.documentElement.classList.add("dark");document.documentElement.style.colorScheme="dark"}else{document.documentElement.classList.remove("dark");document.documentElement.style.colorScheme="light"}function reveal(){document.documentElement.classList.remove("preloader-pending");document.documentElement.classList.add("preloader-skipped")}function isSharedPreview(){return/^\\d{1,3}(?:\\.\\d{1,3}){3}$/.test(location.hostname)}if(isSharedPreview()||sessionStorage.getItem("pixiio-preloader-seen")){reveal()}else{document.documentElement.classList.add("preloader-pending");setTimeout(function(){if(document.documentElement.classList.contains("preloader-pending")){reveal();try{sessionStorage.setItem("pixiio-preloader-seen","1")}catch(e){}}},12000)}}catch(e){}})();`,
-          }}
-        />
+        <style dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_STYLES }} />
+        <script dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_SCRIPT }} />
       </head>
       <body className="min-h-full flex flex-col overflow-x-clip bg-background text-foreground">
+        <BootPreloader />
         <ThemeProvider>
           <BookingProvider>
             <BookingModal />
             <WhatsAppLiveChat />
             <SmoothScroll />
-            <Preloader />
             <div
               id="page-content"
               className="flex flex-col flex-1 min-w-0 overflow-x-clip"
