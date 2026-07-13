@@ -1,61 +1,119 @@
 "use client";
 
+import { useEffect, useMemo, useState } from "react";
 import type { TocItem } from "@/lib/blog-types";
 
 type Props = {
   items: TocItem[];
 };
 
-function TocLink({
-  item,
-  nested = false,
-}: {
-  item: TocItem;
-  nested?: boolean;
-}) {
-  return (
-    <>
-      <a
-        href={`#${item.id}`}
-        className={`block py-1.5 leading-snug transition-colors hover:text-primary ${
-          nested
-            ? "text-[13px] text-gray-500 pl-3 border-l border-gray-200"
-            : "text-sm text-gray-700 font-medium"
-        }`}
-      >
-        {item.text}
-      </a>
-      {item.children && item.children.length > 0 && (
-        <ul className="space-y-0.5 mb-2">
-          {item.children.map((child) => (
-            <li key={child.id}>
-              <TocLink item={child} nested />
-            </li>
-          ))}
-        </ul>
-      )}
-    </>
-  );
+function flattenToc(items: TocItem[]): TocItem[] {
+  const flat: TocItem[] = [];
+  for (const item of items) {
+    flat.push(item);
+    if (item.children?.length) {
+      flat.push(...item.children);
+    }
+  }
+  return flat;
 }
 
 export default function BlogTableOfContents({ items }: Props) {
-  if (items.length === 0) return null;
+  const flatItems = useMemo(() => flattenToc(items), [items]);
+  const [expanded, setExpanded] = useState(false);
+  const [activeId, setActiveId] = useState<string | null>(
+    flatItems[0]?.id ?? null
+  );
+
+  useEffect(() => {
+    if (flatItems.length === 0) return;
+
+    const headings = flatItems
+      .map((item) => document.getElementById(item.id))
+      .filter((el): el is HTMLElement => Boolean(el));
+
+    if (headings.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              a.boundingClientRect.top - b.boundingClientRect.top
+          );
+
+        if (visible[0]?.target.id) {
+          setActiveId(visible[0].target.id);
+        }
+      },
+      {
+        rootMargin: "-20% 0px -65% 0px",
+        threshold: [0, 1],
+      }
+    );
+
+    headings.forEach((heading) => observer.observe(heading));
+    return () => observer.disconnect();
+  }, [flatItems]);
+
+  if (flatItems.length === 0) return null;
 
   return (
-    <nav
-      className="rounded-xl border border-gray-200 bg-surface-elevated p-5 shadow-sm"
-      aria-label="Table of contents"
-    >
-      <h3 className="text-sm font-semibold text-navy mb-4 pb-3 border-b border-gray-100">
-        On this page
-      </h3>
-      <ul className="space-y-1 max-h-[60vh] overflow-y-auto pr-1">
-        {items.map((item) => (
-          <li key={item.id}>
-            <TocLink item={item} />
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div className="blog-toc">
+      <aside
+        aria-label="On this page"
+        className={`article-toc-panel${expanded ? " is-expanded" : ""}`}
+        tabIndex={0}
+        onMouseEnter={() => setExpanded(true)}
+        onMouseLeave={() => setExpanded(false)}
+        onFocus={() => setExpanded(true)}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) {
+            setExpanded(false);
+          }
+        }}
+      >
+        <div
+          className="article-toc-mini"
+          aria-hidden="true"
+          onClick={() => setExpanded(true)}
+        >
+          {flatItems.map((item) => (
+            <div
+              key={item.id}
+              className={`article-toc-mini__item article-toc-mini__item--level-${item.level}${
+                activeId === item.id ? " is-active" : ""
+              }`}
+            />
+          ))}
+        </div>
+
+        <div className="article-toc-panel__title">On this page</div>
+
+        <div className="article-toc-panel__body">
+          <nav className="article-toc" aria-label="On this page">
+            <ul className="article-toc__list">
+              {flatItems.map((item) => (
+                <li
+                  key={item.id}
+                  className={`article-toc__item article-toc__item--level-${item.level}`}
+                >
+                  <a
+                    href={`#${item.id}`}
+                    className={`article-toc__link${
+                      activeId === item.id ? " is-active" : ""
+                    }`}
+                    onClick={() => setExpanded(false)}
+                  >
+                    {item.text}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        </div>
+      </aside>
+    </div>
   );
 }

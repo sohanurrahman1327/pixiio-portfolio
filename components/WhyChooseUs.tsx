@@ -63,15 +63,17 @@ function AnimatedButton({
   );
 }
 
-export default function WhyChooseUs() {
+export default function WhyChooseUs({ showHeading = true }: { showHeading?: boolean }) {
   const { open } = useBooking();
   return (
     <section id="why-us" className="bg-gray-50 py-[50px] md:py-[80px] lg:py-30">
       <div className="max-w-7xl mx-auto px-6 flex flex-col gap-[30px] lg:gap-[42px]">
 
-        <h2 className="font-display text-5xl md:text-6xl text-center text-gray-900 tracking-wide">
-          WHY CHOOSE US
-        </h2>
+        {showHeading && (
+          <h2 className="font-display text-5xl md:text-6xl text-center text-gray-900 tracking-wide">
+            WHY CHOOSE US
+          </h2>
+        )}
 
         {/* ── Bento grid ── */}
         <div className="grid grid-cols-1 md:grid-cols-12 gap-4">

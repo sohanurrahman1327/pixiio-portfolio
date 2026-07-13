@@ -6,6 +6,7 @@ import Preloader from "@/components/Preloader";
 import { BookingProvider } from "@/lib/booking-context";
 import { ThemeProvider } from "@/lib/theme-context";
 import BookingModal from "@/components/BookingModal";
+import WhatsAppLiveChat from "@/components/WhatsAppLiveChat";
 import { getSiteUrl } from "@/lib/site-url";
 
 const bebasNeue = Bebas_Neue({
@@ -56,6 +57,7 @@ export default function RootLayout({
         <ThemeProvider>
           <BookingProvider>
             <BookingModal />
+            <WhatsAppLiveChat />
             <SmoothScroll />
             <Preloader />
             <div

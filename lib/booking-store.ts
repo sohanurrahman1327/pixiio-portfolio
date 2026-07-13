@@ -43,10 +43,19 @@ async function writeAllToFile(data: BookingsFile) {
   await writeFile(BOOKINGS_FILE, JSON.stringify(data, null, 2), "utf8");
 }
 
+function canPersistBookings() {
+  return isOnlineBookingStoreEnabled() || !process.env.VERCEL;
+}
+
 async function readAll(): Promise<BookingsFile> {
   if (isOnlineBookingStoreEnabled()) {
     const bookings = normalizeBookings(await readBookingsFromRedis());
     return { bookings };
+  }
+
+  // On Vercel without Redis there is no durable store — treat as empty.
+  if (process.env.VERCEL) {
+    return { bookings: [] };
   }
 
   return readAllFromFile();
@@ -58,11 +67,20 @@ async function writeAll(data: BookingsFile) {
     return;
   }
 
+  // Vercel filesystems are read-only. Persist via Redis/KV in production.
+  if (process.env.VERCEL) {
+    throw new Error(
+      "BOOKING_STORE_UNAVAILABLE: Set UPSTASH_REDIS_REST_URL and UPSTASH_REDIS_REST_TOKEN (or KV_REST_API_URL / KV_REST_API_TOKEN) for production bookings."
+    );
+  }
+
   await writeAllToFile(data);
 }
 
-export function getBookingStoreMode(): "redis" | "file" {
-  return isOnlineBookingStoreEnabled() ? "redis" : "file";
+export function getBookingStoreMode(): "redis" | "file" | "ephemeral" {
+  if (isOnlineBookingStoreEnabled()) return "redis";
+  if (process.env.VERCEL) return "ephemeral";
+  return "file";
 }
 
 export function dateKeyFromIso(iso: string, timezone = "Asia/Dhaka") {
@@ -161,6 +179,15 @@ export async function createBooking(input: {
     updatedAt: now,
   };
 
+  // Serverless without Redis: still return a booking so emails/token flows work.
+  // Admin dashboard persistence requires Upstash/KV env vars.
+  if (!canPersistBookings()) {
+    console.warn(
+      "[booking-store] Ephemeral booking (no Redis). Emails will send; dashboard will not retain this booking."
+    );
+    return booking;
+  }
+
   const data = await readAll();
   data.bookings.push(booking);
   await writeAll(data);
@@ -172,6 +199,8 @@ export async function updateBookingStatus(
   status: BookingStatus,
   adminMessage = ""
 ) {
+  if (!canPersistBookings()) return null;
+
   const data = await readAll();
   const booking = data.bookings.find((b) => b.id === id);
   if (!booking) return null;
@@ -185,6 +214,8 @@ export async function updateBookingStatus(
 }
 
 export async function updateBookingRespondToken(id: string, respondToken: string) {
+  if (!canPersistBookings()) return null;
+
   const data = await readAll();
   const booking = data.bookings.find((b) => b.id === id);
   if (!booking) return null;

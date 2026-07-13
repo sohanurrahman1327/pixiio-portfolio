@@ -3,8 +3,10 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import BookingRespondForm from "@/components/BookingRespondForm";
 import type { BookingStatus, StoredBooking } from "@/lib/booking-types";
+import type { StoredContactInquiry, StoredSubscriber } from "@/lib/inbox-types";
 import { canRespondToBooking, formatBookingSerial, storedBookingToPayload } from "@/lib/booking-respond";
 
+type PanelId = "meeting" | "subscriber" | "contact";
 type TabId = "all" | "pending" | "accepted" | "declined" | "completed";
 
 interface DashboardStats {
@@ -16,6 +18,13 @@ interface DashboardStats {
 }
 
 const fetchOpts: RequestInit = { credentials: "include" };
+
+const PANELS: { id: PanelId; label: string; hint: string }[] = [
+  { id: "meeting", label: "Meeting", hint: "Let's Talk bookings" },
+  { id: "subscriber", label: "Subscriber", hint: "Newsletter signups" },
+  { id: "contact", label: "Contact", hint: "Contact form inquiries" },
+];
+
 
 function statusBadge(status: BookingStatus) {
   const styles: Record<BookingStatus, string> = {
@@ -562,12 +571,22 @@ function BookingCard({
 
 export default function BookingAdminDashboard() {
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
+  const [loginStep, setLoginStep] = useState<"password" | "totp" | "setup">("password");
   const [inputKey, setInputKey] = useState("");
+  const [totpCode, setTotpCode] = useState("");
+  const [setupQrUrl, setSetupQrUrl] = useState("");
+  const [setupSecret, setSetupSecret] = useState("");
   const [loginError, setLoginError] = useState("");
   const [loginHint, setLoginHint] = useState("");
+  const [loginBusy, setLoginBusy] = useState(false);
+  const [panel, setPanel] = useState<PanelId>("meeting");
   const [tab, setTab] = useState<TabId>("all");
   const [bookings, setBookings] = useState<StoredBooking[]>([]);
   const [stats, setStats] = useState<DashboardStats | null>(null);
+  const [subscribers, setSubscribers] = useState<StoredSubscriber[]>([]);
+  const [subscriberTotal, setSubscriberTotal] = useState(0);
+  const [contacts, setContacts] = useState<StoredContactInquiry[]>([]);
+  const [contactTotal, setContactTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -594,9 +613,68 @@ export default function BookingAdminDashboard() {
     }
   }, []);
 
+  const loadSubscribers = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/booking/admin/subscribers", fetchOpts);
+      const data = await res.json();
+      if (res.status === 401) {
+        setAuthenticated(false);
+        return;
+      }
+      if (!res.ok) throw new Error(data.error || "Failed to load subscribers");
+      setAuthenticated(true);
+      setSubscribers(data.subscribers ?? []);
+      setSubscriberTotal(data.stats?.total ?? data.subscribers?.length ?? 0);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load subscribers");
+      setSubscribers([]);
+      setSubscriberTotal(0);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const loadContacts = useCallback(async () => {
+    setLoading(true);
+    setError("");
+    try {
+      const res = await fetch("/api/booking/admin/contacts", fetchOpts);
+      const data = await res.json();
+      if (res.status === 401) {
+        setAuthenticated(false);
+        return;
+      }
+      if (!res.ok) throw new Error(data.error || "Failed to load contacts");
+      setAuthenticated(true);
+      setContacts(data.contacts ?? []);
+      setContactTotal(data.stats?.total ?? data.contacts?.length ?? 0);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Failed to load contacts");
+      setContacts([]);
+      setContactTotal(0);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
+  const refreshPanel = useCallback(async () => {
+    if (panel === "meeting") await loadBookings();
+    else if (panel === "subscriber") await loadSubscribers();
+    else await loadContacts();
+  }, [panel, loadBookings, loadSubscribers, loadContacts]);
+
   useEffect(() => {
     loadBookings();
   }, [loadBookings]);
+
+  useEffect(() => {
+    if (!authenticated) return;
+    if (panel === "meeting") loadBookings();
+    else if (panel === "subscriber") loadSubscribers();
+    else loadContacts();
+  }, [panel, authenticated, loadBookings, loadSubscribers, loadContacts]);
 
   const filtered = useMemo(() => {
     if (tab === "pending") return bookings.filter((b) => b.status === "pending");
@@ -616,36 +694,96 @@ export default function BookingAdminDashboard() {
 
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
-    if (!inputKey.trim()) return;
     setLoginError("");
     setLoginHint("");
+    setLoginBusy(true);
 
     try {
+      if (loginStep === "password") {
+        if (!inputKey.trim()) {
+          setLoginError("Enter your admin secret.");
+          return;
+        }
+
+        const res = await fetch("/api/booking/admin/auth", {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ key: inputKey.trim() }),
+        });
+        const data = await res.json();
+        if (!res.ok) {
+          setLoginError(data.error || "Invalid admin secret.");
+          setLoginHint(data.hint || "");
+          return;
+        }
+
+        if (data.requires2faSetup) {
+          setSetupQrUrl(data.qrUrl || "");
+          setSetupSecret(data.secret || "");
+          setLoginStep("setup");
+          setTotpCode("");
+          return;
+        }
+
+        if (data.requires2fa) {
+          setLoginStep("totp");
+          setTotpCode("");
+          return;
+        }
+
+        setAuthenticated(true);
+        setInputKey("");
+        await loadBookings();
+        return;
+      }
+
+      if (!totpCode.trim()) {
+        setLoginError("Enter the 6-digit authenticator code.");
+        return;
+      }
+
       const res = await fetch("/api/booking/admin/auth", {
         method: "POST",
         credentials: "include",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ key: inputKey.trim() }),
+        body: JSON.stringify({ action: "verify-2fa", totp: totpCode.trim() }),
       });
       const data = await res.json();
       if (!res.ok) {
-        setLoginError(data.error || "Invalid admin secret.");
-        setLoginHint(data.hint || "");
+        setLoginError(data.error || "Invalid authenticator code.");
         return;
       }
+
       setAuthenticated(true);
       setInputKey("");
+      setTotpCode("");
+      setSetupQrUrl("");
+      setSetupSecret("");
+      setLoginStep("password");
       await loadBookings();
     } catch {
-      setLoginError("Could not verify admin secret. Please try again.");
+      setLoginError(
+        loginStep === "password"
+          ? "Could not verify admin secret. Please try again."
+          : "Could not verify authenticator code. Please try again."
+      );
+    } finally {
+      setLoginBusy(false);
     }
   }
 
   async function handleLogout() {
     await fetch("/api/booking/admin/auth", { method: "DELETE", credentials: "include" });
     setAuthenticated(false);
+    setLoginStep("password");
+    setTotpCode("");
+    setSetupQrUrl("");
+    setSetupSecret("");
     setBookings([]);
     setStats(null);
+    setSubscribers([]);
+    setContacts([]);
     setError("");
   }
 
@@ -657,121 +795,345 @@ export default function BookingAdminDashboard() {
     return (
       <div className="mx-auto max-w-md rounded-2xl border border-gray-100 bg-surface-elevated p-8 shadow-sm">
         <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">Admin access</p>
-        <h2 className="mt-2 text-2xl font-bold text-gray-900">Bookings dashboard</h2>
+        <h2 className="mt-2 text-2xl font-bold text-gray-900">Admin dashboard</h2>
         <p className="mt-2 text-sm text-gray-600">
-          Enter your booking admin secret to view meeting requests, accepted bookings, and completed meetings.
+          {loginStep === "password"
+            ? "Enter your admin secret, then confirm with Google Authenticator."
+            : loginStep === "setup"
+              ? "Scan the QR code with Google Authenticator, then enter the 6-digit code to finish setup."
+              : "Enter the 6-digit code from Google Authenticator."}
         </p>
+
         <form onSubmit={handleLogin} className="mt-6 space-y-4">
-          <input
-            type="password"
-            value={inputKey}
-            onChange={(e) => {
-              setInputKey(e.target.value);
-              if (loginError) setLoginError("");
-            }}
-            placeholder="Admin secret key"
-            className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 outline-none focus:border-primary"
-          />
+          {loginStep === "password" && (
+            <input
+              type="password"
+              value={inputKey}
+              onChange={(e) => {
+                setInputKey(e.target.value);
+                if (loginError) setLoginError("");
+              }}
+              placeholder="Admin secret key"
+              autoComplete="current-password"
+              className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-sm text-gray-900 outline-none focus:border-primary"
+            />
+          )}
+
+          {loginStep === "setup" && (
+            <div className="space-y-3 rounded-xl border border-gray-100 bg-gray-50/80 p-4">
+              {setupQrUrl ? (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={setupQrUrl}
+                  alt="Google Authenticator QR code"
+                  width={220}
+                  height={220}
+                  className="mx-auto rounded-lg bg-white p-2"
+                />
+              ) : null}
+              <p className="text-center text-xs text-gray-500">
+                Can&apos;t scan? Add this key manually in Google Authenticator:
+              </p>
+              <code className="block break-all rounded-lg bg-white px-3 py-2 text-center text-xs font-semibold tracking-wider text-gray-800">
+                {setupSecret}
+              </code>
+            </div>
+          )}
+
+          {(loginStep === "totp" || loginStep === "setup") && (
+            <input
+              type="text"
+              inputMode="numeric"
+              pattern="[0-9]*"
+              maxLength={6}
+              value={totpCode}
+              onChange={(e) => {
+                setTotpCode(e.target.value.replace(/\D/g, "").slice(0, 6));
+                if (loginError) setLoginError("");
+              }}
+              placeholder="6-digit authenticator code"
+              autoComplete="one-time-code"
+              autoFocus
+              className="w-full rounded-lg border border-gray-200 px-3.5 py-2.5 text-center text-lg font-semibold tracking-[0.35em] text-gray-900 outline-none focus:border-primary"
+            />
+          )}
+
           {loginError && (
             <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-red-600">{loginError}</p>
           )}
           {loginHint && <p className="text-xs text-gray-500">{loginHint}</p>}
+
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark"
+            disabled={loginBusy}
+            className="inline-flex w-full items-center justify-center rounded-lg bg-primary px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-primary-dark disabled:opacity-60"
           >
-            Unlock dashboard
+            {loginBusy
+              ? "Verifying…"
+              : loginStep === "password"
+                ? "Continue"
+                : loginStep === "setup"
+                  ? "Confirm & unlock"
+                  : "Verify & unlock"}
           </button>
+
+          {loginStep !== "password" && (
+            <button
+              type="button"
+              onClick={() => {
+                setLoginStep("password");
+                setTotpCode("");
+                setSetupQrUrl("");
+                setSetupSecret("");
+                setLoginError("");
+              }}
+              className="w-full text-center text-xs font-medium text-gray-500 hover:text-gray-800"
+            >
+              ← Back to password
+            </button>
+          )}
         </form>
+
         <p className="mt-4 text-xs text-gray-400">
-          Tip: set <code className="rounded bg-gray-100 px-1 py-0.5">BOOKING_ADMIN_SECRET=your-password</code> in `.env.local` (or Vercel env) and use that password here. For live bookings, also add Upstash Redis or Vercel KV.
+          Tip: password is <code className="rounded bg-gray-100 px-1 py-0.5">BOOKING_ADMIN_SECRET</code>.
+          First login sets up Google Authenticator 2FA automatically.
         </p>
       </div>
     );
   }
 
+  const panelMeta =
+    panel === "meeting"
+      ? {
+          title: "Meeting bookings",
+          description: "Track Let's Talk join requests, accepted meetings, declined requests, and completed sessions.",
+        }
+      : panel === "subscriber"
+        ? {
+            title: "Subscribers",
+            description: "Newsletter signups from the site footer — Pixiio subscribe / mailing list entries.",
+          }
+        : {
+            title: "Contact inquiries",
+            description: "Project requests submitted through the Contact Us form.",
+          };
+
   return (
-    <div>
-      <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">Admin dashboard</p>
-          <h1 className="mt-2 font-display text-4xl tracking-wide text-gray-900">Meeting bookings</h1>
-          <p className="mt-2 text-sm text-gray-600">
-            Track all join requests, accepted meetings, declined requests, and completed sessions.
-          </p>
-        </div>
-        <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={loadBookings}
-            disabled={loading}
-            className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 disabled:opacity-60"
-          >
-            {loading ? "Refreshing…" : "Refresh"}
-          </button>
-          <button
-            type="button"
-            onClick={handleLogout}
-            className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
-          >
-            Log out
-          </button>
-        </div>
-      </div>
-
-      <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-        {[
-          { label: "Total requests", value: stats?.total ?? 0 },
-          { label: "Pending", value: stats?.pending ?? 0 },
-          { label: "Accepted", value: stats?.accepted ?? 0 },
-          { label: "Declined", value: stats?.declined ?? 0 },
-          { label: "Completed", value: stats?.completed ?? 0 },
-        ].map(({ label, value }) => (
-          <div key={label} className="rounded-xl border border-gray-100 bg-surface-elevated px-4 py-3 shadow-sm">
-            <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{label}</p>
-            <p className="mt-1 text-2xl font-bold text-gray-900">{value}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="mb-6 flex flex-wrap gap-2 border-b border-gray-100">
-        {tabs.map(({ id, label, count }) => (
-          <button
-            key={id}
-            type="button"
-            onClick={() => setTab(id)}
-            className={`rounded-t-lg px-4 py-2.5 text-sm font-semibold transition-colors ${
-              tab === id
-                ? "relative z-10 -mb-px border-b-2 border-primary bg-background text-primary"
-                : "text-gray-500 hover:text-gray-800"
-            }`}
-          >
-            {label}
-            <span className="ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-600">{count}</span>
-          </button>
-        ))}
-      </div>
-
-      {loading ? (
-        <p className="text-sm text-gray-500">Loading bookings…</p>
-      ) : error ? (
-        <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
-      ) : filtered.length === 0 ? (
-        <div className="rounded-2xl border border-dashed border-gray-200 bg-surface-elevated p-10 text-center">
-          <p className="text-sm text-gray-500">No bookings in this tab yet.</p>
-        </div>
-      ) : (
-        <div className="grid gap-4">
-          {filtered.map((booking, index) => (
-            <BookingCard
-              key={booking.id}
-              booking={booking}
-              serial={index + 1}
-              onRefresh={loadBookings}
-            />
+    <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
+      <aside className="w-full shrink-0 lg:sticky lg:top-24 lg:w-56">
+        <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.16em] text-primary">Dashboard</p>
+        <nav className="flex gap-2 overflow-x-auto lg:flex-col lg:gap-1">
+          {PANELS.map((item) => (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => setPanel(item.id)}
+              className={`min-w-[8.5rem] rounded-xl px-4 py-3 text-left transition-colors lg:min-w-0 ${
+                panel === item.id
+                  ? "bg-primary text-white shadow-sm"
+                  : "border border-gray-100 bg-surface-elevated text-gray-700 hover:border-primary/20 hover:text-primary"
+              }`}
+            >
+              <span className="block text-sm font-semibold">{item.label}</span>
+              <span className={`mt-0.5 block text-[11px] ${panel === item.id ? "text-white/75" : "text-gray-400"}`}>
+                {item.hint}
+              </span>
+            </button>
           ))}
+        </nav>
+      </aside>
+
+      <div className="min-w-0 flex-1">
+        <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-primary">Admin dashboard</p>
+            <h1 className="mt-2 font-display text-4xl tracking-wide text-gray-900">{panelMeta.title}</h1>
+            <p className="mt-2 text-sm text-gray-600">{panelMeta.description}</p>
+          </div>
+          <div className="flex flex-wrap items-center gap-2">
+            <button
+              type="button"
+              onClick={refreshPanel}
+              disabled={loading}
+              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900 disabled:opacity-60"
+            >
+              {loading ? "Refreshing…" : "Refresh"}
+            </button>
+            <button
+              type="button"
+              onClick={handleLogout}
+              className="rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-600 transition-colors hover:text-gray-900"
+            >
+              Log out
+            </button>
+          </div>
         </div>
-      )}
+
+        {panel === "meeting" && (
+          <>
+            <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
+              {[
+                { label: "Total requests", value: stats?.total ?? 0 },
+                { label: "Pending", value: stats?.pending ?? 0 },
+                { label: "Accepted", value: stats?.accepted ?? 0 },
+                { label: "Declined", value: stats?.declined ?? 0 },
+                { label: "Completed", value: stats?.completed ?? 0 },
+              ].map(({ label, value }) => (
+                <div key={label} className="rounded-xl border border-gray-100 bg-surface-elevated px-4 py-3 shadow-sm">
+                  <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">{label}</p>
+                  <p className="mt-1 text-2xl font-bold text-gray-900">{value}</p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mb-6 flex flex-wrap gap-2 border-b border-gray-100">
+              {tabs.map(({ id, label, count }) => (
+                <button
+                  key={id}
+                  type="button"
+                  onClick={() => setTab(id)}
+                  className={`rounded-t-lg px-4 py-2.5 text-sm font-semibold transition-colors ${
+                    tab === id
+                      ? "relative z-10 -mb-px border-b-2 border-primary bg-background text-primary"
+                      : "text-gray-500 hover:text-gray-800"
+                  }`}
+                >
+                  {label}
+                  <span className="ml-2 rounded-full bg-gray-100 px-2 py-0.5 text-xs font-bold text-gray-600">{count}</span>
+                </button>
+              ))}
+            </div>
+
+            {loading ? (
+              <p className="text-sm text-gray-500">Loading bookings…</p>
+            ) : error ? (
+              <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
+            ) : filtered.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-gray-200 bg-surface-elevated p-10 text-center">
+                <p className="text-sm text-gray-500">No bookings in this tab yet.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {filtered.map((booking, index) => (
+                  <BookingCard
+                    key={booking.id}
+                    booking={booking}
+                    serial={index + 1}
+                    onRefresh={loadBookings}
+                  />
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {panel === "subscriber" && (
+          <>
+            <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-xl border border-gray-100 bg-surface-elevated px-4 py-3 shadow-sm">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Total subscribers</p>
+                <p className="mt-1 text-2xl font-bold text-gray-900">{subscriberTotal}</p>
+              </div>
+            </div>
+
+            {loading ? (
+              <p className="text-sm text-gray-500">Loading subscribers…</p>
+            ) : error ? (
+              <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
+            ) : subscribers.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-gray-200 bg-surface-elevated p-10 text-center">
+                <p className="text-sm text-gray-500">No newsletter subscribers yet.</p>
+              </div>
+            ) : (
+              <div className="overflow-hidden rounded-2xl border border-gray-100 bg-surface-elevated shadow-sm">
+                <table className="min-w-full text-left text-sm">
+                  <thead className="border-b border-gray-100 bg-gray-50/80 text-[10px] font-bold uppercase tracking-widest text-gray-400">
+                    <tr>
+                      <th className="px-4 py-3">#</th>
+                      <th className="px-4 py-3">Email</th>
+                      <th className="px-4 py-3">Source</th>
+                      <th className="px-4 py-3">Subscribed</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {subscribers.map((item, index) => (
+                      <tr key={item.id} className="border-b border-gray-50 last:border-0">
+                        <td className="px-4 py-3 text-gray-400">{formatBookingSerial(index + 1)}</td>
+                        <td className="px-4 py-3 font-medium text-gray-900">
+                          <a href={`mailto:${item.email}`} className="hover:text-primary hover:underline">
+                            {item.email}
+                          </a>
+                        </td>
+                        <td className="px-4 py-3 capitalize text-gray-600">{item.source}</td>
+                        <td className="px-4 py-3 text-gray-600">{formatDhakaDateTime(item.createdAt)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )}
+
+        {panel === "contact" && (
+          <>
+            <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-xl border border-gray-100 bg-surface-elevated px-4 py-3 shadow-sm">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Total inquiries</p>
+                <p className="mt-1 text-2xl font-bold text-gray-900">{contactTotal}</p>
+              </div>
+            </div>
+
+            {loading ? (
+              <p className="text-sm text-gray-500">Loading contact inquiries…</p>
+            ) : error ? (
+              <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
+            ) : contacts.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-gray-200 bg-surface-elevated p-10 text-center">
+                <p className="text-sm text-gray-500">No contact form submissions yet.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {contacts.map((item, index) => (
+                  <article key={item.id} className="rounded-2xl border border-gray-100 bg-surface-elevated p-5 shadow-sm">
+                    <div className="flex flex-wrap items-start justify-between gap-3">
+                      <div className="flex min-w-0 items-start gap-3">
+                        <span className="inline-flex h-8 min-w-8 shrink-0 items-center justify-center rounded-lg bg-gray-900 px-2 text-xs font-bold text-white">
+                          {formatBookingSerial(index + 1)}
+                        </span>
+                        <div className="min-w-0">
+                          <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
+                          <a href={`mailto:${item.email}`} className="mt-1 block text-sm text-primary hover:underline">
+                            {item.email}
+                          </a>
+                        </div>
+                      </div>
+                      <p className="text-xs text-gray-400">{formatDhakaDateTime(item.createdAt)}</p>
+                    </div>
+
+                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Project</p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">{item.project}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Budget</p>
+                        <p className="mt-1 text-sm font-medium text-gray-900">{item.budget}</p>
+                      </div>
+                    </div>
+
+                    <div className="mt-4 border-t border-gray-100 pt-4">
+                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Message</p>
+                      <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">{item.message}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </div>
   );
 }
+

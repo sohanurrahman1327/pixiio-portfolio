@@ -133,7 +133,7 @@ function NoCodeAddon({
   );
 }
 
-/* ─── Schedule a call button ─── */
+/* ─── Purchase Now button ─── */
 function ScheduleButton({ href, highlighted = false }: { href: string; highlighted?: boolean }) {
   return (
     <Link
@@ -144,7 +144,7 @@ function ScheduleButton({ href, highlighted = false }: { href: string; highlight
           : "bg-gray-900 hover:bg-gray-800 dark:bg-white/10 dark:hover:bg-white/15 text-white"
         }`}
     >
-      <span className="text-sm font-semibold">Schedule a call</span>
+      <span className="text-sm font-semibold">Purchase Now</span>
       <span className={`relative flex items-center justify-center w-9 h-9 rounded-full bg-white shrink-0 overflow-hidden ${highlighted ? "text-primary" : "text-[#111111]"}`}>
         <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-in-out group-hover:-translate-x-full">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -325,7 +325,7 @@ export default function Pricing() {
                 </svg>
               </span>
             </span>
-            LET&apos;S TALK
+            Purchase Now
           </Link>
         </aside>
 

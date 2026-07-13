@@ -89,6 +89,8 @@ function SubscribeSuccess() {
 export default function Footer() {
   const [email, setEmail]           = useState("");
   const [emailError, setEmailError] = useState("");
+  const [submitError, setSubmitError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const [subscribed, setSubscribed] = useState(false);
 
   async function handleNewsletter(e: React.FormEvent<HTMLFormElement>) {
@@ -98,6 +100,8 @@ export default function Footer() {
       return;
     }
     setEmailError("");
+    setSubmitError("");
+    setSubmitting(true);
 
     try {
       const res = await fetch("/api/contact", {
@@ -105,18 +109,23 @@ export default function Footer() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ type: "newsletter", email }),
       });
-      const data = await res.json();
-      if (!res.ok) {
-        if (data.fallback === "mailto") {
-          window.location.href = mailtoNewsletterSubscription(email);
-        } else {
-          throw new Error(data.error || "Failed");
-        }
+      const data = await res.json().catch(() => ({}));
+
+      if (res.ok) {
+        setSubscribed(true);
+        return;
       }
-      setSubscribed(true);
+
+      if (data.fallback === "mailto") {
+        window.location.href = mailtoNewsletterSubscription(email);
+        return;
+      }
+
+      setSubmitError(data.error || "Could not subscribe. Please try again.");
     } catch {
       window.location.href = mailtoNewsletterSubscription(email);
-      setSubscribed(true);
+    } finally {
+      setSubmitting(false);
     }
   }
 
@@ -152,23 +161,32 @@ export default function Footer() {
                   <input
                     type="email"
                     value={email}
-                    onChange={(e) => { setEmail(e.target.value); setEmailError(""); }}
+                    onChange={(e) => { setEmail(e.target.value); setEmailError(""); setSubmitError(""); }}
                     placeholder="Enter email address*"
                     required
-                    className={`flex-1 h-11 bg-gray-50 dark:bg-surface-elevated border rounded-lg px-4 text-sm text-gray-900 dark:text-foreground placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary transition-colors ${emailError ? "border-red-400" : "border-gray-200 dark:border-border-subtle"}`}
+                    disabled={submitting}
+                    className={`flex-1 h-11 bg-gray-50 dark:bg-surface-elevated border rounded-lg px-4 text-sm text-gray-900 dark:text-foreground placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:border-primary transition-colors disabled:opacity-60 ${emailError ? "border-red-400" : "border-gray-200 dark:border-border-subtle"}`}
                   />
                   <button
                     type="submit"
                     aria-label="Subscribe"
-                    className="h-11 w-11 rounded-lg bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition-colors shrink-0"
+                    disabled={submitting}
+                    className="h-11 w-11 rounded-lg bg-primary text-white flex items-center justify-center hover:bg-primary-dark transition-colors shrink-0 disabled:opacity-60"
                   >
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
+                    {submitting ? (
+                      <span className="h-3.5 w-3.5 rounded-full border-2 border-white/40 border-t-white animate-spin" aria-hidden="true" />
+                    ) : (
+                      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" aria-hidden="true">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    )}
                   </button>
                 </form>
                 {emailError && (
                   <p className="text-red-500 text-xs mt-2">{emailError}</p>
+                )}
+                {submitError && (
+                  <p className="text-red-500 text-xs mt-2">{submitError}</p>
                 )}
               </>
             )}

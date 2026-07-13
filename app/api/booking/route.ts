@@ -8,10 +8,18 @@ import {
 } from "@/lib/email";
 import { bookingRespondActionsHtml } from "@/lib/booking-email";
 import { createBookingToken } from "@/lib/booking-token";
-import { createBooking, dateKeyFromIso, updateBookingRespondToken } from "@/lib/booking-store";
+import {
+  createBooking,
+  dateKeyFromIso,
+  getBookingStoreMode,
+  updateBookingRespondToken,
+} from "@/lib/booking-store";
 import { CONTACT_EMAIL, GOOGLE_MEET_LINK } from "@/lib/site-config";
 import { getSiteUrl } from "@/lib/site-url";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
+
+export const runtime = "nodejs";
+export const maxDuration = 30;
 
 export async function POST(req: NextRequest) {
   try {
@@ -38,7 +46,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!isEmailConfigured()) {
-      console.warn("[booking] Gmail credentials not configured in .env.local");
+      console.warn("[booking] GMAIL_USER / GMAIL_APP_PASSWORD missing on this deploy");
       return NextResponse.json(
         { error: getEmailConfigError(), fallback: "mailto" },
         { status: 503 }
@@ -183,10 +191,19 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, bookingId: booking.id });
   } catch (err) {
-    console.error("[booking/route] error:", err);
+    console.error("[booking/route] error:", err instanceof Error ? err.message : err);
     return NextResponse.json(
       { error: `Failed to send email. Please contact us directly at ${CONTACT_EMAIL}`, fallback: "mailto" },
       { status: 500 }
     );
   }
+}
+
+// Lightweight health check: visit /api/booking to confirm the live
+// deployment has email + storage configured. Never exposes secrets.
+export async function GET() {
+  return NextResponse.json({
+    emailConfigured: isEmailConfigured(),
+    storeMode: getBookingStoreMode(),
+  });
 }

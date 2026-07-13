@@ -7,37 +7,22 @@ type Props = {
 
 export default function BlogArticleBody({ sections }: Props) {
   return (
-    <div className="space-y-5">
+    <div className="blog-content">
       {sections.map((section, i) => {
         switch (section.type) {
           case "paragraph":
-            return (
-              <p
-                key={i}
-                className="text-[#334155] text-[17px] leading-[1.85]"
-              >
-                {section.text}
-              </p>
-            );
+            return <p key={i}>{section.text}</p>;
 
           case "heading":
             if (section.level === 2) {
               return (
-                <h2
-                  key={i}
-                  id={section.id}
-                  className="text-2xl md:text-[1.75rem] font-bold text-navy leading-tight pt-10 pb-2 scroll-mt-28 border-b border-gray-100"
-                >
+                <h2 key={i} id={section.id}>
                   {section.text}
                 </h2>
               );
             }
             return (
-              <h3
-                key={i}
-                id={section.id}
-                className="text-lg md:text-xl font-bold text-navy leading-snug pt-6 scroll-mt-28"
-              >
+              <h3 key={i} id={section.id}>
                 {section.text}
               </h3>
             );
@@ -45,44 +30,31 @@ export default function BlogArticleBody({ sections }: Props) {
           case "list":
             if (section.ordered) {
               return (
-                <ol
-                  key={i}
-                  className="list-decimal list-outside ml-5 space-y-2.5 text-[#334155] text-[17px] leading-[1.75]"
-                >
+                <ol key={i}>
                   {section.items.map((item, j) => (
-                    <li key={j} className="pl-1">
-                      {item}
-                    </li>
+                    <li key={j}>{item}</li>
                   ))}
                 </ol>
               );
             }
             return (
-              <ul
-                key={i}
-                className="space-y-2.5 text-[#334155] text-[17px] leading-[1.75]"
-              >
+              <ul key={i}>
                 {section.items.map((item, j) => (
-                  <li key={j} className="flex items-start gap-3">
-                    <span className="text-primary mt-2 h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
-                    <span>{item}</span>
-                  </li>
+                  <li key={j}>{item}</li>
                 ))}
               </ul>
             );
 
           case "image":
             return (
-              <figure key={i} className="my-8 w-full">
-                <div className="rounded-xl overflow-hidden border border-gray-100 bg-gray-50 shadow-sm">
-                  <Image
-                    src={section.src}
-                    alt={section.alt}
-                    width={1200}
-                    height={675}
-                    className="w-full h-auto object-cover"
-                  />
-                </div>
+              <figure key={i} className="my-6 w-full">
+                <Image
+                  src={section.src}
+                  alt={section.alt}
+                  width={1200}
+                  height={675}
+                  className="w-full h-auto object-cover !my-0"
+                />
                 {section.caption && (
                   <figcaption className="text-xs text-gray-400 mt-2.5 text-center">
                     {section.caption}
@@ -93,16 +65,11 @@ export default function BlogArticleBody({ sections }: Props) {
 
           case "callout":
             return (
-              <div
-                key={i}
-                className="rounded-xl bg-[#f8f9ff] border border-[#e8ebfa] p-6 md:p-8 my-6"
-              >
-                <h4 className="text-lg font-bold text-navy mb-2">
+              <div key={i} className="blog-callout">
+                <h4 className="text-[1.075rem] font-semibold text-navy mb-2">
                   {section.title}
                 </h4>
-                <p className="text-[#334155] text-[15px] leading-relaxed">
-                  {section.text}
-                </p>
+                <p className="!mb-0 text-[15px] leading-relaxed">{section.text}</p>
               </div>
             );
 

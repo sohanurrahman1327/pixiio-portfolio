@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import { agencyEmailHtml, getEmailConfigError, isEmailConfigured, sendAgencyEmail } from "@/lib/email";
+import { createContactInquiry, upsertSubscriber } from "@/lib/inbox-store";
 import { CONTACT_EMAIL } from "@/lib/site-config";
+
+export const runtime = "nodejs";
+export const maxDuration = 30;
+
+/** Visit /api/contact to confirm the live deploy has Gmail configured. */
+export async function GET() {
+  return NextResponse.json({ emailConfigured: isEmailConfigured() });
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -12,7 +21,7 @@ export async function POST(req: NextRequest) {
     }
 
     if (!isEmailConfigured()) {
-      console.warn("[contact] Gmail credentials not configured in .env.local");
+      console.warn("[contact] GMAIL_USER / GMAIL_APP_PASSWORD missing on this deploy");
       return NextResponse.json({ error: getEmailConfigError(), fallback: "mailto" }, { status: 503 });
     }
 
@@ -24,6 +33,13 @@ export async function POST(req: NextRequest) {
         ]),
         replyTo: email,
       });
+
+      try {
+        await upsertSubscriber(email);
+      } catch (err) {
+        console.error("[contact] failed to persist subscriber:", err instanceof Error ? err.message : err);
+      }
+
       return NextResponse.json({ success: true });
     }
 
@@ -44,9 +60,15 @@ export async function POST(req: NextRequest) {
       replyTo: email,
     });
 
+    try {
+      await createContactInquiry({ name, email, project, budget, message });
+    } catch (err) {
+      console.error("[contact] failed to persist inquiry:", err instanceof Error ? err.message : err);
+    }
+
     return NextResponse.json({ success: true });
   } catch (err) {
-    console.error("[contact/route] error:", err);
+    console.error("[contact/route] error:", err instanceof Error ? err.message : err);
     return NextResponse.json(
       { error: `Failed to send email. Please contact us directly at ${CONTACT_EMAIL}`, fallback: "mailto" },
       { status: 500 }

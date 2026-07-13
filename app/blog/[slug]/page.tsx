@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import BlogArticleBody from "@/components/BlogArticleBody";
-import BlogCard from "@/components/BlogCard";
 import BlogTableOfContents from "@/components/BlogTableOfContents";
 import StartProjectButton from "@/components/StartProjectButton";
 import {
   blogPosts,
   formatBlogDate,
+  formatBlogDateShort,
   getPostBySlug,
   getRelatedPosts,
   getTocFromSections,
@@ -67,153 +68,212 @@ export default async function BlogPostPage({ params }: Props) {
     );
   }
 
-  const related = getRelatedPosts(post);
+  const related = getRelatedPosts(post, 4);
   const toc = getTocFromSections(post.sections);
   const categoryLabel = getCategoryLabel(post.category);
 
   return (
     <PageShell>
-      <article className="bg-background">
-        {/* Header — Element Pack style */}
-        <div className="max-w-7xl mx-auto px-6 pt-10 md:pt-14 pb-8">
+      {/* Header — Element Pack style */}
+      <section className="bg-gradient-to-b from-surface-muted to-background pt-12 pb-0 border-b border-gray-100">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[60px]">
           <nav
-            className="flex flex-wrap items-center gap-x-2 gap-y-1 text-sm text-gray-400 mb-8"
+            className="flex items-center gap-2 text-[12px] text-gray-400 mb-6 flex-wrap"
             aria-label="Breadcrumb"
           >
             <Link href="/" className="hover:text-primary transition-colors">
               Home
             </Link>
-            <span className="text-gray-300">/</span>
+            <span aria-hidden="true">/</span>
             <Link href="/blog" className="hover:text-primary transition-colors">
               Blog
             </Link>
-            <span className="text-gray-300">/</span>
+            <span aria-hidden="true">/</span>
             <Link
               href={`/blog?category=${post.category}`}
               className="hover:text-primary transition-colors"
             >
               {categoryLabel}
             </Link>
-            <span className="text-gray-300">/</span>
-            <span className="text-gray-600 line-clamp-1">{post.title}</span>
+            <span aria-hidden="true">/</span>
+            <span className="text-navy line-clamp-1">{post.title}</span>
           </nav>
 
-          <h1 className="text-3xl md:text-[2.5rem] lg:text-[2.75rem] font-bold text-navy leading-[1.15] tracking-tight mb-6 max-w-4xl">
+          <h1 className="text-3xl sm:text-4xl lg:text-[42px] font-bold text-navy leading-tight max-w-4xl mb-5">
             {post.title}
           </h1>
 
-          <div className="flex flex-wrap items-center gap-2 text-sm text-gray-500 mb-5">
-            <span className="w-8 h-8 rounded-full bg-primary text-white font-bold flex items-center justify-center text-xs shrink-0">
+          <div className="flex items-center gap-2 pb-8 text-[13px] text-gray-400 flex-wrap">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-primary to-primary-dark flex items-center justify-center shrink-0 text-white text-[13px] font-bold">
               {post.author.name.charAt(0)}
+            </div>
+            <span className="font-medium text-[#3c4d6b] dark:text-gray-600">
+              {post.author.name}
             </span>
-            <span className="font-medium text-gray-700">{post.author.name}</span>
-            <span className="text-gray-300">·</span>
+            <span aria-hidden="true">·</span>
             <Link
               href={`/blog?category=${post.category}`}
-              className="hover:text-primary transition-colors"
+              className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-primary/10 text-primary hover:bg-primary/20 transition-colors uppercase tracking-wide"
             >
               {categoryLabel}
             </Link>
-            <span className="text-gray-300">·</span>
+            <span aria-hidden="true">·</span>
             <time dateTime={post.publishedAt}>
               {formatBlogDate(post.publishedAt)}
             </time>
           </div>
-
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-x-3 gap-y-2">
-              {post.tags.map((tag) => (
-                <span key={tag} className="text-sm text-gray-400">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
         </div>
+      </section>
 
-        {/* Content + sidebar */}
-        <div className="max-w-7xl mx-auto px-6 pb-16 md:pb-24">
-          <div className="grid lg:grid-cols-[minmax(0,1fr)_280px] gap-10 xl:gap-14 items-start">
-            <div className="min-w-0">
-              <BlogArticleBody sections={post.sections} />
+      <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[60px]">
+        <div className="blog-layout pt-12 pb-20">
+          <BlogTableOfContents items={toc} />
 
-              {/* Author bio */}
-              <div className="mt-14 pt-8 border-t border-gray-100 flex gap-4">
-                <span className="w-12 h-12 rounded-full bg-primary text-white font-bold flex items-center justify-center text-lg shrink-0">
-                  {post.author.name.charAt(0)}
-                </span>
-                <div>
-                  <p className="font-semibold text-navy">{post.author.name}</p>
-                  <p className="text-sm text-gray-500 mb-2">{post.author.role}</p>
-                  <p className="text-[15px] text-gray-600 leading-relaxed">
-                    Pixiio designs and builds high-converting websites for
-                    startups, SaaS companies, and local businesses worldwide.
-                  </p>
+          <article className="blog-article min-w-0" aria-label={post.title}>
+            {post.tags.length > 0 && (
+              <div className="pt-0 pb-4">
+                <div className="flex flex-wrap gap-2">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="inline-flex items-center px-3 py-1 rounded-full text-[12px] font-medium bg-gray-50 text-[#3c4d6b] dark:text-gray-600 border border-gray-100"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {!post.sections.some((s) => s.type === "image") && (
+              <figure className="mb-6">
+                <Image
+                  src={post.coverImage}
+                  alt={post.title}
+                  width={1200}
+                  height={675}
+                  priority
+                  className="w-full h-auto object-cover rounded-2xl border border-gray-100"
+                />
+              </figure>
+            )}
+
+            <BlogArticleBody sections={post.sections} />
+
+            {/* Author bio */}
+            <div className="mt-12 pt-8 border-t border-gray-100 flex gap-4">
+              <span className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-primary-dark text-white font-bold flex items-center justify-center text-lg shrink-0">
+                {post.author.name.charAt(0)}
+              </span>
+              <div>
+                <p className="font-semibold text-navy">{post.author.name}</p>
+                <p className="text-sm text-gray-400 mb-2">{post.author.role}</p>
+                <p className="text-[13px] text-gray-600 leading-relaxed">
+                  Pixiio designs and builds high-converting websites for
+                  startups, SaaS companies, and local businesses worldwide.
+                </p>
+              </div>
+            </div>
+          </article>
+
+          <aside className="blog-sidebar">
+            <div className="lg:sticky lg:top-24">
+              <div className="flex flex-col gap-6" aria-label="Sidebar">
+                {/* Related Articles */}
+                <div className="bg-surface-elevated rounded-2xl border border-gray-100 p-5">
+                  <h2 className="text-[13px] font-bold text-navy uppercase tracking-wider mb-4">
+                    Related Articles
+                  </h2>
+                  <ul className="flex flex-col gap-4" role="list">
+                    {related.map((relatedPost) => (
+                      <li key={relatedPost.slug}>
+                        <Link
+                          href={`/blog/${relatedPost.slug}`}
+                          className="group flex flex-col gap-1.5"
+                        >
+                          <div className="rounded-xl overflow-hidden aspect-[16/9] bg-surface-muted shrink-0">
+                            <Image
+                              src={relatedPost.coverImage}
+                              alt={relatedPost.title}
+                              width={400}
+                              height={225}
+                              className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-[1.04]"
+                            />
+                          </div>
+                          <span className="text-[12.5px] font-semibold text-navy leading-snug line-clamp-2 group-hover:text-primary transition-colors">
+                            {relatedPost.title}
+                          </span>
+                          <time
+                            dateTime={relatedPost.publishedAt}
+                            className="text-[11px] text-gray-400"
+                          >
+                            {formatBlogDateShort(relatedPost.publishedAt)}
+                          </time>
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Categories */}
+                <div className="bg-surface-elevated rounded-2xl border border-gray-100 p-5">
+                  <h2 className="text-[13px] font-bold text-navy uppercase tracking-wider mb-4">
+                    Categories
+                  </h2>
+                  <ul className="flex flex-col gap-1" role="list">
+                    <li>
+                      <Link
+                        href="/blog"
+                        className="flex items-center px-3 py-2 rounded-xl text-[13px] transition-colors text-[#3c4d6b] dark:text-gray-600 hover:bg-surface-muted"
+                      >
+                        All Articles
+                      </Link>
+                    </li>
+                    {blogCategories.map((cat) => (
+                      <li key={cat.slug}>
+                        <Link
+                          href={`/blog?category=${cat.slug}`}
+                          className={`flex items-center px-3 py-2 rounded-xl text-[13px] transition-colors ${
+                            post.category === cat.slug
+                              ? "bg-primary/10 text-primary font-semibold"
+                              : "text-[#3c4d6b] dark:text-gray-600 hover:bg-surface-muted"
+                          }`}
+                        >
+                          {cat.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* CTA */}
+                <div className="rounded-2xl overflow-hidden bg-gradient-to-br from-navy-solid via-[#152240] to-navy-solid p-5 flex flex-col gap-3 relative">
+                  <div
+                    className="absolute inset-0 opacity-30 pointer-events-none"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(circle at 65% 35%, var(--primary) 0%, transparent 65%)",
+                    }}
+                    aria-hidden="true"
+                  />
+                  <div className="relative z-10 flex flex-col gap-2">
+                    <p className="text-white text-[15px] font-bold leading-snug">
+                      Pixiio Design Agency
+                    </p>
+                    <p className="text-gray-400 text-[12px] leading-relaxed">
+                      We design conversion-ready websites for ambitious brands —
+                      WordPress, Elementor, SaaS & more.
+                    </p>
+                  </div>
+                  <div className="relative z-10">
+                    <StartProjectButton className="w-full justify-center" />
+                  </div>
                 </div>
               </div>
             </div>
-
-            <aside className="lg:sticky lg:top-28 space-y-6">
-              <BlogTableOfContents items={toc} />
-
-              <div className="rounded-xl border border-gray-200 bg-surface-elevated p-5 shadow-sm">
-                <h3 className="text-sm font-semibold text-navy mb-4 pb-3 border-b border-gray-100">
-                  Categories
-                </h3>
-                <ul className="space-y-2">
-                  <li>
-                    <Link
-                      href="/blog"
-                      className="text-sm text-gray-600 hover:text-primary transition-colors"
-                    >
-                      All Articles
-                    </Link>
-                  </li>
-                  {blogCategories.map((cat) => (
-                    <li key={cat.slug}>
-                      <Link
-                        href={`/blog?category=${cat.slug}`}
-                        className={`text-sm transition-colors ${
-                          post.category === cat.slug
-                            ? "text-primary font-semibold"
-                            : "text-gray-600 hover:text-primary"
-                        }`}
-                      >
-                        {cat.label}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="rounded-xl bg-navy-solid p-6 shadow-sm">
-                <p className="text-base font-bold text-white mb-1.5">
-                  Pixiio Design Agency
-                </p>
-                <p className="text-gray-400 text-xs leading-relaxed mb-5">
-                  We design conversion-ready websites for ambitious brands —
-                  WordPress, Elementor, SaaS & more.
-                </p>
-                <StartProjectButton />
-              </div>
-            </aside>
-          </div>
+          </aside>
         </div>
-      </article>
-
-      {/* Related articles */}
-      <section className="py-14 md:py-18 bg-gray-50 border-t border-gray-100">
-        <div className="max-w-7xl mx-auto px-6">
-          <h2 className="text-xl font-bold text-navy mb-8">
-            Related Articles
-          </h2>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            {related.map((relatedPost) => (
-              <BlogCard key={relatedPost.slug} post={relatedPost} />
-            ))}
-          </div>
-        </div>
-      </section>
+      </div>
     </PageShell>
   );
 }

@@ -3,7 +3,8 @@ import PageHero from "@/components/PageHero";
 import PageShell from "@/components/PageShell";
 import StartProjectButton from "@/components/StartProjectButton";
 import Testimonial from "@/components/Testimonial";
-import { stats, whyChooseReasons } from "@/lib/content";
+import WhyChooseUs from "@/components/WhyChooseUs";
+import { stats } from "@/lib/content";
 
 export const metadata: Metadata = {
   title: "Why Choose Us — Pixiio Design Agency",
@@ -37,31 +38,7 @@ export default function WhyUsPage() {
         </div>
       </section>
 
-      <section className="py-20 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {whyChooseReasons.map((reason) => (
-              <article
-                key={reason.title}
-                className="bg-surface-elevated rounded-3xl p-8 border border-gray-100"
-              >
-                <span className="text-primary text-2xl mb-4 block">
-                  {reason.icon}
-                </span>
-                <h2 className="font-display text-2xl text-gray-900 tracking-wide mb-3">
-                  {reason.title}
-                </h2>
-                <p className="text-gray-600 text-sm leading-relaxed mb-3">
-                  {reason.description}
-                </p>
-                <p className="text-gray-400 text-xs leading-relaxed">
-                  {reason.detail}
-                </p>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+      <WhyChooseUs showHeading={false} />
 
       <Testimonial />
 

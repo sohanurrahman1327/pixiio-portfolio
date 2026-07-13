@@ -4,11 +4,9 @@ import { CONTACT_EMAIL } from "@/lib/site-config";
 const PLACEHOLDER_PASSWORD = "your_16_char_app_password_here";
 
 export function isEmailConfigured(): boolean {
-  return !!(
-    process.env.GMAIL_USER &&
-    process.env.GMAIL_APP_PASSWORD &&
-    process.env.GMAIL_APP_PASSWORD !== PLACEHOLDER_PASSWORD
-  );
+  const user = process.env.GMAIL_USER?.trim();
+  const pass = process.env.GMAIL_APP_PASSWORD?.replace(/\s+/g, "").trim();
+  return !!(user && pass && pass !== PLACEHOLDER_PASSWORD);
 }
 
 export function getEmailConfigError(): string {
@@ -24,12 +22,23 @@ function getGmailAuth() {
 
 export function createMailTransporter() {
   const { user, pass } = getGmailAuth();
+
+  // Port 465 (implicit SSL) is far more reliable than 587/STARTTLS on
+  // serverless hosts like Vercel, where STARTTLS handshakes often hang.
+  // Override with SMTP_PORT=587 if your host requires it.
+  const port = Number(process.env.SMTP_PORT) || 465;
+  const secure = port === 465;
+
   return nodemailer.createTransport({
-    host: "smtp.gmail.com",
-    port: 587,
-    secure: false,
-    requireTLS: true,
+    host: process.env.SMTP_HOST?.trim() || "smtp.gmail.com",
+    port,
+    secure,
+    requireTLS: !secure,
     auth: { user, pass },
+    // Fail fast instead of letting the serverless function time out silently.
+    connectionTimeout: 10_000,
+    greetingTimeout: 10_000,
+    socketTimeout: 20_000,
   });
 }
 

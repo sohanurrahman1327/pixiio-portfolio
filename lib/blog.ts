@@ -533,6 +533,14 @@ export function formatBlogDate(iso: string): string {
   });
 }
 
+export function formatBlogDateShort(iso: string): string {
+  return new Date(iso).toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  });
+}
+
 export function getTocFromSections(sections: BlogSection[]): TocItem[] {
   const items: TocItem[] = [];
   let currentH2: TocItem | null = null;
