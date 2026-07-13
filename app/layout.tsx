@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Script from "next/script";
 import { Bebas_Neue, Inter } from "next/font/google";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
@@ -7,11 +6,7 @@ import { BookingProvider } from "@/lib/booking-context";
 import { ThemeProvider } from "@/lib/theme-context";
 import BookingModal from "@/components/BookingModal";
 import WhatsAppLiveChat from "@/components/WhatsAppLiveChat";
-import {
-  BOOT_PRELOADER_BOOTSTRAP,
-  BOOT_PRELOADER_SCRIPT,
-  BOOT_PRELOADER_STYLES,
-} from "@/lib/boot-preloader";
+import { BOOT_PRELOADER_SCRIPT, BOOT_PRELOADER_STYLES } from "@/lib/boot-preloader";
 import { getSiteUrl } from "@/lib/site-url";
 
 const bebasNeue = Bebas_Neue({
@@ -52,16 +47,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
-        {/* Blocking: hide page + decide pending/skipped before first paint */}
         <style dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_STYLES }} />
-        <script dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_BOOTSTRAP }} />
+        {/* Single sync script — never rely on next/script ordering */}
+        <script dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_SCRIPT }} />
       </head>
       <body className="min-h-full flex flex-col overflow-x-clip bg-background text-foreground">
-        <Script
-          id="pixiio-boot-preloader"
-          strategy="beforeInteractive"
-          dangerouslySetInnerHTML={{ __html: BOOT_PRELOADER_SCRIPT }}
-        />
         <ThemeProvider>
           <BookingProvider>
             <BookingModal />
