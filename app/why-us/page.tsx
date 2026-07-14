@@ -7,9 +7,10 @@ import WhyChooseUs from "@/components/WhyChooseUs";
 import { stats } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Why Choose Us — Pixiio Design Agency",
+  title: "Why Choose Us",
   description:
     "Discover why brands trust Pixiio for design-first UI, branding, and web experiences.",
+  alternates: { canonical: "/why-us" },
 };
 
 export default function WhyUsPage() {

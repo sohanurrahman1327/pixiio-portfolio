@@ -80,7 +80,7 @@ export default function CTABanner() {
     >
       {/* Content — pointer-events-none so chips can be grabbed over the full section */}
       <div className="relative z-10 max-w-7xl mx-auto px-6 pt-[50px] md:pt-[80px] pb-10 md:py-28 flex flex-col items-center justify-start md:justify-center text-center pointer-events-none h-full">
-        <h1 className="font-display text-[clamp(2.85rem,13.5vw,4.25rem)] md:text-[clamp(3.8rem,7.5vw,6.5rem)] leading-[0.92] md:leading-[0.92] tracking-wide text-white mb-4 md:mb-6 w-full max-w-[22rem] md:max-w-none mx-auto">
+        <h2 className="font-display text-[clamp(2.85rem,13.5vw,4.25rem)] md:text-[clamp(3.8rem,7.5vw,6.5rem)] leading-[0.92] md:leading-[0.92] tracking-wide text-white mb-4 md:mb-6 w-full max-w-[22rem] md:max-w-none mx-auto">
           READY TO BUILD
           <br />
           YOUR NEXT{" "}
@@ -88,7 +88,7 @@ export default function CTABanner() {
           <span className="bg-gradient-to-r from-primary to-primary-dark bg-clip-text text-transparent">
             DIGITAL PRODUCT?
           </span>
-        </h1>
+        </h2>
 
         <p className="text-gray-300 text-sm md:text-base leading-snug md:leading-relaxed max-w-[19rem] md:max-w-2xl mx-auto mb-6 md:mb-8 line-clamp-3 md:line-clamp-none">
           We help ambitious brands launch websites, landing pages, SaaS products & digital

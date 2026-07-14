@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Ticker from "@/components/Ticker";
@@ -12,11 +13,26 @@ import FAQ from "@/components/FAQ";
 import CTABanner from "@/components/CTABanner";
 import Footer from "@/components/Footer";
 
+export const metadata: Metadata = {
+  title: {
+    absolute: "Pixiio — Design-Led Creative Agency for UI, Branding & Websites",
+  },
+  description:
+    "Pixiio designs brands that lead and inspire. We deliver UI/UX design, branding, website design, and marketing assets for startups, SaaS, and growing businesses worldwide.",
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: "Pixiio — Design-Led Creative Agency for UI, Branding & Websites",
+    description:
+      "Pixiio designs brands that lead and inspire. We deliver UI/UX design, branding, website design, and marketing assets for startups, SaaS, and growing businesses worldwide.",
+    url: "/",
+  },
+};
+
 export default function Home() {
   return (
   <>
     <Header />
-    <main className="overflow-x-clip">
+    <main id="main-content" className="overflow-x-clip">
       <Hero />
       <Ticker />
       <Services />

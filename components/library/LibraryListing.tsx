@@ -1,11 +1,5 @@
-"use client";
-
-import { useSearchParams } from "next/navigation";
-import { Suspense } from "react";
-import type { LibraryType } from "@/lib/library-types";
+import type { LibraryCategory, LibraryType, PlatformSlug } from "@/lib/library-types";
 import { filterItems } from "@/lib/library";
-import type { LibraryCategory } from "@/lib/library-types";
-import type { PlatformSlug } from "@/lib/library-types";
 import { libraryCategories } from "@/lib/library-categories";
 import { libraryPlatforms } from "@/lib/library-platforms";
 import LibraryCard from "@/components/library/LibraryCard";
@@ -16,41 +10,64 @@ import LibrarySearch from "@/components/library/LibrarySearch";
 type Props = {
   type: LibraryType;
   basePath: string;
+  heroTitle: string;
+  platform?: string;
+  category?: string;
+  tag?: string;
+  query?: string;
 };
 
-function isPlatform(v: string | null): v is PlatformSlug {
-  return libraryPlatforms.some((p) => p.slug === v);
+function isPlatform(v: string | undefined): v is PlatformSlug {
+  return !!v && libraryPlatforms.some((p) => p.slug === v);
 }
 
-function isCategory(v: string | null): v is LibraryCategory {
-  return libraryCategories.some((c) => c.slug === v);
+function isCategory(v: string | undefined): v is LibraryCategory {
+  return !!v && libraryCategories.some((c) => c.slug === v);
 }
 
-function LibraryListingInner({ type, basePath }: Props) {
-  const searchParams = useSearchParams();
-  const platformParam = searchParams.get("platform");
-  const categoryParam = searchParams.get("category");
-  const tagParam = searchParams.get("tag");
-  const query = searchParams.get("q") ?? "";
+/**
+ * Rendered server-side (no `useSearchParams`) so search engines and other
+ * non-JS crawlers receive the fully filtered listing in the initial HTML
+ * instead of a client-only "Loading library…" placeholder.
+ */
+export default function LibraryListing({
+  type,
+  basePath,
+  heroTitle,
+  platform,
+  category,
+  tag,
+  query,
+}: Props) {
+  const activePlatform = isPlatform(platform) ? platform : undefined;
+  const activeCategory = isCategory(category) ? category : undefined;
 
   const items = filterItems({
     type,
-    platform: isPlatform(platformParam) ? platformParam : undefined,
-    category: isCategory(categoryParam) ? categoryParam : undefined,
-    tag: tagParam ?? undefined,
+    platform: activePlatform,
+    category: activeCategory,
+    tag: tag || undefined,
     query: query || undefined,
   });
 
   return (
     <div className="max-w-[1600px] mx-auto px-4 md:px-6 py-6">
-      <LibrarySearch basePath={basePath} />
+      <LibrarySearch
+        basePath={basePath}
+        initialQuery={query ?? ""}
+        currentParams={{ platform: activePlatform, category: activeCategory, tag, q: query }}
+      />
 
-      <LibraryHero />
+      <LibraryHero title={heroTitle} />
 
       <div className="flex flex-col lg:flex-row gap-8 lg:gap-10 mt-8">
-        <Suspense fallback={<div className="w-[240px] shrink-0" />}>
-          <LibrarySidebar basePath={basePath} />
-        </Suspense>
+        <LibrarySidebar
+          basePath={basePath}
+          activePlatform={activePlatform}
+          activeCategory={activeCategory}
+          activeTag={tag}
+          activeQuery={query}
+        />
 
         <div className="flex-1 min-w-0">
           <p className="text-sm text-gray-400 mb-6">
@@ -71,19 +88,5 @@ function LibraryListingInner({ type, basePath }: Props) {
         </div>
       </div>
     </div>
-  );
-}
-
-export default function LibraryListing(props: Props) {
-  return (
-    <Suspense
-      fallback={
-        <div className="max-w-[1600px] mx-auto px-6 py-20 text-center text-gray-400 text-sm">
-          Loading library…
-        </div>
-      }
-    >
-      <LibraryListingInner {...props} />
-    </Suspense>
   );
 }

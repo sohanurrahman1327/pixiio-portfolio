@@ -1,10 +1,42 @@
-"use client";
-
+import type { Metadata } from "next";
 import { services } from "@/lib/content";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import PageShell from "@/components/PageShell";
+import { jsonLdScript, breadcrumbSchema, serviceSchema } from "@/lib/schema";
+
+type Props = {
+  params: Promise<{ slug: string }>;
+};
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
+
+  if (!service) {
+    return {
+      title: "Service Not Found",
+      description: "The service you're looking for doesn't exist.",
+    };
+  }
+
+  return {
+    title: `${service.title} Services`,
+    description: service.longDescription,
+    alternates: { canonical: `/services/${service.slug}` },
+    openGraph: {
+      title: `${service.title} Services | Pixiio`,
+      description: service.longDescription,
+      url: `/services/${service.slug}`,
+      images: [{ url: service.image }],
+    },
+  };
+}
+
+export async function generateStaticParams() {
+  return services.map((service) => ({ slug: service.slug }));
+}
 
 /* ─── Process steps for each service ─── */
 const processSteps: Record<string, Array<{ title: string; description: string; icon: string }>> = {
@@ -136,17 +168,32 @@ function AnimatedArrowIcon() {
   );
 }
 
-export default function ServicePage({ params }: { params: { slug: string } }) {
-  const service = services.find((s) => s.slug === params.slug);
+export default async function ServicePage({ params }: Props) {
+  const { slug } = await params;
+  const service = services.find((s) => s.slug === slug);
 
   if (!service) {
     notFound();
   }
 
-  const steps = processSteps[params.slug] || [];
+  const steps = processSteps[slug] || [];
 
   return (
     <PageShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(serviceSchema(service))}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Services", path: "/services" },
+            { name: service.title, path: `/services/${service.slug}` },
+          ])
+        )}
+      />
       {/* ── Hero Section ── */}
       <section className="bg-gradient-to-br from-surface-muted to-white py-20">
         <div className="max-w-7xl mx-auto px-6">
@@ -154,13 +201,13 @@ export default function ServicePage({ params }: { params: { slug: string } }) {
             {/* Left: Content */}
             <div>
               <p className="text-[11px] font-bold tracking-[0.25em] text-primary mb-3 uppercase">
-                {service.title}
+                Pixiio {service.title} Services
               </p>
               <h1 className="font-display text-[clamp(3.8rem,7.5vw,6.5rem)] leading-[0.92] tracking-wide text-navy mb-6">
-                {service.longDescription}
+                {service.title} SERVICES
               </h1>
               <p className="text-gray-600 text-base leading-relaxed max-w-md mb-8">
-                We deliver comprehensive {service.title.toLowerCase()} solutions tailored to your unique business needs and goals.
+                {service.longDescription}
               </p>
               <Link
                 href="/contact"

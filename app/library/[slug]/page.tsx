@@ -6,6 +6,7 @@ import {
   getSimilarItems,
   libraryItems,
 } from "@/lib/library";
+import { breadcrumbSchema, jsonLdScript } from "@/lib/schema";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -15,11 +16,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const item = getItemBySlug(slug);
   if (!item) {
-    return { title: "Design Not Found — Pixiio Library" };
+    return { title: "Design Not Found" };
   }
   return {
-    title: `${item.title} | Pixiio Library`,
+    title: `${item.title} — Design Library`,
     description: item.excerpt,
+    alternates: { canonical: `/library/${item.slug}` },
+    openGraph: {
+      title: `${item.title} — Design Library`,
+      description: item.excerpt,
+      url: `/library/${item.slug}`,
+      images: [{ url: item.previewImage }],
+    },
   };
 }
 
@@ -53,5 +61,19 @@ export default async function LibraryDetailPage({ params }: Props) {
   }
 
   const similar = getSimilarItems(item);
-  return <LibraryDetailView item={item} similar={similar} />;
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Library", path: "/library/components" },
+            { name: item.title, path: `/library/${item.slug}` },
+          ])
+        )}
+      />
+      <LibraryDetailView item={item} similar={similar} />
+    </>
+  );
 }

@@ -50,7 +50,7 @@ function RightColumn() {
 export default function HeroMarquee() {
   return (
     /* absolute inset-0 — fills the relative parent in Hero exactly */
-    <div className="absolute inset-0 overflow-hidden">
+    <div className="absolute inset-0 overflow-hidden" aria-hidden="true">
       {/* Top fade — acts as the top gap */}
       <div className="absolute inset-x-0 top-0 h-20 bg-gradient-to-b from-surface-muted to-transparent z-10 pointer-events-none" />
       {/* Bottom fade — acts as the bottom gap */}

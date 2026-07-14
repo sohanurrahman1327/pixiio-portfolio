@@ -44,9 +44,10 @@ const timeline = [
 ];
 
 export const metadata: Metadata = {
-  title: "Design Process — Pixiio Design Agency",
+  title: "Design Process",
   description:
     "Our 4-step design process from Illustrator logo to live WordPress or Framer website.",
+  alternates: { canonical: "/process" },
 };
 
 export default function ProcessPage() {

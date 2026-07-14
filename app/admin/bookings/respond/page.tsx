@@ -9,7 +9,7 @@ import { getBookingById, getBookingByToken } from "@/lib/booking-store";
 import { verifyBookingToken } from "@/lib/booking-token";
 
 export const metadata: Metadata = {
-  title: "Respond to Booking — Pixiio",
+  title: "Respond to Booking",
   robots: { index: false, follow: false },
 };
 

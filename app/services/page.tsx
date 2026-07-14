@@ -7,9 +7,10 @@ import StartProjectButton from "@/components/StartProjectButton";
 import { services } from "@/lib/content";
 
 export const metadata: Metadata = {
-  title: "Services — Pixiio Design Agency",
+  title: "Services",
   description:
     "UI design, branding, website design, and marketing services for modern brands.",
+  alternates: { canonical: "/services" },
 };
 
 export default function ServicesPage() {

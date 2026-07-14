@@ -5,8 +5,9 @@ import { mailtoLinks } from "@/lib/mailto";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy — Pixiio Design Agency",
+  title: "Privacy Policy",
   description: "How Pixiio collects, uses, and protects your personal information.",
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {

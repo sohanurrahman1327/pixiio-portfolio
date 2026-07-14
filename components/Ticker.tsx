@@ -10,7 +10,10 @@ export default function Ticker() {
   const repeated = [...items, ...items];
 
   return (
-    <div className="bg-background overflow-hidden border-y border-border-subtle transition-colors duration-300">
+    <div
+      className="bg-background overflow-hidden border-y border-border-subtle transition-colors duration-300"
+      aria-hidden="true"
+    >
       <div className="marquee-left flex whitespace-nowrap w-max items-stretch divide-x divide-border-subtle">
         {repeated.map((item, i) => (
           <span

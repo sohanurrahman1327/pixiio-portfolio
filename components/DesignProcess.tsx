@@ -84,10 +84,14 @@ export default function DesignProcess() {
               const staggerDelay = hasScrolled ? index * 0.1 : 0;
 
               return (
-                <div
+                <button
+                  type="button"
                   key={step.step}
-                  className="relative group cursor-pointer"
+                  aria-pressed={isActive}
+                  aria-label={`Step ${step.step}: ${step.title}`}
+                  className="relative group cursor-pointer w-full text-left bg-transparent"
                   onMouseEnter={() => handleStepHover(index)}
+                  onFocus={() => handleStepHover(index)}
                   onClick={() => handleStepClick(index)}
                 >
                   {/* Step Label and Title Row */}
@@ -145,7 +149,7 @@ export default function DesignProcess() {
                       />
                     )}
                   </div>
-                </div>
+                </button>
               );
             })}
           </div>

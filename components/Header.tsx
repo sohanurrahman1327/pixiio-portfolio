@@ -5,12 +5,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import OffcanvasMenu from "@/components/OffcanvasMenu";
 import PixiioLogo from "@/components/PixiioLogo";
+import ServicesMenu from "@/components/ServicesMenu";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useBooking } from "@/lib/booking-context";
 
 const headerNavLinks = [
-  { label: "Services", href: "/services" },
-  { label: "Library", href: "/library/components" },
   { label: "Case Studies", href: "/work" },
   { label: "Blog", href: "/blog" },
   { label: "About Us", href: "/why-us" },
@@ -32,11 +31,9 @@ export default function Header() {
 
         {/* Desktop Nav */}
         <nav className="hidden lg:flex items-center gap-0.5" aria-label="Main navigation">
+          <ServicesMenu />
           {headerNavLinks.map((link) => {
-            const isActive =
-              pathname === link.href ||
-              (link.href === "/library/components" &&
-                pathname.startsWith("/library"));
+            const isActive = pathname === link.href;
             return (
               <Link
                 key={link.href}

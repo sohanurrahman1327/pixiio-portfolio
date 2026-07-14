@@ -1,34 +1,43 @@
-"use client";
-
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
 import { libraryCategories, libraryTags } from "@/lib/library-categories";
 import { libraryPlatforms } from "@/lib/library-platforms";
-import type { LibraryCategory } from "@/lib/library-types";
 
 type Props = {
   basePath: string;
+  activePlatform?: string;
+  activeCategory?: string;
+  activeTag?: string;
+  activeQuery?: string;
 };
 
 function buildHref(
   basePath: string,
-  params: URLSearchParams,
+  current: Record<string, string | undefined>,
   key: string,
   value: string | null
 ) {
-  const next = new URLSearchParams(params.toString());
-  if (value === null) next.delete(key);
-  else next.set(key, value);
+  const next = new URLSearchParams();
+  for (const [k, v] of Object.entries(current)) {
+    if (v && k !== key) next.set(k, v);
+  }
+  if (value !== null) next.set(key, value);
   const qs = next.toString();
   return qs ? `${basePath}?${qs}` : basePath;
 }
 
-export default function LibrarySidebar({ basePath }: Props) {
-  const searchParams = useSearchParams();
-  const pathname = usePathname();
-  const activePlatform = searchParams.get("platform");
-  const activeCategory = searchParams.get("category");
-  const activeTag = searchParams.get("tag");
+export default function LibrarySidebar({
+  basePath,
+  activePlatform,
+  activeCategory,
+  activeTag,
+  activeQuery,
+}: Props) {
+  const current = {
+    platform: activePlatform,
+    category: activeCategory,
+    tag: activeTag,
+    q: activeQuery,
+  };
 
   const pillClass = (active: boolean) =>
     `inline-flex items-center px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
@@ -46,7 +55,7 @@ export default function LibrarySidebar({ basePath }: Props) {
         <ul className="space-y-1">
           <li>
             <Link
-              href={buildHref(basePath, searchParams, "platform", null)}
+              href={buildHref(basePath, current, "platform", null)}
               className={`flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm transition-colors ${
                 !activePlatform
                   ? "bg-primary/10 text-primary font-medium"
@@ -59,7 +68,7 @@ export default function LibrarySidebar({ basePath }: Props) {
           {libraryPlatforms.map((p) => (
             <li key={p.slug}>
               <Link
-                href={buildHref(basePath, searchParams, "platform", p.slug)}
+                href={buildHref(basePath, current, "platform", p.slug)}
                 className={`flex items-center gap-2.5 px-2 py-2 rounded-lg text-sm transition-colors ${
                   activePlatform === p.slug
                     ? "bg-primary/10 text-primary font-medium"
@@ -82,7 +91,7 @@ export default function LibrarySidebar({ basePath }: Props) {
         </h3>
         <div className="flex flex-wrap gap-1.5">
           <Link
-            href={buildHref(basePath, searchParams, "category", null)}
+            href={buildHref(basePath, current, "category", null)}
             className={pillClass(!activeCategory)}
           >
             All
@@ -90,7 +99,7 @@ export default function LibrarySidebar({ basePath }: Props) {
           {libraryCategories.map((cat) => (
             <Link
               key={cat.slug}
-              href={buildHref(basePath, searchParams, "category", cat.slug)}
+              href={buildHref(basePath, current, "category", cat.slug)}
               className={pillClass(activeCategory === cat.slug)}
             >
               {cat.label}
@@ -105,7 +114,7 @@ export default function LibrarySidebar({ basePath }: Props) {
         </h3>
         <div className="flex flex-wrap gap-1.5">
           <Link
-            href={buildHref(basePath, searchParams, "tag", null)}
+            href={buildHref(basePath, current, "tag", null)}
             className={pillClass(!activeTag)}
           >
             All
@@ -113,7 +122,7 @@ export default function LibrarySidebar({ basePath }: Props) {
           {libraryTags.map((tag) => (
             <Link
               key={tag}
-              href={buildHref(basePath, searchParams, "tag", tag.toLowerCase())}
+              href={buildHref(basePath, current, "tag", tag.toLowerCase())}
               className={pillClass(activeTag === tag.toLowerCase())}
             >
               {tag}
@@ -122,11 +131,8 @@ export default function LibrarySidebar({ basePath }: Props) {
         </div>
       </div>
 
-      {(activePlatform || activeCategory || activeTag || searchParams.get("q")) && (
-        <Link
-          href={pathname}
-          className="text-xs text-primary font-medium hover:underline"
-        >
+      {(activePlatform || activeCategory || activeTag || activeQuery) && (
+        <Link href={basePath} className="text-xs text-primary font-medium hover:underline">
           Clear all filters
         </Link>
       )}

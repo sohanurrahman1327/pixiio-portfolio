@@ -4,6 +4,7 @@ import Link from "next/link";
 import PageShell from "@/components/PageShell";
 import StartProjectButton from "@/components/StartProjectButton";
 import { featuredWorkImages } from "@/lib/images";
+import { breadcrumbSchema, jsonLdScript } from "@/lib/schema";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -21,8 +22,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${project.title} — ${project.subtitle} | Pixiio Design`,
+    title: `${project.title} — ${project.subtitle}`,
     description: project.description,
+    alternates: { canonical: `/work/${project.slug}` },
+    openGraph: {
+      title: `${project.title} — ${project.subtitle}`,
+      description: project.description,
+      url: `/work/${project.slug}`,
+      images: [{ url: project.image }],
+      type: "article",
+    },
   };
 }
 
@@ -67,6 +76,16 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <PageShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Work", path: "/work" },
+            { name: project.title, path: `/work/${project.slug}` },
+          ])
+        )}
+      />
       {/* Hero Section */}
       <section className="bg-gradient-to-b from-gray-50 to-white py-12 md:py-20">
         <div className="max-w-7xl mx-auto px-6">

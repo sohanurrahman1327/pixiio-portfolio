@@ -5,8 +5,9 @@ import { mailtoLinks } from "@/lib/mailto";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions — Pixiio Design Agency",
+  title: "Terms & Conditions",
   description: "Terms and conditions governing the use of Pixiio's services.",
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {

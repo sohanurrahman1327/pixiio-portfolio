@@ -9,7 +9,7 @@ export default function PageShell({
   return (
     <>
       <Header />
-      <main className="flex-1 overflow-x-clip">{children}</main>
+      <main id="main-content" className="flex-1 overflow-x-clip">{children}</main>
       <Footer />
     </>
   );

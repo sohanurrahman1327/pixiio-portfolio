@@ -8,11 +8,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "But here's the reality: many businesses invest thousands of dollars in a website redesign only to end up with a prettier website that performs no better than the old one.",
-  },
-  {
-    type: "paragraph",
-    text: "Why? Because they focus on how the website looks, instead of how it performs.",
+    text: "But here's the reality: many businesses invest thousands of dollars in a website redesign only to end up with a prettier website that performs no better than the old one. Why? Because they focus on how the website looks, instead of how it performs.",
   },
   {
     type: "paragraph",
@@ -138,11 +134,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Before replacing your current website, identify what's already working.",
-  },
-  {
-    type: "paragraph",
-    text: "Review:",
+    text: "Before replacing your current website, identify what's already working. Review:",
   },
   {
     type: "heading",
@@ -211,11 +203,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your website should be designed for your customers, not for your internal team.",
-  },
-  {
-    type: "paragraph",
-    text: "Ask questions like:",
+    text: "Your website should be designed for your customers, not for your internal team. Ask questions like:",
   },
   {
     type: "list",
@@ -254,11 +242,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Instead of copying competitors, study them.",
-  },
-  {
-    type: "paragraph",
-    text: "Look at:",
+    text: "Instead of copying competitors, study them. Look at:",
   },
   {
     type: "list",
@@ -275,11 +259,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Then identify opportunities where your website can provide a better experience.",
-  },
-  {
-    type: "paragraph",
-    text: "For example, if every competitor has a long, cluttered homepage, a cleaner, faster, and more focused experience can become your competitive advantage.",
+    text: "Then identify opportunities where your website can provide a better experience. For example, if every competitor has a long, cluttered homepage, a cleaner, faster, and more focused experience can become your competitive advantage.",
   },
 
   {
@@ -290,11 +270,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "One of the biggest mistakes businesses make is launching a redesigned website without considering SEO.",
-  },
-  {
-    type: "paragraph",
-    text: "As a result:",
+    text: "One of the biggest mistakes businesses make is launching a redesigned website without considering SEO. As a result:",
   },
   {
     type: "list",
@@ -339,11 +315,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A visually attractive website isn't enough if visitors struggle to navigate it. Good user experience means making it easy for people to find information, understand your value, and take action.",
-  },
-  {
-    type: "paragraph",
-    text: "As you review your current website, ask yourself:",
+    text: "A visually attractive website isn't enough if visitors struggle to navigate it. Good user experience means making it easy for people to find information, understand your value, and take action. As you review your current website, ask yourself:",
   },
   {
     type: "list",
@@ -368,15 +340,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many businesses redesign their website but reuse outdated content. That usually leads to the same weak results with a new design.",
-  },
-  {
-    type: "paragraph",
-    text: "Instead of copying everything from your old site, review every page and ask: Does this page still support our business goals?",
-  },
-  {
-    type: "paragraph",
-    text: "Update:",
+    text: "Many businesses redesign their website but reuse outdated content. That usually leads to the same weak results with a new design. Instead of copying everything from your old site, review every page and ask: Does this page still support our business goals? Update:",
   },
   {
     type: "list",
@@ -415,15 +379,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A website redesign is one of the best opportunities to improve your search visibility.",
-  },
-  {
-    type: "paragraph",
-    text: "Rather than targeting a single keyword on each page, build content around a topic.",
-  },
-  {
-    type: "paragraph",
-    text: "For example, a service page about Website Redesign can naturally include related phrases such as:",
+    text: "A website redesign is one of the best opportunities to improve your search visibility. Rather than targeting a single keyword on each page, build content around a topic. For example, a service page about Website Redesign can naturally include related phrases such as:",
   },
   {
     type: "list",
@@ -455,15 +411,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Speed directly affects user experience, search rankings, and conversions.",
-  },
-  {
-    type: "paragraph",
-    text: "Studies consistently show that even a one-second delay can reduce conversions and increase bounce rates.",
-  },
-  {
-    type: "paragraph",
-    text: "Common causes of slow websites include:",
+    text: "Speed directly affects user experience, search rankings, and conversions. Studies consistently show that even a one-second delay can reduce conversions and increase bounce rates. Common causes of slow websites include:",
   },
   {
     type: "list",
@@ -478,11 +426,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "During your redesign, prioritize performance from the beginning instead of treating it as an afterthought.",
-  },
-  {
-    type: "paragraph",
-    text: "A fast website creates a better experience for both users and search engines.",
+    text: "During your redesign, prioritize performance from the beginning instead of treating it as an afterthought. A fast website creates a better experience for both users and search engines.",
   },
 
   {
@@ -493,11 +437,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "More than half of website traffic now comes from mobile devices. Yet many businesses still design primarily for desktop screens.",
-  },
-  {
-    type: "paragraph",
-    text: "Review your website on different devices and check:",
+    text: "More than half of website traffic now comes from mobile devices. Yet many businesses still design primarily for desktop screens. Review your website on different devices and check:",
   },
   {
     type: "list",
@@ -525,15 +465,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A common redesign mistake is assuming visitors will automatically know what to do next.",
-  },
-  {
-    type: "paragraph",
-    text: "Instead, every important page should guide users toward a specific action.",
-  },
-  {
-    type: "paragraph",
-    text: "Examples include:",
+    text: "A common redesign mistake is assuming visitors will automatically know what to do next. Instead, every important page should guide users toward a specific action. Examples include:",
   },
   {
     type: "list",
@@ -559,11 +491,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "People rarely buy from websites they don't trust. Trust is built through clear evidence—not just claims.",
-  },
-  {
-    type: "paragraph",
-    text: "Consider adding:",
+    text: "People rarely buy from websites they don't trust. Trust is built through clear evidence—not just claims. Consider adding:",
   },
   {
     type: "list",
@@ -847,11 +775,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If your current website has a solid structure and only needs visual or content improvements, a redesign may be enough.",
-  },
-  {
-    type: "paragraph",
-    text: "If it suffers from technical issues, poor performance, outdated architecture, or scalability limitations, rebuilding may be the better long-term investment.",
+    text: "If your current website has a solid structure and only needs visual or content improvements, a redesign may be enough. If it suffers from technical issues, poor performance, outdated architecture, or scalability limitations, rebuilding may be the better long-term investment.",
   },
   {
     type: "heading",
@@ -967,19 +891,11 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A successful website isn't measured by compliments—it's measured by business results.",
+    text: "A successful website isn't measured by compliments—it's measured by business results. If your website attracts qualified visitors, builds trust, answers customer questions, and guides people toward taking action, it's doing its job.",
   },
   {
     type: "paragraph",
-    text: "If your website attracts qualified visitors, builds trust, answers customer questions, and guides people toward taking action, it's doing its job.",
-  },
-  {
-    type: "paragraph",
-    text: "A redesign is an opportunity to improve every stage of the customer journey, from the first impression to the final conversion.",
-  },
-  {
-    type: "paragraph",
-    text: "Approach it strategically, make decisions based on user needs and business goals, and focus on long-term performance rather than short-term trends.",
+    text: "A redesign is an opportunity to improve every stage of the customer journey, from the first impression to the final conversion. Approach it strategically, make decisions based on user needs and business goals, and focus on long-term performance rather than short-term trends.",
   },
 
   {
@@ -990,11 +906,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "At Pixiio, we help startups, SaaS companies, WordPress product businesses, and growing brands build websites that are designed to perform—not just impress.",
-  },
-  {
-    type: "paragraph",
-    text: "Our approach combines:",
+    text: "At Pixiio, we help startups, SaaS companies, WordPress product businesses, and growing brands build websites that are designed to perform—not just impress. Our approach combines:",
   },
   {
     type: "list",

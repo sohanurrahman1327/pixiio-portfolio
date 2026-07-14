@@ -4,16 +4,23 @@ import PageHero from "@/components/PageHero";
 import PageShell from "@/components/PageShell";
 import FAQ from "@/components/FAQ";
 import WhatsappButton from "@/components/WhatsappButton";
+import { faqs } from "@/lib/content";
+import { faqPageSchema, jsonLdScript } from "@/lib/schema";
 
 export const metadata: Metadata = {
-  title: "Quick Help & FAQ — Pixiio Design Agency",
+  title: "Quick Help & FAQ",
   description:
     "Answers to common questions about our design services, process, pricing, and timelines.",
+  alternates: { canonical: "/faq" },
 };
 
 export default function FaqPage() {
   return (
     <PageShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(faqPageSchema(faqs))}
+      />
       <PageHero
         label="SUPPORT"
         title="QUICK HELP"
