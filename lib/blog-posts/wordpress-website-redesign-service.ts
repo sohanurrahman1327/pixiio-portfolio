@@ -4,27 +4,11 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   // ——— Part 1 ———
   {
     type: "paragraph",
-    text: "Your website looked modern when it launched.",
+    text: "Your website looked modern when it launched. The layout felt fresh, the colors matched your brand, and your team was excited to share it with customers. Fast forward three years.",
   },
   {
     type: "paragraph",
-    text: "The layout felt fresh, the colors matched your brand, and your team was excited to share it with customers.",
-  },
-  {
-    type: "paragraph",
-    text: "Fast forward three years.",
-  },
-  {
-    type: "paragraph",
-    text: "Your competitors have improved their websites. Customer expectations have changed. Mobile traffic has increased. Google has updated its search algorithms.",
-  },
-  {
-    type: "paragraph",
-    text: "And suddenly, the same website that once felt modern is no longer helping your business grow.",
-  },
-  {
-    type: "paragraph",
-    text: "This happens more often than most business owners realize.",
+    text: "Your competitors have improved their websites. Customer expectations have changed. Mobile traffic has increased. Google has updated its search algorithms. And suddenly, the same website that once felt modern is no longer helping your business grow. This happens more often than most business owners realize.",
   },
   {
     type: "paragraph",
@@ -32,11 +16,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A successful redesign should improve how people discover, understand, and trust your business. It should remove friction, strengthen your online presence, and increase the likelihood that visitors become customers.",
-  },
-  {
-    type: "paragraph",
-    text: "At Pixiio, we believe a redesign is a business decision—not just a design project.",
+    text: "A successful redesign should improve how people discover, understand, and trust your business. It should remove friction, strengthen your online presence, and increase the likelihood that visitors become customers. At Pixiio, we believe a redesign is a business decision—not just a design project.",
   },
   {
     type: "paragraph",
@@ -166,11 +146,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "WordPress remains one of the world's most trusted content management systems because it offers flexibility, scalability, and long-term control.",
-  },
-  {
-    type: "paragraph",
-    text: "Benefits include:",
+    text: "WordPress remains one of the world's most trusted content management systems because it offers flexibility, scalability, and long-term control. Benefits include:",
   },
   {
     type: "list",
@@ -260,11 +236,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Before changing anything, we evaluate the current website.",
-  },
-  {
-    type: "paragraph",
-    text: "This includes:",
+    text: "Before changing anything, we evaluate the current website. This includes:",
   },
   {
     type: "list",
@@ -289,11 +261,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "This is where the redesign takes shape.",
-  },
-  {
-    type: "paragraph",
-    text: "We define:",
+    text: "This is where the redesign takes shape. We define:",
   },
   {
     type: "list",
@@ -318,11 +286,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Only after strategy is complete do we begin visual design.",
-  },
-  {
-    type: "paragraph",
-    text: "Every section is created to support:",
+    text: "Only after strategy is complete do we begin visual design. Every section is created to support:",
   },
   {
     type: "list",
@@ -347,15 +311,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many redesign projects fail because teams skip discovery and jump directly into design.",
-  },
-  {
-    type: "paragraph",
-    text: "Without understanding your audience, goals, and existing performance, decisions are based on assumptions rather than data.",
-  },
-  {
-    type: "paragraph",
-    text: "A thoughtful discovery process helps answer questions like:",
+    text: "Many redesign projects fail because teams skip discovery and jump directly into design. Without understanding your audience, goals, and existing performance, decisions are based on assumptions rather than data. A thoughtful discovery process helps answer questions like:",
   },
   {
     type: "list",
@@ -410,11 +366,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "One of the biggest mistakes businesses make during a redesign is accidentally destroying years of SEO progress.",
-  },
-  {
-    type: "paragraph",
-    text: "Common SEO mistakes include:",
+    text: "One of the biggest mistakes businesses make during a redesign is accidentally destroying years of SEO progress. Common SEO mistakes include:",
   },
   {
     type: "list",
@@ -449,11 +401,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many redesign projects focus heavily on animations, gradients, and visual effects. While modern design matters, clarity matters more.",
-  },
-  {
-    type: "paragraph",
-    text: "Ask yourself:",
+    text: "Many redesign projects focus heavily on animations, gradients, and visual effects. While modern design matters, clarity matters more. Ask yourself:",
   },
   {
     type: "list",
@@ -578,11 +526,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Visitors expect websites to load quickly. Google expects the same. A slow website creates frustration before visitors even read your content.",
-  },
-  {
-    type: "paragraph",
-    text: "Performance optimization should include:",
+    text: "Visitors expect websites to load quickly. Google expects the same. A slow website creates frustration before visitors even read your content. Performance optimization should include:",
   },
   {
     type: "list",
@@ -619,11 +563,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Accessibility isn't only about compliance. It's about making your website usable for everyone.",
-  },
-  {
-    type: "paragraph",
-    text: "A redesigned website should include:",
+    text: "Accessibility isn't only about compliance. It's about making your website usable for everyone. A redesigned website should include:",
   },
   {
     type: "list",
@@ -794,11 +734,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A website redesign is a significant investment. Unfortunately, many businesses focus on aesthetics while overlooking the factors that actually drive growth.",
-  },
-  {
-    type: "paragraph",
-    text: "Avoid these common mistakes to maximize the return on your investment.",
+    text: "A website redesign is a significant investment. Unfortunately, many businesses focus on aesthetics while overlooking the factors that actually drive growth. Avoid these common mistakes to maximize the return on your investment.",
   },
   {
     type: "heading",
@@ -808,11 +744,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "One of the biggest reasons redesign projects fail is the lack of a clear objective.",
-  },
-  {
-    type: "paragraph",
-    text: "Before starting, ask:",
+    text: "One of the biggest reasons redesign projects fail is the lack of a clear objective. Before starting, ask:",
   },
   {
     type: "list",
@@ -836,11 +768,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many websites already have valuable SEO assets.",
-  },
-  {
-    type: "paragraph",
-    text: "During a redesign, businesses sometimes:",
+    text: "Many websites already have valuable SEO assets. During a redesign, businesses sometimes:",
   },
   {
     type: "list",
@@ -864,15 +792,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Business owners often know their products so well that they unintentionally create confusing websites.",
-  },
-  {
-    type: "paragraph",
-    text: "Remember: Your website isn't built for your employees. It's built for people who have never heard of your company before.",
-  },
-  {
-    type: "paragraph",
-    text: "Every page should answer three questions:",
+    text: "Business owners often know their products so well that they unintentionally create confusing websites. Remember: Your website isn't built for your employees. It's built for people who have never heard of your company before. Every page should answer three questions:",
   },
   {
     type: "list",
@@ -894,11 +814,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "More animations. More sliders. More effects. More popups. None of these guarantee better performance.",
-  },
-  {
-    type: "paragraph",
-    text: "Modern websites succeed because they're clear—not because they're complicated. A clean, focused design usually converts better than a visually overloaded one.",
+    text: "More animations. More sliders. More effects. More popups. None of these guarantee better performance. Modern websites succeed because they're clear—not because they're complicated. A clean, focused design usually converts better than a visually overloaded one.",
   },
   {
     type: "heading",
@@ -908,11 +824,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Even the best design cannot compensate for weak content.",
-  },
-  {
-    type: "paragraph",
-    text: "Every redesign should include:",
+    text: "Even the best design cannot compensate for weak content. Every redesign should include:",
   },
   {
     type: "list",
@@ -1075,11 +987,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A website should never remain unchanged for years. The most successful businesses continuously improve their websites based on real user behavior.",
-  },
-  {
-    type: "paragraph",
-    text: "Regular optimization may include:",
+    text: "A website should never remain unchanged for years. The most successful businesses continuously improve their websites based on real user behavior. Regular optimization may include:",
   },
   {
     type: "list",
@@ -1174,50 +1082,12 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   {
     type: "heading",
     level: 2,
-    text: "Final Thoughts",
-    id: "final-thoughts",
-  },
-  {
-    type: "paragraph",
-    text: "A website redesign is one of the most valuable investments you can make in your business—when it's approached strategically.",
-  },
-  {
-    type: "paragraph",
-    text: "The goal isn't simply to create a website that looks modern.",
-  },
-  {
-    type: "paragraph",
-    text: "The goal is to create a website that:",
-  },
-  {
-    type: "list",
-    items: [
-      "Clearly communicates your value",
-      "Builds trust with potential customers",
-      "Supports your marketing efforts",
-      "Improves search visibility",
-      "Generates qualified leads",
-      "Grows alongside your business",
-    ],
-  },
-  {
-    type: "paragraph",
-    text: "When strategy, UX, SEO, content, and performance work together, your website becomes more than a digital brochure—it becomes one of your most effective business assets.",
-  },
-
-  {
-    type: "heading",
-    level: 2,
     text: "Ready to Redesign Your WordPress Website?",
     id: "ready-to-redesign-your-wordpress-website",
   },
   {
     type: "paragraph",
-    text: "At Pixiio, we help businesses transform outdated websites into high-performing digital experiences that support long-term growth.",
-  },
-  {
-    type: "paragraph",
-    text: "Our WordPress Website Redesign Services include:",
+    text: "At Pixiio, we help businesses transform outdated websites into high-performing digital experiences that support long-term growth. Our WordPress Website Redesign Services include:",
   },
   {
     type: "list",
@@ -1245,5 +1115,31 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   {
     type: "paragraph",
     text: "A successful redesign doesn't start with a new homepage—it starts with understanding your business goals and creating a strategy to achieve them.",
+  },
+
+  {
+    type: "heading",
+    level: 2,
+    text: "Final Thoughts",
+    id: "final-thoughts",
+  },
+  {
+    type: "paragraph",
+    text: "A website redesign is one of the most valuable investments you can make in your business—when it's approached strategically. The goal isn't simply to create a website that looks modern. The goal is to create a website that:",
+  },
+  {
+    type: "list",
+    items: [
+      "Clearly communicates your value",
+      "Builds trust with potential customers",
+      "Supports your marketing efforts",
+      "Improves search visibility",
+      "Generates qualified leads",
+      "Grows alongside your business",
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "When strategy, UX, SEO, content, and performance work together, your website becomes more than a digital brochure—it becomes one of your most effective business assets.",
   },
 ];

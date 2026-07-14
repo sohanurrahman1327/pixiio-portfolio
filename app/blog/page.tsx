@@ -7,9 +7,10 @@ import BlogListing from "@/components/BlogListing";
 import { blogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog — Design Insights & Guides | Pixiio",
+  title: "Blog — Design Insights & Guides",
   description:
     "Expert articles on website redesign, SaaS design, WordPress, UI/UX, and industry-specific web design — written by the Pixiio team.",
+  alternates: { canonical: "/blog" },
 };
 
 export default function BlogPage() {

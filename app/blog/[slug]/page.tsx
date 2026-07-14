@@ -14,6 +14,8 @@ import {
   getTocFromSections,
 } from "@/lib/blog";
 import { blogCategories, getCategoryLabel } from "@/lib/blog-categories";
+import { articleSchema, breadcrumbSchema, jsonLdScript } from "@/lib/schema";
+import { services } from "@/lib/content";
 
 type Props = {
   params: Promise<{ slug: string }>;
@@ -25,15 +27,30 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   if (!post) {
     return {
-      title: "Article Not Found — Pixiio Blog",
+      title: "Article Not Found",
       description: "The article you're looking for doesn't exist.",
     };
   }
 
   return {
-    title: `${post.title} | Pixiio Blog`,
+    title: post.title,
     description: post.excerpt,
     keywords: post.tags,
+    alternates: { canonical: `/blog/${post.slug}` },
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      url: `/blog/${post.slug}`,
+      type: "article",
+      publishedTime: post.publishedAt,
+      authors: [post.author.name],
+      images: [{ url: post.coverImage }],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt,
+    },
   };
 }
 
@@ -74,6 +91,31 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <PageShell>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          articleSchema({
+            title: post.title,
+            excerpt: post.excerpt,
+            slug: post.slug,
+            coverImage: post.coverImage,
+            publishedAt: post.publishedAt,
+            authorName: post.author.name,
+            tags: post.tags,
+          })
+        )}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={jsonLdScript(
+          breadcrumbSchema([
+            { name: "Home", path: "/" },
+            { name: "Blog", path: "/blog" },
+            { name: categoryLabel, path: `/blog/category/${post.category}` },
+            { name: post.title, path: `/blog/${post.slug}` },
+          ])
+        )}
+      />
       {/* Header — Element Pack style */}
       <section className="bg-gradient-to-b from-surface-muted to-background pt-12 pb-0 border-b border-gray-100">
         <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-[60px]">
@@ -90,7 +132,7 @@ export default async function BlogPostPage({ params }: Props) {
             </Link>
             <span aria-hidden="true">/</span>
             <Link
-              href={`/blog?category=${post.category}`}
+              href={`/blog/category/${post.category}`}
               className="hover:text-primary transition-colors"
             >
               {categoryLabel}
@@ -112,7 +154,7 @@ export default async function BlogPostPage({ params }: Props) {
             </span>
             <span aria-hidden="true">·</span>
             <Link
-              href={`/blog?category=${post.category}`}
+              href={`/blog/category/${post.category}`}
               className="inline-flex items-center px-2.5 py-1 rounded-full text-[11px] font-semibold bg-primary/10 text-primary hover:bg-primary/20 transition-colors uppercase tracking-wide"
             >
               {categoryLabel}
@@ -217,6 +259,25 @@ export default async function BlogPostPage({ params }: Props) {
                 </div>
                 )}
 
+                {/* Related Services — strengthens blog → service internal linking */}
+                <div className="bg-surface-elevated rounded-2xl border border-gray-100 p-5">
+                  <h2 className="text-[13px] font-bold text-navy uppercase tracking-wider mb-4">
+                    Explore Our Services
+                  </h2>
+                  <ul className="flex flex-col gap-1" role="list">
+                    {services.map((service) => (
+                      <li key={service.slug}>
+                        <Link
+                          href={`/services/${service.slug}`}
+                          className="flex items-center px-3 py-2 rounded-xl text-[13px] transition-colors text-[#3c4d6b] dark:text-gray-600 hover:bg-surface-muted hover:text-primary"
+                        >
+                          {service.title}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
                 {/* Categories */}
                 <div className="bg-surface-elevated rounded-2xl border border-gray-100 p-5">
                   <h2 className="text-[13px] font-bold text-navy uppercase tracking-wider mb-4">
@@ -234,7 +295,7 @@ export default async function BlogPostPage({ params }: Props) {
                     {blogCategories.map((cat) => (
                       <li key={cat.slug}>
                         <Link
-                          href={`/blog?category=${cat.slug}`}
+                          href={`/blog/category/${cat.slug}`}
                           className={`flex items-center px-3 py-2 rounded-xl text-[13px] transition-colors ${
                             post.category === cat.slug
                               ? "bg-primary/10 text-primary font-semibold"

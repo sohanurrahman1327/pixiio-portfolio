@@ -158,7 +158,11 @@ export default function Footer() {
             ) : (
               <>
                 <form onSubmit={handleNewsletter} className="flex items-stretch gap-2">
+                  <label htmlFor="footer-newsletter-email" className="sr-only">
+                    Email address
+                  </label>
                   <input
+                    id="footer-newsletter-email"
                     type="email"
                     value={email}
                     onChange={(e) => { setEmail(e.target.value); setEmailError(""); setSubmitError(""); }}

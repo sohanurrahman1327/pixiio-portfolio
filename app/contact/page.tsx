@@ -9,9 +9,10 @@ import { whatsappLinks } from "@/lib/whatsapp";
 import { socialLinks } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Contact — Pixiio Design Agency",
+  title: "Contact",
   description:
     "Get in touch with Pixiio to start your next UI, branding, or website design project.",
+  alternates: { canonical: "/contact" },
 };
 
 export default function ContactPage() {

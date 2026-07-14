@@ -4,19 +4,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   // ——— Part 01 ———
   {
     type: "paragraph",
-    text: "Imagine you've spent months building an incredible product.",
-  },
-  {
-    type: "paragraph",
-    text: "Your team is excited. You've polished the features, fixed the bugs, and finally launched.",
-  },
-  {
-    type: "paragraph",
-    text: "Then you run your first marketing campaign.",
-  },
-  {
-    type: "paragraph",
-    text: "People click your ads. Visitors arrive on your website. …and almost all of them leave without signing up.",
+    text: "Imagine you've spent months building an incredible product. Your team is excited. You've polished the features, fixed the bugs, and finally launched. Then you run your first marketing campaign. People click your ads. Visitors arrive on your website. …and almost all of them leave without signing up.",
   },
   {
     type: "paragraph",
@@ -47,11 +35,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Unlike established brands, startups don't have years of reputation or widespread customer trust.",
-  },
-  {
-    type: "paragraph",
-    text: "Your landing page has to do several jobs at once:",
+    text: "Unlike established brands, startups don't have years of reputation or widespread customer trust. Your landing page has to do several jobs at once:",
   },
   {
     type: "list",
@@ -65,11 +49,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If any of these elements are missing, people are likely to leave—even if your product is excellent.",
-  },
-  {
-    type: "paragraph",
-    text: "Think of your landing page as a conversation with a potential customer. Every section should answer the next question they're likely to have.",
+    text: "If any of these elements are missing, people are likely to leave—even if your product is excellent. Think of your landing page as a conversation with a potential customer. Every section should answer the next question they're likely to have.",
   },
 
   {
@@ -80,11 +60,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many startups assume that adding more animations, gradients, or trendy visuals will increase conversions. In reality, the opposite is often true.",
-  },
-  {
-    type: "paragraph",
-    text: "Here are a few common issues:",
+    text: "Many startups assume that adding more animations, gradients, or trendy visuals will increase conversions. In reality, the opposite is often true. Here are a few common issues:",
   },
   {
     type: "heading",
@@ -94,11 +70,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Visitors shouldn't have to guess what your product does.",
-  },
-  {
-    type: "paragraph",
-    text: "Within the first few seconds, they should understand:",
+    text: "Visitors shouldn't have to guess what your product does. Within the first few seconds, they should understand:",
   },
   {
     type: "list",
@@ -121,19 +93,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Founders naturally love talking about features. Customers care about results.",
-  },
-  {
-    type: "paragraph",
-    text: "Instead of saying: AI-powered workflow automation platform",
-  },
-  {
-    type: "paragraph",
-    text: "Explain the benefit: Automate repetitive work so your team can focus on growing the business.",
-  },
-  {
-    type: "paragraph",
-    text: "People buy outcomes—not feature lists.",
+    text: "Founders naturally love talking about features. Customers care about results. Instead of saying, \"AI-powered workflow automation platform,\" explain the benefit: \"Automate repetitive work so your team can focus on growing the business.\" People buy outcomes—not feature lists.",
   },
   {
     type: "heading",
@@ -143,11 +103,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A landing page should have one primary goal.",
-  },
-  {
-    type: "paragraph",
-    text: "Whether that's:",
+    text: "A landing page should have one primary goal. Whether that's:",
   },
   {
     type: "list",
@@ -171,11 +127,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "When we evaluate a landing page, we don't start with colors or typography. We start with strategy.",
-  },
-  {
-    type: "paragraph",
-    text: "Our framework includes six key stages:",
+    text: "When we evaluate a landing page, we don't start with colors or typography. We start with strategy. Our framework includes six key stages:",
   },
   {
     type: "heading",
@@ -274,11 +226,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A landing page is never truly finished.",
-  },
-  {
-    type: "paragraph",
-    text: "Monitor:",
+    text: "A landing page is never truly finished. Monitor:",
   },
   {
     type: "list",
@@ -324,11 +272,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A landing page should guide visitors from curiosity to confidence.",
-  },
-  {
-    type: "paragraph",
-    text: "Here's a proven structure:",
+    text: "A landing page should guide visitors from curiosity to confidence. Here's a proven structure:",
   },
   {
     type: "list",
@@ -358,11 +302,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your hero section is the most important part of the page. Most visitors decide within a few seconds whether they'll continue reading.",
-  },
-  {
-    type: "paragraph",
-    text: "Your hero should answer four questions immediately:",
+    text: "Your hero section is the most important part of the page. Most visitors decide within a few seconds whether they'll continue reading. Your hero should answer four questions immediately:",
   },
   {
     type: "list",
@@ -394,11 +334,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Write: Grow Your Startup With Landing Pages Designed to Convert More Visitors Into Customers.",
-  },
-  {
-    type: "paragraph",
-    text: "This is specific, benefit-driven, and immediately relevant to founders.",
+    text: "Write: Grow Your Startup With Landing Pages Designed to Convert More Visitors Into Customers. This is specific, benefit-driven, and immediately relevant to founders.",
   },
 
   {
@@ -442,11 +378,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Visitors rarely convert the first time they see a new brand. Trust must be earned.",
-  },
-  {
-    type: "paragraph",
-    text: "Strong trust signals include:",
+    text: "Visitors rarely convert the first time they see a new brand. Trust must be earned. Strong trust signals include:",
   },
   {
     type: "list",
@@ -463,15 +395,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Instead of saying: We create amazing websites.",
-  },
-  {
-    type: "paragraph",
-    text: "Show proof: Helped startups increase demo bookings by improving landing page clarity and user experience.",
-  },
-  {
-    type: "paragraph",
-    text: "Evidence always beats promises.",
+    text: "Instead of saying: We create amazing websites. Show proof: Helped startups increase demo bookings by improving landing page clarity and user experience. Evidence always beats promises.",
   },
 
   {
@@ -482,11 +406,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A landing page is different from a traditional website. Too many navigation links can distract visitors from your primary goal.",
-  },
-  {
-    type: "paragraph",
-    text: "For campaign landing pages, consider:",
+    text: "A landing page is different from a traditional website. Too many navigation links can distract visitors from your primary goal. For campaign landing pages, consider:",
   },
   {
     type: "list",
@@ -535,11 +455,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Most visitors don't read every word. They scan. That means your page should be easy to understand at a glance.",
-  },
-  {
-    type: "paragraph",
-    text: "Use:",
+    text: "Most visitors don't read every word. They scan. That means your page should be easy to understand at a glance. Use:",
   },
   {
     type: "list",
@@ -566,11 +482,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Every visitor has questions.",
-  },
-  {
-    type: "paragraph",
-    text: "Examples include:",
+    text: "Every visitor has questions. Examples include:",
   },
   {
     type: "list",
@@ -584,11 +496,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Great landing pages answer these questions before visitors need to ask.",
-  },
-  {
-    type: "paragraph",
-    text: "Consider including:",
+    text: "Great landing pages answer these questions before visitors need to ask. Consider including:",
   },
   {
     type: "list",
@@ -614,11 +522,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many founders review their landing pages on a desktop, but a significant share of visitors arrive on mobile devices.",
-  },
-  {
-    type: "paragraph",
-    text: "Review your page on different screen sizes and check:",
+    text: "Many founders review their landing pages on a desktop, but a significant share of visitors arrive on mobile devices. Review your page on different screen sizes and check:",
   },
   {
     type: "list",
@@ -643,11 +547,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "One mistake we frequently see is waiting until the bottom of the page to include a call-to-action. Instead, place relevant CTAs throughout the page.",
-  },
-  {
-    type: "paragraph",
-    text: "For example:",
+    text: "One mistake we frequently see is waiting until the bottom of the page to include a call-to-action. Instead, place relevant CTAs throughout the page. For example:",
   },
   {
     type: "list",
@@ -715,11 +615,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Instead, define your ideal customer clearly.",
-  },
-  {
-    type: "paragraph",
-    text: "For example:",
+    text: "Instead, define your ideal customer clearly. For example:",
   },
   {
     type: "list",
@@ -742,11 +638,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If visitors have to scroll to understand what you offer, you've already lost many of them.",
-  },
-  {
-    type: "paragraph",
-    text: "Your headline should communicate:",
+    text: "If visitors have to scroll to understand what you offer, you've already lost many of them. Your headline should communicate:",
   },
   {
     type: "list",
@@ -768,11 +660,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Long forms create friction. If your goal is to start a conversation, ask only for the information you genuinely need.",
-  },
-  {
-    type: "paragraph",
-    text: "For many startups, this is enough:",
+    text: "Long forms create friction. If your goal is to start a conversation, ask only for the information you genuinely need. For many startups, this is enough:",
   },
   {
     type: "list",
@@ -795,11 +683,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "People trust other customers more than marketing copy.",
-  },
-  {
-    type: "paragraph",
-    text: "Strengthen credibility with:",
+    text: "People trust other customers more than marketing copy. Strengthen credibility with:",
   },
   {
     type: "list",
@@ -958,11 +842,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A beautiful landing page means very little if it doesn't achieve business goals.",
-  },
-  {
-    type: "paragraph",
-    text: "Instead of focusing only on traffic, measure:",
+    text: "A beautiful landing page means very little if it doesn't achieve business goals. Instead of focusing only on traffic, measure:",
   },
   {
     type: "table",
@@ -1055,43 +935,12 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   {
     type: "heading",
     level: 2,
-    text: "Final Thoughts",
-    id: "final-thoughts",
-  },
-  {
-    type: "paragraph",
-    text: "Your landing page is more than a design asset—it's a critical part of your sales and marketing strategy.",
-  },
-  {
-    type: "paragraph",
-    text: "A successful landing page doesn't rely on flashy visuals or the latest design trends. It succeeds because it communicates clearly, builds trust, and makes it easy for visitors to take the next step.",
-  },
-  {
-    type: "paragraph",
-    text: "Whether you're launching a new startup, promoting a SaaS product, or expanding your business, investing in a well-planned landing page can have a lasting impact on your growth.",
-  },
-  {
-    type: "paragraph",
-    text: 'Rather than asking, "Does it look modern?", ask: "Will this page help the right people become customers?"',
-  },
-  {
-    type: "paragraph",
-    text: "That simple shift in perspective often leads to better decisions—and better results.",
-  },
-
-  {
-    type: "heading",
-    level: 2,
     text: "Ready to Build a Landing Page That Converts?",
     id: "ready-to-build-a-landing-page-that-converts",
   },
   {
     type: "paragraph",
-    text: "At Pixiio, we help startups, SaaS companies, marketing agencies, and WordPress product businesses create landing pages that combine strategy, design, and performance.",
-  },
-  {
-    type: "paragraph",
-    text: "Our process focuses on:",
+    text: "At Pixiio, we help startups, SaaS companies, marketing agencies, and WordPress product businesses create landing pages that combine strategy, design, and performance. Our process focuses on:",
   },
   {
     type: "list",
@@ -1111,5 +960,28 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   {
     type: "paragraph",
     text: "A high-converting landing page isn't built by chance—it's built through strategy, testing, and continuous improvement.",
+  },
+
+  {
+    type: "heading",
+    level: 2,
+    text: "Final Thoughts",
+    id: "final-thoughts",
+  },
+  {
+    type: "paragraph",
+    text: "Your landing page is more than a design asset—it's a critical part of your sales and marketing strategy. A successful landing page doesn't rely on flashy visuals or the latest design trends. It succeeds because it communicates clearly, builds trust, and makes it easy for visitors to take the next step.",
+  },
+  {
+    type: "paragraph",
+    text: "Whether you're launching a new startup, promoting a SaaS product, or expanding your business, investing in a well-planned landing page can have a lasting impact on your growth.",
+  },
+  {
+    type: "paragraph",
+    text: 'Rather than asking, "Does it look modern?", ask: "Will this page help the right people become customers?"',
+  },
+  {
+    type: "paragraph",
+    text: "That simple shift in perspective often leads to better decisions—and better results.",
   },
 ];

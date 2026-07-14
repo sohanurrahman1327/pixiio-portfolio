@@ -8,9 +8,10 @@ import WorkImageLens from "@/components/WorkImageLens";
 import { featuredWorkImages } from "@/lib/images";
 
 export const metadata: Metadata = {
-  title: "Featured Work — Pixiio Design Agency",
+  title: "Featured Work",
   description:
     "Explore our portfolio of branding, UI design, and website projects for modern brands.",
+  alternates: { canonical: "/work" },
 };
 
 export default function WorkPage() {

@@ -4,19 +4,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   // ——— Part 1 ———
   {
     type: "paragraph",
-    text: "Imagine you're planning to renovate your office.",
-  },
-  {
-    type: "paragraph",
-    text: "One company quotes $2,000. Another quotes $8,000. A third quotes $20,000.",
-  },
-  {
-    type: "paragraph",
-    text: "Which one is correct?",
-  },
-  {
-    type: "paragraph",
-    text: "The honest answer is: they all might be.",
+    text: "Imagine you're planning to renovate your office. One company quotes $2,000. Another quotes $8,000. A third quotes $20,000. Which one is correct? The honest answer is: they all might be.",
   },
   {
     type: "paragraph",
@@ -24,11 +12,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Both are called \"website redesigns.\" But they're completely different services.",
-  },
-  {
-    type: "paragraph",
-    text: "That's why asking only \"How much does a website redesign cost?\" is the wrong question.",
+    text: "Both are called \"website redesigns.\" But they're completely different services. That's why asking only \"How much does a website redesign cost?\" is the wrong question.",
   },
   {
     type: "paragraph",
@@ -36,11 +20,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "At Pixiio, we believe businesses shouldn't buy websites. They should invest in digital assets that generate leads, strengthen trust, and support long-term growth.",
-  },
-  {
-    type: "paragraph",
-    text: "This guide explains what influences website redesign costs, how agencies calculate pricing, and how to decide whether a redesign is worth the investment.",
+    text: "At Pixiio, we believe businesses shouldn't buy websites. They should invest in digital assets that generate leads, strengthen trust, and support long-term growth. This guide explains what influences website redesign costs, how agencies calculate pricing, and how to decide whether a redesign is worth the investment.",
   },
 
   {
@@ -51,11 +31,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many business owners are surprised by the difference in agency quotes. The reason is simple: every redesign project is unique.",
-  },
-  {
-    type: "paragraph",
-    text: "Pricing depends on factors such as:",
+    text: "Many business owners are surprised by the difference in agency quotes. The reason is simple: every redesign project is unique. Pricing depends on factors such as:",
   },
   {
     type: "list",
@@ -678,11 +654,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If even a few of those additional leads become paying customers, the redesign may pay for itself much sooner than expected.",
-  },
-  {
-    type: "paragraph",
-    text: "Instead of measuring only what you spend, measure what your improved website helps you earn.",
+    text: "If even a few of those additional leads become paying customers, the redesign may pay for itself much sooner than expected. Instead of measuring only what you spend, measure what your improved website helps you earn.",
   },
 
   {
@@ -780,11 +752,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Investing in a website redesign is a major business decision. However, many companies don't lose money because they spend too much—they lose money because they invest in the wrong things.",
-  },
-  {
-    type: "paragraph",
-    text: "Here are the most common budgeting mistakes to avoid.",
+    text: "Investing in a website redesign is a major business decision. However, many companies don't lose money because they spend too much—they lose money because they invest in the wrong things. Here are the most common budgeting mistakes to avoid.",
   },
 
   {
@@ -825,11 +793,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If your redesigned website helps you increase qualified leads, improve conversion rates, build stronger customer trust, and reduce bounce rates, the long-term return can far exceed the initial investment.",
-  },
-  {
-    type: "paragraph",
-    text: "Think beyond today's invoice. Think about the next three years of business growth.",
+    text: "If your redesigned website helps you increase qualified leads, improve conversion rates, build stronger customer trust, and reduce bounce rates, the long-term return can far exceed the initial investment. Think beyond today's invoice. Think about the next three years of business growth.",
   },
 
   {
@@ -864,11 +828,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many redesign projects focus on visuals while neglecting content. Your website copy influences search visibility, customer trust, conversion rates, and brand perception.",
-  },
-  {
-    type: "paragraph",
-    text: "A beautifully designed page with weak messaging rarely performs well. Good content is one of the highest-return investments in any redesign project.",
+    text: "Many redesign projects focus on visuals while neglecting content. Your website copy influences search visibility, customer trust, conversion rates, and brand perception. A beautifully designed page with weak messaging rarely performs well. Good content is one of the highest-return investments in any redesign project.",
   },
 
   {
@@ -1082,40 +1042,6 @@ export const websiteRedesignCostSections: BlogSection[] = [
   {
     type: "heading",
     level: 2,
-    text: "Final Thoughts",
-    id: "final-thoughts",
-  },
-  {
-    type: "paragraph",
-    text: "A website redesign isn't just another marketing expense. It's an investment in your business's digital infrastructure.",
-  },
-  {
-    type: "paragraph",
-    text: "The right redesign helps you:",
-  },
-  {
-    type: "list",
-    items: [
-      "Generate more qualified leads",
-      "Improve customer trust",
-      "Increase conversions",
-      "Strengthen SEO performance",
-      "Support future growth",
-      "Create a better user experience",
-    ],
-  },
-  {
-    type: "paragraph",
-    text: "The cheapest proposal isn't always the most affordable. The most affordable redesign is the one that creates measurable business results for years to come.",
-  },
-  {
-    type: "paragraph",
-    text: "When strategy, UX, content, SEO, and performance work together, your website becomes one of your most valuable business assets.",
-  },
-
-  {
-    type: "heading",
-    level: 2,
     text: "Why Businesses Choose Pixiio",
     id: "why-businesses-choose-pixiio",
   },
@@ -1149,5 +1075,31 @@ export const websiteRedesignCostSections: BlogSection[] = [
   {
     type: "paragraph",
     text: "The true cost of a website redesign isn't what you pay today—it's what your business misses if your website continues underperforming tomorrow.",
+  },
+
+  {
+    type: "heading",
+    level: 2,
+    text: "Final Thoughts",
+    id: "final-thoughts",
+  },
+  {
+    type: "paragraph",
+    text: "A website redesign isn't just another marketing expense. It's an investment in your business's digital infrastructure. The right redesign helps you:",
+  },
+  {
+    type: "list",
+    items: [
+      "Generate more qualified leads",
+      "Improve customer trust",
+      "Increase conversions",
+      "Strengthen SEO performance",
+      "Support future growth",
+      "Create a better user experience",
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "The cheapest proposal isn't always the most affordable. The most affordable redesign is the one that creates measurable business results for years to come. When strategy, UX, content, SEO, and performance work together, your website becomes one of your most valuable business assets.",
   },
 ];

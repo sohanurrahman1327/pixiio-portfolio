@@ -143,32 +143,45 @@ export default function FAQ({ showTitle = true }: { showTitle?: boolean }) {
           {/* Right: FAQ Items (60%) */}
           <div className="border border-gray-200 rounded-3xl p-8 bg-surface-elevated">
             <div className="divide-y divide-gray-200">
-              {faqs.map((faq, i) => (
-                <article key={faq.question}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenIndex(openIndex === i ? null : i)}
-                    className="w-full flex items-center justify-between py-6 text-left group"
-                  >
-                    <div className="flex items-center gap-4 flex-1">
-                      <span className="text-primary font-bold text-sm min-w-fit">
-                        {String(i + 1).padStart(2, '0')}
+              {faqs.map((faq, i) => {
+                const isOpen = openIndex === i;
+                const panelId = `faq-panel-${i}`;
+                const buttonId = `faq-button-${i}`;
+                return (
+                  <article key={faq.question}>
+                    <button
+                      type="button"
+                      id={buttonId}
+                      aria-expanded={isOpen}
+                      aria-controls={panelId}
+                      onClick={() => setOpenIndex(isOpen ? null : i)}
+                      className="w-full flex items-center justify-between py-6 text-left group"
+                    >
+                      <div className="flex items-center gap-4 flex-1">
+                        <span className="text-primary font-bold text-sm min-w-fit">
+                          {String(i + 1).padStart(2, '0')}
+                        </span>
+                        <span className="text-base font-bold text-navy group-hover:text-primary transition-colors">
+                          {faq.question}
+                        </span>
+                      </div>
+                      <span className="text-primary text-2xl ml-4 flex-shrink-0 transition-transform duration-300 font-light" aria-hidden="true">
+                        {isOpen ? "−" : "+"}
                       </span>
-                      <span className="text-base font-bold text-navy group-hover:text-primary transition-colors">
-                        {faq.question}
-                      </span>
-                    </div>
-                    <span className="text-primary text-2xl ml-4 flex-shrink-0 transition-transform duration-300 font-light">
-                      {openIndex === i ? "−" : "+"}
-                    </span>
-                  </button>
-                  {openIndex === i && (
-                    <p className="pb-6 text-sm text-gray-600 leading-relaxed pl-12">
-                      {faq.answer}
-                    </p>
-                  )}
-                </article>
-              ))}
+                    </button>
+                    {isOpen && (
+                      <p
+                        id={panelId}
+                        role="region"
+                        aria-labelledby={buttonId}
+                        className="pb-6 text-sm text-gray-600 leading-relaxed pl-12"
+                      >
+                        {faq.answer}
+                      </p>
+                    )}
+                  </article>
+                );
+              })}
             </div>
           </div>
         </div>

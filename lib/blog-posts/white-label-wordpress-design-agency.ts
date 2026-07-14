@@ -4,11 +4,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   // ——— Part 1 ———
   {
     type: "paragraph",
-    text: "Imagine your agency is growing.",
-  },
-  {
-    type: "paragraph",
-    text: "New inquiries are coming in every week. Your clients are asking for:",
+    text: "Imagine your agency is growing. New inquiries are coming in every week. Your clients are asking for:",
   },
   {
     type: "list",
@@ -22,11 +18,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "On paper, that's great news.",
-  },
-  {
-    type: "paragraph",
-    text: "But behind the scenes, your designers are overloaded, your developers are juggling deadlines, and projects start taking longer than expected.",
+    text: "On paper, that's great news. But behind the scenes, your designers are overloaded, your developers are juggling deadlines, and projects start taking longer than expected.",
   },
   {
     type: "paragraph",
@@ -73,11 +65,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Think of them as an extension of your internal team rather than an external freelancer.",
-  },
-  {
-    type: "paragraph",
-    text: "The goal isn't simply outsourcing. It's creating a reliable long-term production partner.",
+    text: "Think of them as an extension of your internal team rather than an external freelancer. The goal isn't simply outsourcing. It's creating a reliable long-term production partner.",
   },
 
   {
@@ -88,15 +76,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Agency owners face the same challenges worldwide. Demand grows faster than their internal team. Hiring full-time employees isn't always the best solution.",
-  },
-  {
-    type: "paragraph",
-    text: "A white label partnership provides flexibility without the long-term commitment of expanding your payroll.",
-  },
-  {
-    type: "paragraph",
-    text: "Some of the biggest advantages include:",
+    text: "Agency owners face the same challenges worldwide. Demand grows faster than their internal team. Hiring full-time employees isn't always the best solution. A white label partnership provides flexibility without the long-term commitment of expanding your payroll. Some of the biggest advantages include:",
   },
   {
     type: "list",
@@ -281,11 +261,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Reliable maintenance, updates, and future improvements.",
-  },
-  {
-    type: "paragraph",
-    text: "A long-term partner should help your agency deliver complete solutions—not just finished pages.",
+    text: "Reliable maintenance, updates, and future improvements. A long-term partner should help your agency deliver complete solutions—not just finished pages.",
   },
 
   {
@@ -323,11 +299,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your clients judge your agency—not your production partner. That's why consistency is everything.",
-  },
-  {
-    type: "paragraph",
-    text: "The right partner helps strengthen your reputation. The wrong one puts it at risk.",
+    text: "Your clients judge your agency—not your production partner. That's why consistency is everything. The right partner helps strengthen your reputation. The wrong one puts it at risk.",
   },
   {
     type: "paragraph",
@@ -343,11 +315,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Finding a white label partner isn't difficult. Finding one you can trust with your clients is.",
-  },
-  {
-    type: "paragraph",
-    text: "The agency you choose becomes an extension of your business. Their work directly impacts your reputation, client retention, and long-term growth.",
+    text: "Finding a white label partner isn't difficult. Finding one you can trust with your clients is. The agency you choose becomes an extension of your business. Their work directly impacts your reputation, client retention, and long-term growth.",
   },
   {
     type: "paragraph",
@@ -361,11 +329,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A beautiful portfolio is impressive. But it doesn't tell the full story.",
-  },
-  {
-    type: "paragraph",
-    text: "Ask questions like:",
+    text: "A beautiful portfolio is impressive. But it doesn't tell the full story. Ask questions like:",
   },
   {
     type: "list",
@@ -389,11 +353,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Poor communication is one of the biggest reasons white label partnerships fail.",
-  },
-  {
-    type: "paragraph",
-    text: "A professional partner should provide:",
+    text: "Poor communication is one of the biggest reasons white label partnerships fail. A professional partner should provide:",
   },
   {
     type: "list",
@@ -633,11 +593,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Growth isn't just about winning more clients. It's about delivering excellent work consistently.",
-  },
-  {
-    type: "paragraph",
-    text: "A trusted white label partner helps agencies:",
+    text: "Growth isn't just about winning more clients. It's about delivering excellent work consistently. A trusted white label partner helps agencies:",
   },
   {
     type: "list",
@@ -806,11 +762,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A white label partnership can become one of your agency's greatest competitive advantages—but only if it's managed correctly.",
-  },
-  {
-    type: "paragraph",
-    text: "Many agencies struggle not because their partner lacks technical skills, but because expectations, communication, and processes were never properly defined.",
+    text: "A white label partnership can become one of your agency's greatest competitive advantages—but only if it's managed correctly. Many agencies struggle not because their partner lacks technical skills, but because expectations, communication, and processes were never properly defined.",
   },
   {
     type: "paragraph",
@@ -899,11 +851,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many agencies review a project only after development is complete. Instead, review work throughout the project: Discovery, Wireframes, UI Design, Development, QA, Client Review, and Launch.",
-  },
-  {
-    type: "paragraph",
-    text: "Frequent reviews prevent expensive last-minute changes.",
+    text: "Many agencies review a project only after development is complete. Instead, review work throughout the project: Discovery, Wireframes, UI Design, Development, QA, Client Review, and Launch. Frequent reviews prevent expensive last-minute changes.",
   },
   {
     type: "heading",
@@ -913,11 +861,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "The most successful agency partnerships are built over months and years—not individual projects.",
-  },
-  {
-    type: "paragraph",
-    text: "As your white label partner becomes familiar with your brand standards, design system, preferred tools, client expectations, and communication workflow, projects become faster, smoother, and more profitable.",
+    text: "The most successful agency partnerships are built over months and years—not individual projects. As your white label partner becomes familiar with your brand standards, design system, preferred tools, client expectations, and communication workflow, projects become faster, smoother, and more profitable.",
   },
 
   {
@@ -928,11 +872,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many agency owners believe growth comes from hiring more people. In reality, sustainable growth usually comes from improving systems.",
-  },
-  {
-    type: "paragraph",
-    text: "Strong systems help you:",
+    text: "Many agency owners believe growth comes from hiring more people. In reality, sustainable growth usually comes from improving systems. Strong systems help you:",
   },
   {
     type: "list",
@@ -1093,46 +1033,12 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   {
     type: "heading",
     level: 2,
-    text: "Final Thoughts",
-    id: "final-thoughts",
-  },
-  {
-    type: "paragraph",
-    text: "A successful white label partnership isn't just about completing projects. It's about building a production system that allows your agency to grow confidently.",
-  },
-  {
-    type: "paragraph",
-    text: "The right partner helps you:",
-  },
-  {
-    type: "list",
-    items: [
-      "Deliver consistently",
-      "Protect your reputation",
-      "Improve client satisfaction",
-      "Increase profitability",
-      "Expand your service offerings",
-      "Scale without unnecessary hiring",
-    ],
-  },
-  {
-    type: "paragraph",
-    text: "Instead of worrying about production capacity, your team can focus on what it does best: building relationships and growing the business.",
-  },
-
-  {
-    type: "heading",
-    level: 2,
     text: "Why Agencies Partner With Pixiio",
     id: "why-agencies-partner-with-pixiio",
   },
   {
     type: "paragraph",
-    text: "At Pixiio, we work behind the scenes to help agencies deliver premium WordPress experiences under their own brand.",
-  },
-  {
-    type: "paragraph",
-    text: "Our white label services include:",
+    text: "At Pixiio, we work behind the scenes to help agencies deliver premium WordPress experiences under their own brand. Our white label services include:",
   },
   {
     type: "list",
@@ -1149,11 +1055,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "We integrate with your workflow, respect your processes, and deliver work that reflects your agency's standards.",
-  },
-  {
-    type: "paragraph",
-    text: "Our goal is simple: help your agency grow without increasing operational complexity.",
+    text: "We integrate with your workflow, respect your processes, and deliver work that reflects your agency's standards. Our goal is simple: help your agency grow without increasing operational complexity.",
   },
   {
     type: "callout",
@@ -1162,10 +1064,32 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Whether you're handling five websites a month or fifty, we'll help you build a production process that supports sustainable growth.",
+    text: "Whether you're handling five websites a month or fifty, we'll help you build a production process that supports sustainable growth. The strongest agencies aren't always the biggest. They're the ones with the best systems, the right partners, and a commitment to delivering exceptional client experiences.",
+  },
+
+  {
+    type: "heading",
+    level: 2,
+    text: "Final Thoughts",
+    id: "final-thoughts",
   },
   {
     type: "paragraph",
-    text: "The strongest agencies aren't always the biggest. They're the ones with the best systems, the right partners, and a commitment to delivering exceptional client experiences.",
+    text: "A successful white label partnership isn't just about completing projects. It's about building a production system that allows your agency to grow confidently. The right partner helps you:",
+  },
+  {
+    type: "list",
+    items: [
+      "Deliver consistently",
+      "Protect your reputation",
+      "Improve client satisfaction",
+      "Increase profitability",
+      "Expand your service offerings",
+      "Scale without unnecessary hiring",
+    ],
+  },
+  {
+    type: "paragraph",
+    text: "Instead of worrying about production capacity, your team can focus on what it does best: building relationships and growing the business.",
   },
 ];

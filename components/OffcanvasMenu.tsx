@@ -171,6 +171,15 @@ export default function OffcanvasMenu() {
 
   const close = () => setOpen(false);
 
+  useEffect(() => {
+    if (!open) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") close();
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [open]);
+
   const overlay = (
     <>
       {/* Backdrop */}

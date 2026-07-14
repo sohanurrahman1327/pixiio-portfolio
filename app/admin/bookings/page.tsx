@@ -3,7 +3,7 @@ import BookingAdminDashboard from "@/components/BookingAdminDashboard";
 import PageShell from "@/components/PageShell";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard — Pixiio",
+  title: "Admin Dashboard",
   robots: { index: false, follow: false },
 };
 

@@ -1,23 +1,30 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 
 type Props = {
   basePath: string;
+  initialQuery?: string;
+  currentParams?: Record<string, string | undefined>;
 };
 
-export default function LibrarySearch({ basePath }: Props) {
+export default function LibrarySearch({
+  basePath,
+  initialQuery = "",
+  currentParams = {},
+}: Props) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const [query, setQuery] = useState(searchParams.get("q") ?? "");
+  const [query, setQuery] = useState(initialQuery);
   const [, startTransition] = useTransition();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const params = new URLSearchParams(searchParams.toString());
+    const params = new URLSearchParams();
+    for (const [key, value] of Object.entries(currentParams)) {
+      if (value && key !== "q") params.set(key, value);
+    }
     if (query.trim()) params.set("q", query.trim());
-    else params.delete("q");
     const qs = params.toString();
     startTransition(() => {
       router.push(qs ? `${basePath}?${qs}` : basePath);
@@ -37,7 +44,11 @@ export default function LibrarySearch({ basePath }: Props) {
         <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" />
         <path d="M20 20l-3-3" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
       </svg>
+      <label htmlFor="library-search" className="sr-only">
+        Search components, blocks and templates
+      </label>
       <input
+        id="library-search"
         type="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}

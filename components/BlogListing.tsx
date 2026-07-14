@@ -75,7 +75,7 @@ export default function BlogListing() {
         {blogCategories.map((cat) => (
           <a
             key={cat.slug}
-            href={`/blog?category=${cat.slug}`}
+            href={`/blog/category/${cat.slug}`}
             className={`text-sm font-medium px-4 py-2 rounded-full border transition-colors ${
               activeCategory === cat.slug
                 ? "bg-primary text-white border-primary"

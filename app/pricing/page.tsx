@@ -4,9 +4,10 @@ import PageShell from "@/components/PageShell";
 import PricingSection from "@/components/Pricing";
 
 export const metadata: Metadata = {
-  title: "Pricing — Pixiio Design Agency",
+  title: "Pricing",
   description:
     "Transparent pricing for UI design, branding, and website packages. Basic, Pro, and Elite plans available.",
+  alternates: { canonical: "/pricing" },
 };
 
 const comparisons = [

@@ -1,6 +1,12 @@
 import Link from "next/link";
 
-export default function LibraryHero() {
+type LibraryHeroProps = {
+  title?: string;
+};
+
+export default function LibraryHero({
+  title = "Website components for WordPress, Figma, Elementor & more",
+}: LibraryHeroProps) {
   return (
     <div className="relative mt-6 rounded-2xl overflow-hidden bg-gradient-to-br from-surface-muted via-[#e8eaff] to-[#dde1ff] border border-border-subtle">
       <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-6 p-8 md:p-10">
@@ -8,9 +14,9 @@ export default function LibraryHero() {
           <span className="inline-block text-[11px] font-bold tracking-[0.2em] text-primary uppercase mb-3 bg-surface-elevated/60 px-3 py-1 rounded-full">
             Build Better, Faster
           </span>
-          <h2 className="text-2xl md:text-3xl font-bold text-navy leading-tight mb-3">
-            Website components for WordPress, Figma, Elementor & more
-          </h2>
+          <h1 className="text-2xl md:text-3xl font-bold text-navy leading-tight mb-3">
+            {title}
+          </h1>
           <p className="text-sm text-gray-600 leading-relaxed mb-5">
             Browse hundreds of ready-made components, blocks, and templates —
             crafted for modern brands and built to ship fast.
