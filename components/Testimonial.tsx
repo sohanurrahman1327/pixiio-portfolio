@@ -65,7 +65,7 @@ const testimonials: TestimonialItem[] = [
     image: "/image-02.jpg",
     imageAlt: "Design That Sells landing page project",
     quote:
-      "The landing page Pixiio designed converted from day one. Every section was intentional — the copy, layout, and visuals all worked together to drive sign-ups.",
+      "The landing page Pixiio designed converted from day one. Every section was intentional, the copy, layout, and visuals all worked together to drive sign-ups.",
     name: "Emma Rodriguez",
     role: "Marketing Lead, Design That Sells",
     avatar:
@@ -124,7 +124,7 @@ export default function Testimonial() {
             REAL STORIES, REAL SUCCESS
           </h2>
           <p className="text-gray-500 text-sm md:text-base max-w-xl leading-relaxed">
-            Hear from the brands we&apos;ve partnered with — real results from design-led
+            Hear from the brands we&apos;ve partnered with, real results from design-led
             collaboration.
           </p>
         </header>

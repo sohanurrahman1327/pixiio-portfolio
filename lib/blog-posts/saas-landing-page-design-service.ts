@@ -4,7 +4,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   // ——— Part 1 ———
   {
     type: "paragraph",
-    text: "Building a SaaS product takes months—sometimes years. Your team spends countless hours developing features, fixing bugs, improving performance, and preparing for launch. Then you finally start driving traffic.",
+    text: "Building a SaaS product takes months, sometimes years. Your team spends countless hours developing features, fixing bugs, improving performance, and preparing for launch. Then you finally start driving traffic.",
   },
   {
     type: "paragraph",
@@ -12,7 +12,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "For SaaS companies, your landing page isn't just another marketing page. It's your salesperson, your product demo, and your first impression—and in many cases, it's the deciding factor between a visitor becoming a customer or leaving for a competitor.",
+    text: "For SaaS companies, your landing page isn't just another marketing page. It's your salesperson, your product demo, and your first impression, and in many cases, it's the deciding factor between a visitor becoming a customer or leaving for a competitor.",
   },
   {
     type: "paragraph",
@@ -53,7 +53,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Selling software is different from selling physical products. Potential customers often have questions before they're ready to buy—for example:",
+    text: "Selling software is different from selling physical products. Potential customers often have questions before they're ready to buy, for example:",
   },
   {
     type: "list",
@@ -68,7 +68,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A great SaaS landing page answers these questions before the visitor needs to ask. That's why successful SaaS companies invest heavily in messaging, UX, and conversion optimization—not just visual design.",
+    text: "A great SaaS landing page answers these questions before the visitor needs to ask. That's why successful SaaS companies invest heavily in messaging, UX, and conversion optimization, not just visual design.",
   },
 
   {
@@ -141,7 +141,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Today's buyers compare multiple SaaS products before making a decision. If your competitors communicate their value more clearly, they often win—even if your product is technically stronger.",
+    text: "Today's buyers compare multiple SaaS products before making a decision. If your competitors communicate their value more clearly, they often win, even if your product is technically stronger.",
   },
 
   {
@@ -158,12 +158,12 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
     type: "list",
     ordered: true,
     items: [
-      "Understand — Your product, target audience, customer pain points, buying journey, and competitive landscape.",
-      "Position — Your unique value proposition, core messaging, competitive advantages, and conversion goals.",
-      "Design — Clear visual hierarchy, conversion-focused layouts, mobile-first interfaces, modern UI systems, and accessible experiences.",
-      "Develop — Clean code, fast loading performance, SEO-friendly structure, responsive layouts, and easy future updates.",
-      "Optimize — UX, speed, accessibility, SEO, Core Web Vitals, and conversion opportunities before launch.",
-      "Grow — Monitor conversion rates, scroll depth, user behavior, heatmaps, session recordings, and landing page performance.",
+      "Understand, Your product, target audience, customer pain points, buying journey, and competitive landscape.",
+      "Position, Your unique value proposition, core messaging, competitive advantages, and conversion goals.",
+      "Design, Clear visual hierarchy, conversion-focused layouts, mobile-first interfaces, modern UI systems, and accessible experiences.",
+      "Develop, Clean code, fast loading performance, SEO-friendly structure, responsive layouts, and easy future updates.",
+      "Optimize, UX, speed, accessibility, SEO, Core Web Vitals, and conversion opportunities before launch.",
+      "Grow, Monitor conversion rates, scroll depth, user behavior, heatmaps, session recordings, and landing page performance.",
     ],
   },
   {
@@ -265,19 +265,19 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A Clear Headline — Avoid generic statements like \"The Future of Business Software.\" Instead write: \"Project Management Software That Helps Remote Teams Deliver Projects 30% Faster.\" Specific messaging creates immediate clarity.",
+    text: "A Clear Headline, Avoid generic statements like \"The Future of Business Software.\" Instead write: \"Project Management Software That Helps Remote Teams Deliver Projects 30% Faster.\" Specific messaging creates immediate clarity.",
   },
   {
     type: "paragraph",
-    text: "A Supporting Subheadline — Example: \"Plan projects, automate workflows, and collaborate in one simple platform trusted by growing SaaS teams.\"",
+    text: "A Supporting Subheadline, Example: \"Plan projects, automate workflows, and collaborate in one simple platform trusted by growing SaaS teams.\"",
   },
   {
     type: "paragraph",
-    text: "One Primary CTA — Choose one action such as Start Free Trial, Book a Demo, Get Started, or Schedule a Consultation. Multiple competing CTAs often reduce conversions.",
+    text: "One Primary CTA, Choose one action such as Start Free Trial, Book a Demo, Get Started, or Schedule a Consultation. Multiple competing CTAs often reduce conversions.",
   },
   {
     type: "paragraph",
-    text: "Product Visuals — Instead of decorative graphics, show dashboard screenshots, product interfaces, feature previews, and workflow examples. Visitors want to visualize how the product fits into their work.",
+    text: "Product Visuals, Instead of decorative graphics, show dashboard screenshots, product interfaces, feature previews, and workflow examples. Visitors want to visualize how the product fits into their work.",
   },
 
   {
@@ -313,7 +313,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "People rarely purchase software from companies they've never heard of without first building confidence. Trust signals help reduce perceived risk—consider including:",
+    text: "People rarely purchase software from companies they've never heard of without first building confidence. Trust signals help reduce perceived risk, consider including:",
   },
   {
     type: "list",
@@ -345,11 +345,11 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Problem — Managing projects across spreadsheets, emails, and chat tools wastes valuable time.",
+    text: "Problem, Managing projects across spreadsheets, emails, and chat tools wastes valuable time.",
   },
   {
     type: "paragraph",
-    text: "Solution — Our platform brings planning, communication, and reporting together in one workspace so your team stays aligned.",
+    text: "Solution, Our platform brings planning, communication, and reporting together in one workspace so your team stays aligned.",
   },
   {
     type: "paragraph",
@@ -421,7 +421,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Pricing isn't just about numbers—it's about reducing uncertainty. A well-designed pricing section should answer questions like:",
+    text: "Pricing isn't just about numbers, it's about reducing uncertainty. A well-designed pricing section should answer questions like:",
   },
   {
     type: "list",
@@ -469,7 +469,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A landing page shouldn't only convert visitors—it should also attract them through search engines.",
+    text: "A landing page shouldn't only convert visitors, it should also attract them through search engines.",
   },
   {
     type: "heading",
@@ -512,7 +512,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Google rewards pages that demonstrate original insights, practical advice, experience, authority, and trustworthiness. Writing for real users—not search engines—is still the most effective SEO strategy.",
+    text: "Google rewards pages that demonstrate original insights, practical advice, experience, authority, and trustworthiness. Writing for real users, not search engines, is still the most effective SEO strategy.",
   },
 
   {
@@ -663,7 +663,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If visitors need to scroll through multiple sections before understanding your product, your messaging needs improvement. A strong SaaS landing page communicates what the product does, who it's for, why it's different, why visitors should trust you, and what action to take next—within the first few seconds.",
+    text: "If visitors need to scroll through multiple sections before understanding your product, your messaging needs improvement. A strong SaaS landing page communicates what the product does, who it's for, why it's different, why visitors should trust you, and what action to take next, within the first few seconds.",
   },
   {
     type: "paragraph",
@@ -717,7 +717,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Launching a landing page is the beginning of optimization—not the end. High-performing SaaS companies continuously test headlines, CTA buttons, pricing layouts, images, form length, testimonials, and hero copy.",
+    text: "Launching a landing page is the beginning of optimization, not the end. High-performing SaaS companies continuously test headlines, CTA buttons, pricing layouts, images, form length, testimonials, and hero copy.",
   },
   {
     type: "paragraph",
@@ -838,7 +838,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A landing page should be measured by business impact—not just traffic.",
+    text: "A landing page should be measured by business impact, not just traffic.",
   },
   {
     type: "table",
@@ -908,7 +908,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Review performance every month and make improvements based on user behavior. A full redesign isn't always necessary—continuous optimization usually delivers stronger long-term results.",
+    text: "Review performance every month and make improvements based on user behavior. A full redesign isn't always necessary, continuous optimization usually delivers stronger long-term results.",
   },
   {
     type: "heading",
@@ -961,7 +961,7 @@ export const saasLandingPageDesignServiceSections: BlogSection[] = [
   {
     type: "callout",
     title: "Get a Free SaaS Landing Page Audit",
-    text: "Not sure why your landing page isn't converting? Start with a free audit. Our team will review value proposition & messaging, UX & UI design, conversion opportunities, CTA placement strategy, SEO fundamentals, mobile experience, performance & Core Web Vitals, and trust & credibility signals. You'll receive practical recommendations tailored to your business—no generic reports, no unnecessary sales pressure.",
+    text: "Not sure why your landing page isn't converting? Start with a free audit. Our team will review value proposition & messaging, UX & UI design, conversion opportunities, CTA placement strategy, SEO fundamentals, mobile experience, performance & Core Web Vitals, and trust & credibility signals. You'll receive practical recommendations tailored to your business, no generic reports, no unnecessary sales pressure.",
   },
   {
     type: "paragraph",

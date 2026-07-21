@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import PixiioLogo from "@/components/PixiioLogo";
+import WhatsAppLink from "@/components/WhatsAppLink";
 import { navLinks, CONTACT_EMAIL, CONTACT_PHONE, socialLinks } from "@/lib/site-config";
 import { mailtoLinks, mailtoNewsletterSubscription } from "@/lib/mailto";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
@@ -150,7 +151,7 @@ export default function Footer() {
               Stay connected
             </h2>
             <p className="text-sm text-gray-500 mb-6 leading-relaxed">
-              Join our newsletter for tips, updates, and project highlights—only the good stuff.
+              Join our newsletter for tips, updates, and project highlights, only the good stuff.
             </p>
 
             {subscribed ? (
@@ -250,14 +251,12 @@ export default function Footer() {
             <h3 className="text-[10px] font-semibold tracking-widest text-gray-400 mb-5 uppercase">
               Get in touch
             </h3>
-            <a
+            <WhatsAppLink
               href={buildWhatsAppUrl()}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block text-base font-bold text-gray-900 hover:text-[#25D366] transition-colors mb-1"
+              className="block text-base font-bold text-gray-900 hover:text-[#25D366] transition-colors mb-1 text-left"
             >
               {CONTACT_PHONE}
-            </a>
+            </WhatsAppLink>
             <a
               href={mailtoLinks.general()}
               className="block text-base font-bold text-primary hover:text-primary-dark transition-colors mb-8"

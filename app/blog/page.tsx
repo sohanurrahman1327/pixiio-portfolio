@@ -7,9 +7,9 @@ import BlogListing from "@/components/BlogListing";
 import { blogPosts } from "@/lib/blog";
 
 export const metadata: Metadata = {
-  title: "Blog — Design Insights & Guides",
+  title: "Blog, Design Insights & Guides",
   description:
-    "Expert articles on website redesign, SaaS design, WordPress, UI/UX, and industry-specific web design — written by the Pixiio team.",
+    "Expert articles on website redesign, SaaS design, WordPress, UI/UX, and industry-specific web design, written by the Pixiio team.",
   alternates: { canonical: "/blog" },
 };
 
@@ -19,7 +19,7 @@ export default function BlogPage() {
       <PageHero
         label="BLOG"
         title="DESIGN INSIGHTS & GUIDES"
-        description="Expert articles on website redesign, SaaS design, WordPress, UI/UX, and industry-specific web design — written by the Pixiio team."
+        description="Expert articles on website redesign, SaaS design, WordPress, UI/UX, and industry-specific web design, written by the Pixiio team."
       />
 
       <section className="py-16 md:py-20 bg-background">
@@ -62,7 +62,7 @@ export default function BlogPage() {
             </h2>
             <p className="text-gray-400 text-sm leading-relaxed">
               From website redesign strategy to SaaS conversion and Elementor
-              expertise — practical guides for ambitious brands.
+              expertise, practical guides for ambitious brands.
             </p>
           </div>
           <div className="shrink-0 md:self-center">

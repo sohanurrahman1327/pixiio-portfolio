@@ -1,34 +1,32 @@
 import type { Metadata } from "next";
-import PageHero from "@/components/PageHero";
 import PageShell from "@/components/PageShell";
 import PricingSection from "@/components/Pricing";
+import Bonuses from "@/components/Bonuses";
 
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Transparent pricing for UI design, branding, and website packages. Basic, Pro, and Elite plans available.",
+    "Transparent pricing for UI design, development, and branding packages. Launch, Growth, and Signature plans available.",
   alternates: { canonical: "/pricing" },
 };
 
 const comparisons = [
-  { feature: "Landing Page Design", basic: true, pro: true, elite: true },
-  { feature: "Full Website Design", basic: false, pro: true, elite: true },
-  { feature: "Brand Identity", basic: false, pro: true, elite: true },
-  { feature: "Marketing Assets", basic: false, pro: false, elite: true },
-  { feature: "Unlimited Revisions", basic: false, pro: true, elite: true },
-  { feature: "Dedicated Designer", basic: false, pro: false, elite: true },
+  { feature: "High-Fidelity UI Design", basic: true, pro: true, elite: true },
+  { feature: "Figma Prototype & Design System", basic: true, pro: true, elite: true },
+  { feature: "Development (Framer/Webflow/WordPress)", basic: false, pro: true, elite: true },
+  { feature: "Hosting, Domain & Analytics Setup", basic: false, pro: true, elite: true },
+  { feature: "SEO Setup", basic: false, pro: false, elite: true },
+  { feature: "Logo & Brand Essentials", basic: false, pro: false, elite: true },
+  { feature: "Maintenance (2–3 Months)", basic: false, pro: true, elite: true },
+  { feature: "Unlimited Revisions", basic: true, pro: true, elite: true },
 ];
 
 export default function PricingPage() {
   return (
     <PageShell>
-      <PageHero
-        label="INVEST IN DESIGN"
-        title="PRICING"
-        description="Simple, transparent packages with no hidden fees. Pick the plan that fits your stage — or contact us for a custom quote."
-      />
-
       <PricingSection />
+
+      <Bonuses />
 
       <section className="py-20 bg-gray-50">
         <div className="max-w-4xl mx-auto px-6">
@@ -43,13 +41,13 @@ export default function PricingPage() {
                     FEATURE
                   </th>
                   <th className="p-4 text-xs font-bold tracking-wider text-gray-900">
-                    BASIC
+                    LAUNCH
                   </th>
                   <th className="p-4 text-xs font-bold tracking-wider text-primary">
-                    PRO
+                    GROWTH
                   </th>
                   <th className="p-4 text-xs font-bold tracking-wider text-gray-900">
-                    ELITE
+                    SIGNATURE
                   </th>
                 </tr>
               </thead>

@@ -261,7 +261,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Reliable maintenance, updates, and future improvements. A long-term partner should help your agency deliver complete solutions—not just finished pages.",
+    text: "Reliable maintenance, updates, and future improvements. A long-term partner should help your agency deliver complete solutions, not just finished pages.",
   },
 
   {
@@ -278,12 +278,12 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
     type: "list",
     ordered: true,
     items: [
-      "Discover — Understand your agency, workflow, and client expectations.",
-      "Plan — Define communication processes, timelines, and deliverables.",
-      "Design — Create premium UI/UX tailored to each client's goals.",
-      "Develop — Build clean WordPress and Elementor websites using best practices.",
-      "Deliver — Provide review-ready work under your agency's brand.",
-      "Grow — Support your agency with ongoing collaboration as your client base expands.",
+      "Discover, Understand your agency, workflow, and client expectations.",
+      "Plan, Define communication processes, timelines, and deliverables.",
+      "Design, Create premium UI/UX tailored to each client's goals.",
+      "Develop, Build clean WordPress and Elementor websites using best practices.",
+      "Deliver, Provide review-ready work under your agency's brand.",
+      "Grow, Support your agency with ongoing collaboration as your client base expands.",
     ],
   },
   {
@@ -299,7 +299,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your clients judge your agency—not your production partner. That's why consistency is everything. The right partner helps strengthen your reputation. The wrong one puts it at risk.",
+    text: "Your clients judge your agency, not your production partner. That's why consistency is everything. The right partner helps strengthen your reputation. The wrong one puts it at risk.",
   },
   {
     type: "paragraph",
@@ -319,7 +319,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "That's why selecting a white label partner should be treated as a strategic business decision—not simply a production decision.",
+    text: "That's why selecting a white label partner should be treated as a strategic business decision, not simply a production decision.",
   },
   {
     type: "heading",
@@ -421,7 +421,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "For many agencies, white label partnerships provide greater flexibility—especially during periods of rapid growth.",
+    text: "For many agencies, white label partnerships provide greater flexibility, especially during periods of rapid growth.",
   },
 
   {
@@ -480,7 +480,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Choosing the right partner is about reducing long-term risk—not just lowering short-term costs.",
+    text: "Choosing the right partner is about reducing long-term risk, not just lowering short-term costs.",
   },
 
   {
@@ -624,13 +624,13 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   {
     type: "list",
     items: [
-      "Process — How do you manage projects?",
-      "Communication — Who will be my point of contact?",
-      "Revisions — How many revision rounds are included?",
-      "Quality — How do you review projects before delivery?",
-      "Confidentiality — Do you sign NDAs?",
-      "Support — Do you offer post-launch maintenance?",
-      "Scalability — Can you handle multiple projects simultaneously?",
+      "Process, How do you manage projects?",
+      "Communication, Who will be my point of contact?",
+      "Revisions, How many revision rounds are included?",
+      "Quality, How do you review projects before delivery?",
+      "Confidentiality, Do you sign NDAs?",
+      "Support, Do you offer post-launch maintenance?",
+      "Scalability, Can you handle multiple projects simultaneously?",
     ],
   },
   {
@@ -750,7 +750,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A dependable white label partner should strengthen your agency—not create additional work.",
+    text: "A dependable white label partner should strengthen your agency, not create additional work.",
   },
 
   // ——— Part 3 ———
@@ -762,7 +762,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A white label partnership can become one of your agency's greatest competitive advantages—but only if it's managed correctly. Many agencies struggle not because their partner lacks technical skills, but because expectations, communication, and processes were never properly defined.",
+    text: "A white label partnership can become one of your agency's greatest competitive advantages, but only if it's managed correctly. Many agencies struggle not because their partner lacks technical skills, but because expectations, communication, and processes were never properly defined.",
   },
   {
     type: "paragraph",
@@ -790,7 +790,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your clients don't know what you paid for the work. They only judge the final result. Choose a partner that protects your reputation—not just your budget.",
+    text: "Your clients don't know what you paid for the work. They only judge the final result. Choose a partner that protects your reputation, not just your budget.",
   },
   {
     type: "heading",
@@ -814,7 +814,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "The better your partner understands your business, the more valuable they become. Think of them as part of your team—not an external vendor.",
+    text: "The better your partner understands your business, the more valuable they become. Think of them as part of your team, not an external vendor.",
   },
   {
     type: "heading",
@@ -861,7 +861,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "The most successful agency partnerships are built over months and years—not individual projects. As your white label partner becomes familiar with your brand standards, design system, preferred tools, client expectations, and communication workflow, projects become faster, smoother, and more profitable.",
+    text: "The most successful agency partnerships are built over months and years, not individual projects. As your white label partner becomes familiar with your brand standards, design system, preferred tools, client expectations, and communication workflow, projects become faster, smoother, and more profitable.",
   },
 
   {
@@ -997,7 +997,7 @@ export const whiteLabelWordPressDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Not always—but they're designed for different purposes. Traditional outsourcing is often project-based. White label partnerships focus on long-term collaboration, consistent quality, and becoming an extension of your agency.",
+    text: "Not always, but they're designed for different purposes. Traditional outsourcing is often project-based. White label partnerships focus on long-term collaboration, consistent quality, and becoming an extension of your agency.",
   },
   {
     type: "heading",

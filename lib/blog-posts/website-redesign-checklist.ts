@@ -4,7 +4,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   // ——— Part 01 ———
   {
     type: "paragraph",
-    text: "Your website isn't just an online brochure anymore—it's often the first impression potential customers have of your business. In many cases, it's also your most effective salesperson, working around the clock to generate leads, build trust, and drive revenue.",
+    text: "Your website isn't just an online brochure anymore, it's often the first impression potential customers have of your business. In many cases, it's also your most effective salesperson, working around the clock to generate leads, build trust, and drive revenue.",
   },
   {
     type: "paragraph",
@@ -192,7 +192,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your current website contains valuable data. A redesign should build on those insights—not ignore them.",
+    text: "Your current website contains valuable data. A redesign should build on those insights, not ignore them.",
   },
 
   {
@@ -491,7 +491,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "People rarely buy from websites they don't trust. Trust is built through clear evidence—not just claims. Consider adding:",
+    text: "People rarely buy from websites they don't trust. Trust is built through clear evidence, not just claims. Consider adding:",
   },
   {
     type: "list",
@@ -716,7 +716,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Not if it's planned properly. Preserving valuable URLs, implementing 301 redirects where necessary, optimizing content, and maintaining your keyword strategy can protect—and often improve—your search visibility.",
+    text: "Not if it's planned properly. Preserving valuable URLs, implementing 301 redirects where necessary, optimizing content, and maintaining your keyword strategy can protect, and often improve, your search visibility.",
   },
   {
     type: "heading",
@@ -891,7 +891,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A successful website isn't measured by compliments—it's measured by business results. If your website attracts qualified visitors, builds trust, answers customer questions, and guides people toward taking action, it's doing its job.",
+    text: "A successful website isn't measured by compliments, it's measured by business results. If your website attracts qualified visitors, builds trust, answers customer questions, and guides people toward taking action, it's doing its job.",
   },
   {
     type: "paragraph",
@@ -906,7 +906,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "At Pixiio, we help startups, SaaS companies, WordPress product businesses, and growing brands build websites that are designed to perform—not just impress. Our approach combines:",
+    text: "At Pixiio, we help startups, SaaS companies, WordPress product businesses, and growing brands build websites that are designed to perform, not just impress. Our approach combines:",
   },
   {
     type: "list",
@@ -926,7 +926,7 @@ export const websiteRedesignChecklistSections: BlogSection[] = [
   {
     type: "callout",
     title: "Claim Your Free Website Audit",
-    text: "We'll review your current website and provide actionable insights on user experience (UX), conversion opportunities, SEO fundamentals, performance and speed, mobile usability, content structure, and design improvements. The goal isn't just to make your website look better—it's to help it generate more leads, build more trust, and support your business as it grows.",
+    text: "We'll review your current website and provide actionable insights on user experience (UX), conversion opportunities, SEO fundamentals, performance and speed, mobile usability, content structure, and design improvements. The goal isn't just to make your website look better, it's to help it generate more leads, build more trust, and support your business as it grows.",
   },
   {
     type: "paragraph",

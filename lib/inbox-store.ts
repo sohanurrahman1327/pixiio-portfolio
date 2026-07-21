@@ -126,7 +126,11 @@ export async function createContactInquiry(input: {
   email: string;
   project?: string;
   budget?: string;
+  package?: string;
   message: string;
+  hasReferenceImage?: boolean;
+  referenceImagePreview?: string;
+  fromPricing?: boolean;
 }) {
   const inquiry: StoredContactInquiry = {
     id: randomUUID(),
@@ -134,7 +138,11 @@ export async function createContactInquiry(input: {
     email: input.email.trim().toLowerCase(),
     project: (input.project ?? "Not specified").trim(),
     budget: (input.budget ?? "Not specified").trim(),
+    package: (input.package ?? "General Inquiry").trim(),
     message: input.message.trim(),
+    hasReferenceImage: Boolean(input.hasReferenceImage),
+    referenceImagePreview: input.referenceImagePreview,
+    fromPricing: Boolean(input.fromPricing),
     createdAt: new Date().toISOString(),
   };
 

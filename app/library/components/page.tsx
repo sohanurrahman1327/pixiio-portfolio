@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LibraryListing from "@/components/library/LibraryListing";
 
 export const metadata: Metadata = {
-  title: "Components — Design Library",
+  title: "Components, Design Library",
   description:
     "Browse free and premium UI components for Figma, Elementor, WordPress, Framer, Webflow, and more.",
   alternates: { canonical: "/library/components" },

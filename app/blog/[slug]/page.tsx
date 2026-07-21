@@ -324,7 +324,7 @@ export default async function BlogPostPage({ params }: Props) {
                       Pixiio Design Agency
                     </p>
                     <p className="text-gray-400 text-[12px] leading-relaxed">
-                      We design conversion-ready websites for ambitious brands —
+                      We design conversion-ready websites for ambitious brands,
                       WordPress, Elementor, SaaS & more.
                     </p>
                   </div>

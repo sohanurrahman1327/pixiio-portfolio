@@ -90,7 +90,7 @@ export const designProcessSteps = [
     step: "01",
     title: "LOGO IN ILLUSTRATOR",
     description:
-      "Brand identity starts in Adobe Illustrator — crafting a unique logo with color palette, typography, and visual language.",
+      "Brand identity starts in Adobe Illustrator, crafting a unique logo with color palette, typography, and visual language.",
     image: unsplash("photo-1626785774573-4b799315345d", 400, 500),
     alt: "Logo design process in Adobe Illustrator",
   },
@@ -106,7 +106,7 @@ export const designProcessSteps = [
     step: "03",
     title: "FIGMA SITE DESIGN",
     description:
-      "High-fidelity UI designed in Figma — pixel-perfect screens, components, and interactive prototypes ready for review.",
+      "High-fidelity UI designed in Figma, pixel-perfect screens, components, and interactive prototypes ready for review.",
     image: unsplash("photo-1561070791-2526d30994b5", 400, 500),
     alt: "Website UI design in Figma on screen",
   },
@@ -114,7 +114,7 @@ export const designProcessSteps = [
     step: "04",
     title: "WEBSITE LIVE",
     description:
-      "Final design built and deployed — fully responsive, optimized, and live for the world to see.",
+      "Final design built and deployed, fully responsive, optimized, and live for the world to see.",
     image: unsplash("photo-1498050108023-c5249f4df085", 400, 500),
     alt: "Live website deployed",
   },

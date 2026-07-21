@@ -22,11 +22,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   return {
-    title: `${project.title} — ${project.subtitle}`,
+    title: `${project.title}, ${project.subtitle}`,
     description: project.description,
     alternates: { canonical: `/work/${project.slug}` },
     openGraph: {
-      title: `${project.title} — ${project.subtitle}`,
+      title: `${project.title}, ${project.subtitle}`,
       description: project.description,
       url: `/work/${project.slug}`,
       images: [{ url: project.image }],
@@ -109,7 +109,7 @@ export default async function ProjectPage({ params }: Props) {
           <figure className="rounded-3xl overflow-hidden aspect-[16/9] border border-gray-100 shadow-lg">
             <Image
               src={project.image}
-              alt={`${project.subtitle} — ${project.title}`}
+              alt={`${project.subtitle}, ${project.title}`}
               width={1400}
               height={788}
               className="object-cover w-full h-full"
@@ -204,7 +204,7 @@ export default async function ProjectPage({ params }: Props) {
               <figure className="rounded-2xl overflow-hidden aspect-[4/3] border border-gray-100">
                 <Image
                   src={nextProject.image}
-                  alt={`${nextProject.subtitle} — ${nextProject.title}`}
+                  alt={`${nextProject.subtitle}, ${nextProject.title}`}
                   width={600}
                   height={450}
                   className="object-cover w-full h-full group-hover:scale-105 transition-transform duration-500"

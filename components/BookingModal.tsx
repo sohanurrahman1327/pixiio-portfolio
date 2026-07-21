@@ -458,7 +458,7 @@ function LeftPanel() {
         <p className="mt-1 text-xs leading-relaxed text-gray-600">
           Pixiio transformed our ideas into a powerful digital experience.
         </p>
-        <p className="mt-2 text-[10px] font-medium text-primary">— CEO, InnovateX</p>
+        <p className="mt-2 text-[10px] font-medium text-primary">CEO, InnovateX</p>
       </div>
     </BookingScrollArea>
   );
@@ -913,7 +913,7 @@ function MeetingSummaryPanel({
             ) : (
               <div className="rounded-xl border border-dashed border-gray-200 bg-gray-50/60 p-3">
                 <p className="text-xs leading-relaxed text-gray-500">
-                  Create a Meet link, copy it, then return here — it will fill in the booking form automatically.
+                  Create a Meet link, copy it, then return here, it will fill in the booking form automatically.
                 </p>
                 <button
                   id="booking-create-meet-link"

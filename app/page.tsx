@@ -15,13 +15,13 @@ import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: {
-    absolute: "Pixiio — Design-Led Creative Agency for UI, Branding & Websites",
+    absolute: "Pixiio, Design-Led Creative Agency for UI, Branding & Websites",
   },
   description:
     "Pixiio designs brands that lead and inspire. We deliver UI/UX design, branding, website design, and marketing assets for startups, SaaS, and growing businesses worldwide.",
   alternates: { canonical: "/" },
   openGraph: {
-    title: "Pixiio — Design-Led Creative Agency for UI, Branding & Websites",
+    title: "Pixiio, Design-Led Creative Agency for UI, Branding & Websites",
     description:
       "Pixiio designs brands that lead and inspire. We deliver UI/UX design, branding, website design, and marketing assets for startups, SaaS, and growing businesses worldwide.",
     url: "/",

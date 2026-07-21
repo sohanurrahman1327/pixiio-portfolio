@@ -12,7 +12,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If your onboarding is confusing, your dashboard feels overwhelming, or users can't accomplish simple tasks quickly, they'll leave—no matter how powerful your software is.",
+    text: "If your onboarding is confusing, your dashboard feels overwhelming, or users can't accomplish simple tasks quickly, they'll leave, no matter how powerful your software is.",
   },
   {
     type: "paragraph",
@@ -95,7 +95,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "That's why successful SaaS companies invest heavily in user experience. Good UX doesn't just improve satisfaction—it improves retention. And retention drives recurring revenue.",
+    text: "That's why successful SaaS companies invest heavily in user experience. Good UX doesn't just improve satisfaction, it improves retention. And retention drives recurring revenue.",
   },
 
   {
@@ -126,7 +126,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Customers cancel after only a short time. The product may solve the right problem—but the experience isn't enjoyable enough to keep them engaged.",
+    text: "Customers cancel after only a short time. The product may solve the right problem, but the experience isn't enjoyable enough to keep them engaged.",
   },
   {
     type: "heading",
@@ -156,7 +156,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If customers need several days—or multiple meetings—to understand your software, your onboarding experience likely needs improvement.",
+    text: "If customers need several days, or multiple meetings, to understand your software, your onboarding experience likely needs improvement.",
   },
 
   {
@@ -200,7 +200,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   {
     type: "heading",
     level: 3,
-    text: "Phase 1 — Discover",
+    text: "Phase 1, Discover",
     id: "phase-1-discover",
   },
   {
@@ -224,7 +224,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   {
     type: "heading",
     level: 3,
-    text: "Phase 2 — Research",
+    text: "Phase 2, Research",
     id: "phase-2-research",
   },
   {
@@ -249,7 +249,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   {
     type: "heading",
     level: 3,
-    text: "Phase 3 — Experience Design",
+    text: "Phase 3, Experience Design",
     id: "phase-3-experience-design",
   },
   {
@@ -273,7 +273,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   {
     type: "heading",
     level: 3,
-    text: "Phase 4 — Interface Design",
+    text: "Phase 4, Interface Design",
     id: "phase-4-interface-design",
   },
   {
@@ -298,7 +298,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   {
     type: "heading",
     level: 3,
-    text: "Phase 5 — Validation",
+    text: "Phase 5, Validation",
     id: "phase-5-validation",
   },
   {
@@ -317,12 +317,12 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Good design is validated—not assumed.",
+    text: "Good design is validated, not assumed.",
   },
   {
     type: "heading",
     level: 3,
-    text: "Phase 6 — Continuous Improvement",
+    text: "Phase 6, Continuous Improvement",
     id: "phase-6-continuous-improvement",
   },
   {
@@ -537,7 +537,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Great UX often comes from removing—not adding.",
+    text: "Great UX often comes from removing, not adding.",
   },
 
   {
@@ -604,7 +604,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Design decisions should be based on evidence—not assumptions. Useful research methods include:",
+    text: "Design decisions should be based on evidence, not assumptions. Useful research methods include:",
   },
   {
     type: "heading",
@@ -699,7 +699,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Users should feel confident—not overwhelmed.",
+    text: "Users should feel confident, not overwhelmed.",
   },
 
   {
@@ -886,7 +886,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Many SaaS startups believe they have a marketing problem. In reality, they have a product experience problem. You can increase traffic, improve advertising, and spend more on acquisition—but if users struggle to understand or use your product, growth eventually slows.",
+    text: "Many SaaS startups believe they have a marketing problem. In reality, they have a product experience problem. You can increase traffic, improve advertising, and spend more on acquisition, but if users struggle to understand or use your product, growth eventually slows.",
   },
   {
     type: "paragraph",
@@ -936,7 +936,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Some of the world's most successful SaaS products grow because they remove unnecessary friction—not because they continuously add new functionality.",
+    text: "Some of the world's most successful SaaS products grow because they remove unnecessary friction, not because they continuously add new functionality.",
   },
 
   {
@@ -1208,7 +1208,7 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A strong agency should focus on business outcomes—not just visual design.",
+    text: "A strong agency should focus on business outcomes, not just visual design.",
   },
 
   {
@@ -1238,12 +1238,12 @@ export const uiUxDesignAgencyForSaasStartupsSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "We believe great design isn't about decoration—it's about helping users succeed while helping your business grow.",
+    text: "We believe great design isn't about decoration, it's about helping users succeed while helping your business grow.",
   },
   {
     type: "callout",
     title: "Request Your Free SaaS UX Audit",
-    text: "If your product has low activation rates, high churn, poor onboarding, confusing navigation, low feature adoption, or declining engagement, it's time for a strategic UX review. Our Free SaaS UX Audit includes a User Journey Analysis, UX & UI Evaluation, Navigation Review, Design System Assessment, Accessibility Review, Product Onboarding Analysis, Conversion & Retention Opportunities, and a Prioritized Improvement Roadmap. You'll receive practical, actionable recommendations based on UX best practices and SaaS product strategy—not generic design feedback.",
+    text: "If your product has low activation rates, high churn, poor onboarding, confusing navigation, low feature adoption, or declining engagement, it's time for a strategic UX review. Our Free SaaS UX Audit includes a User Journey Analysis, UX & UI Evaluation, Navigation Review, Design System Assessment, Accessibility Review, Product Onboarding Analysis, Conversion & Retention Opportunities, and a Prioritized Improvement Roadmap. You'll receive practical, actionable recommendations based on UX best practices and SaaS product strategy, not generic design feedback.",
   },
   {
     type: "paragraph",

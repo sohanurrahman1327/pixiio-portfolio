@@ -6,7 +6,7 @@ import type { BookingStatus, StoredBooking } from "@/lib/booking-types";
 import type { StoredContactInquiry, StoredSubscriber } from "@/lib/inbox-types";
 import { canRespondToBooking, formatBookingSerial, storedBookingToPayload } from "@/lib/booking-respond";
 
-type PanelId = "meeting" | "subscriber" | "contact";
+type PanelId = "meeting" | "subscriber" | "pricing" | "contact";
 type TabId = "all" | "pending" | "accepted" | "declined" | "completed";
 
 interface DashboardStats {
@@ -22,6 +22,7 @@ const fetchOpts: RequestInit = { credentials: "include" };
 const PANELS: { id: PanelId; label: string; hint: string }[] = [
   { id: "meeting", label: "Meeting", hint: "Let's Talk bookings" },
   { id: "subscriber", label: "Subscriber", hint: "Newsletter signups" },
+  { id: "pricing", label: "Pricing", hint: "Package requests from Pricing" },
   { id: "contact", label: "Contact", hint: "Contact form inquiries" },
 ];
 
@@ -569,6 +570,156 @@ function BookingCard({
   );
 }
 
+const ZOOM_MIN = 1;
+const ZOOM_MAX = 4;
+const ZOOM_STEP = 0.5;
+
+function ContactInquiryCard({ item, serial }: { item: StoredContactInquiry; serial: number }) {
+  const [showPreview, setShowPreview] = useState(false);
+  const [zoom, setZoom] = useState(1);
+
+  function closePreview() {
+    setShowPreview(false);
+    setZoom(1);
+  }
+
+  return (
+    <article className="rounded-2xl border border-gray-100 bg-surface-elevated p-5 shadow-sm">
+      <div className="flex flex-wrap items-start justify-between gap-3">
+        <div className="flex min-w-0 items-start gap-3">
+          <span className="inline-flex h-8 min-w-8 shrink-0 items-center justify-center rounded-lg bg-gray-900 px-2 text-xs font-bold text-white">
+            {formatBookingSerial(serial)}
+          </span>
+          <div className="min-w-0">
+            <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
+            <a href={`mailto:${item.email}`} className="mt-1 block text-sm text-primary hover:underline">
+              {item.email}
+            </a>
+          </div>
+        </div>
+        <p className="text-xs text-gray-400">{formatDhakaDateTime(item.createdAt)}</p>
+      </div>
+
+      {(item.package && item.package !== "General Inquiry") || item.hasReferenceImage ? (
+        <div className="mt-4 flex flex-wrap items-center gap-2">
+          {item.package && item.package !== "General Inquiry" && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-3 py-1 text-xs font-semibold text-primary">
+              Package: {item.package}
+            </span>
+          )}
+          {item.hasReferenceImage && !item.referenceImagePreview && (
+            <span className="inline-flex items-center gap-1.5 rounded-full bg-amber-100 px-3 py-1 text-xs font-semibold text-amber-700">
+              📎 Reference image attached, check email
+            </span>
+          )}
+        </div>
+      ) : null}
+
+      {item.hasReferenceImage && item.referenceImagePreview && (
+        <button
+          type="button"
+          onClick={() => setShowPreview(true)}
+          className="mt-4 inline-flex items-center gap-3 rounded-xl border border-gray-100 bg-gray-50/80 px-3 py-2 transition-colors hover:border-primary/30"
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={item.referenceImagePreview}
+            alt="Reference image from client"
+            className="h-14 w-14 shrink-0 rounded-lg object-cover"
+          />
+          <span className="text-xs font-semibold text-primary">
+            📎 Reference image attached — click to view
+          </span>
+        </button>
+      )}
+
+      {showPreview && item.referenceImagePreview && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          onClick={closePreview}
+          className="fixed inset-0 z-50 flex flex-col bg-black/80"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="absolute top-5 right-5 z-10 flex items-center gap-2"
+          >
+            <button
+              type="button"
+              onClick={() => setZoom((z) => Math.max(ZOOM_MIN, z - ZOOM_STEP))}
+              disabled={zoom <= ZOOM_MIN}
+              aria-label="Zoom out"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-lg font-semibold text-white transition-colors hover:bg-white/20 disabled:opacity-40"
+            >
+              −
+            </button>
+            <span className="min-w-[3.5rem] text-center text-xs font-semibold text-white/80">
+              {Math.round(zoom * 100)}%
+            </span>
+            <button
+              type="button"
+              onClick={() => setZoom((z) => Math.min(ZOOM_MAX, z + ZOOM_STEP))}
+              disabled={zoom >= ZOOM_MAX}
+              aria-label="Zoom in"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-white/10 text-lg font-semibold text-white transition-colors hover:bg-white/20 disabled:opacity-40"
+            >
+              +
+            </button>
+            <a
+              href={item.referenceImagePreview}
+              download={`reference-image-${item.name.replace(/\s+/g, "-").toLowerCase() || "client"}.jpg`}
+              aria-label="Download image"
+              className="inline-flex h-9 items-center gap-1.5 rounded-full bg-white/10 px-3 text-xs font-semibold text-white transition-colors hover:bg-white/20"
+            >
+              ⬇ Download
+            </a>
+            <button
+              type="button"
+              onClick={closePreview}
+              aria-label="Close preview"
+              className="inline-flex h-9 items-center rounded-full bg-white/10 px-3 text-xs font-semibold text-white transition-colors hover:bg-white/20"
+            >
+              Close ✕
+            </button>
+          </div>
+
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="flex h-full w-full items-center justify-center overflow-auto p-6"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={item.referenceImagePreview}
+              alt="Reference image from client"
+              style={{ transform: `scale(${zoom})` }}
+              className={`max-h-[85vh] max-w-[90vw] shrink-0 rounded-xl object-contain shadow-2xl transition-transform duration-200 ${zoom > ZOOM_MIN ? "cursor-zoom-out" : "cursor-zoom-in"}`}
+              onClick={() =>
+                setZoom((z) => (z > ZOOM_MIN ? ZOOM_MIN : Math.min(ZOOM_MAX, ZOOM_MIN + ZOOM_STEP * 2)))
+              }
+            />
+          </div>
+        </div>
+      )}
+
+      <div className="mt-5 grid gap-4 sm:grid-cols-2">
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Project</p>
+          <p className="mt-1 text-sm font-medium text-gray-900">{item.project}</p>
+        </div>
+        <div>
+          <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Budget</p>
+          <p className="mt-1 text-sm font-medium text-gray-900">{item.budget}</p>
+        </div>
+      </div>
+
+      <div className="mt-4 border-t border-gray-100 pt-4">
+        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Message</p>
+        <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">{item.message}</p>
+      </div>
+    </article>
+  );
+}
+
 export default function BookingAdminDashboard() {
   const [authenticated, setAuthenticated] = useState<boolean | null>(null);
   const [loginStep, setLoginStep] = useState<"password" | "totp" | "setup">("password");
@@ -586,7 +737,6 @@ export default function BookingAdminDashboard() {
   const [subscribers, setSubscribers] = useState<StoredSubscriber[]>([]);
   const [subscriberTotal, setSubscriberTotal] = useState(0);
   const [contacts, setContacts] = useState<StoredContactInquiry[]>([]);
-  const [contactTotal, setContactTotal] = useState(0);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -649,11 +799,9 @@ export default function BookingAdminDashboard() {
       if (!res.ok) throw new Error(data.error || "Failed to load contacts");
       setAuthenticated(true);
       setContacts(data.contacts ?? []);
-      setContactTotal(data.stats?.total ?? data.contacts?.length ?? 0);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Failed to load contacts");
       setContacts([]);
-      setContactTotal(0);
     } finally {
       setLoading(false);
     }
@@ -673,8 +821,11 @@ export default function BookingAdminDashboard() {
     if (!authenticated) return;
     if (panel === "meeting") loadBookings();
     else if (panel === "subscriber") loadSubscribers();
-    else loadContacts();
+    else if (panel === "pricing" || panel === "contact") loadContacts();
   }, [panel, authenticated, loadBookings, loadSubscribers, loadContacts]);
+
+  const pricingContacts = useMemo(() => contacts.filter((item) => item.fromPricing), [contacts]);
+  const generalContacts = useMemo(() => contacts.filter((item) => !item.fromPricing), [contacts]);
 
   const filtered = useMemo(() => {
     if (tab === "pending") return bookings.filter((b) => b.status === "pending");
@@ -913,10 +1064,15 @@ export default function BookingAdminDashboard() {
             title: "Subscribers",
             description: "Newsletter signups from the site footer — Pixiio subscribe / mailing list entries.",
           }
-        : {
-            title: "Contact inquiries",
-            description: "Project requests submitted through the Contact Us form.",
-          };
+        : panel === "pricing"
+          ? {
+              title: "Pricing requests",
+              description: "\"Purchase Now\" submissions from the Pricing page, grouped separately from general contact inquiries.",
+            }
+          : {
+              title: "Contact inquiries",
+              description: "Project requests submitted through the Contact Us form.",
+            };
 
   return (
     <div className="flex flex-col gap-6 lg:flex-row lg:items-start">
@@ -1075,12 +1231,39 @@ export default function BookingAdminDashboard() {
           </>
         )}
 
+        {panel === "pricing" && (
+          <>
+            <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              <div className="rounded-xl border border-gray-100 bg-surface-elevated px-4 py-3 shadow-sm">
+                <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Total pricing requests</p>
+                <p className="mt-1 text-2xl font-bold text-gray-900">{pricingContacts.length}</p>
+              </div>
+            </div>
+
+            {loading ? (
+              <p className="text-sm text-gray-500">Loading pricing requests…</p>
+            ) : error ? (
+              <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
+            ) : pricingContacts.length === 0 ? (
+              <div className="rounded-2xl border border-dashed border-gray-200 bg-surface-elevated p-10 text-center">
+                <p className="text-sm text-gray-500">No package requests from the Pricing page yet.</p>
+              </div>
+            ) : (
+              <div className="grid gap-4">
+                {pricingContacts.map((item, index) => (
+                  <ContactInquiryCard key={item.id} item={item} serial={index + 1} />
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
         {panel === "contact" && (
           <>
             <div className="mb-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
               <div className="rounded-xl border border-gray-100 bg-surface-elevated px-4 py-3 shadow-sm">
                 <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Total inquiries</p>
-                <p className="mt-1 text-2xl font-bold text-gray-900">{contactTotal}</p>
+                <p className="mt-1 text-2xl font-bold text-gray-900">{generalContacts.length}</p>
               </div>
             </div>
 
@@ -1088,45 +1271,14 @@ export default function BookingAdminDashboard() {
               <p className="text-sm text-gray-500">Loading contact inquiries…</p>
             ) : error ? (
               <p className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">{error}</p>
-            ) : contacts.length === 0 ? (
+            ) : generalContacts.length === 0 ? (
               <div className="rounded-2xl border border-dashed border-gray-200 bg-surface-elevated p-10 text-center">
                 <p className="text-sm text-gray-500">No contact form submissions yet.</p>
               </div>
             ) : (
               <div className="grid gap-4">
-                {contacts.map((item, index) => (
-                  <article key={item.id} className="rounded-2xl border border-gray-100 bg-surface-elevated p-5 shadow-sm">
-                    <div className="flex flex-wrap items-start justify-between gap-3">
-                      <div className="flex min-w-0 items-start gap-3">
-                        <span className="inline-flex h-8 min-w-8 shrink-0 items-center justify-center rounded-lg bg-gray-900 px-2 text-xs font-bold text-white">
-                          {formatBookingSerial(index + 1)}
-                        </span>
-                        <div className="min-w-0">
-                          <h3 className="text-lg font-bold text-gray-900">{item.name}</h3>
-                          <a href={`mailto:${item.email}`} className="mt-1 block text-sm text-primary hover:underline">
-                            {item.email}
-                          </a>
-                        </div>
-                      </div>
-                      <p className="text-xs text-gray-400">{formatDhakaDateTime(item.createdAt)}</p>
-                    </div>
-
-                    <div className="mt-5 grid gap-4 sm:grid-cols-2">
-                      <div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Project</p>
-                        <p className="mt-1 text-sm font-medium text-gray-900">{item.project}</p>
-                      </div>
-                      <div>
-                        <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Budget</p>
-                        <p className="mt-1 text-sm font-medium text-gray-900">{item.budget}</p>
-                      </div>
-                    </div>
-
-                    <div className="mt-4 border-t border-gray-100 pt-4">
-                      <p className="text-[10px] font-bold uppercase tracking-widest text-gray-400">Message</p>
-                      <p className="mt-1 whitespace-pre-wrap text-sm text-gray-700">{item.message}</p>
-                    </div>
-                  </article>
+                {generalContacts.map((item, index) => (
+                  <ContactInquiryCard key={item.id} item={item} serial={index + 1} />
                 ))}
               </div>
             )}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import WhatsAppLink from "@/components/WhatsAppLink";
 import { faqs } from "@/lib/content";
 import { mailtoLinks } from "@/lib/mailto";
 import { whatsappLinks } from "@/lib/whatsapp";
@@ -76,11 +77,9 @@ export default function FAQ({ showTitle = true }: { showTitle?: boolean }) {
                 </Link>
 
                 {/* Chat on WhatsApp */}
-                <Link
+                <WhatsAppLink
                   href={whatsappLinks.support()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between p-4 bg-surface-elevated rounded-xl border border-gray-200 hover:border-green-500 hover:shadow-md transition-all group"
+                  className="w-full flex items-center justify-between p-4 bg-surface-elevated rounded-xl border border-gray-200 hover:border-green-500 hover:shadow-md transition-all group text-left"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-10 h-10 rounded-full bg-green-500 flex items-center justify-center flex-shrink-0">
@@ -96,7 +95,7 @@ export default function FAQ({ showTitle = true }: { showTitle?: boolean }) {
                   <svg width="18" height="18" viewBox="0 0 18 18" fill="none" className="text-gray-400 group-hover:text-green-500 transition-colors">
                     <path d="M6.75 13.5L11.25 9L6.75 4.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
-                </Link>
+                </WhatsAppLink>
 
                 {/* Prefer email */}
                 <Link

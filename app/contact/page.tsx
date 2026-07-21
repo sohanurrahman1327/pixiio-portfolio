@@ -3,6 +3,7 @@ import PageHero from "@/components/PageHero";
 import PageShell from "@/components/PageShell";
 import ContactForm from "@/components/ContactForm";
 import WhatsappButton from "@/components/WhatsappButton";
+import WhatsAppLink from "@/components/WhatsAppLink";
 import { contactInfo } from "@/lib/content";
 import { mailtoLinks } from "@/lib/mailto";
 import { whatsappLinks } from "@/lib/whatsapp";
@@ -55,14 +56,12 @@ export default function ContactPage() {
                     <p className="text-[10px] font-bold tracking-widest text-gray-400 mb-1">
                       PHONE / WHATSAPP
                     </p>
-                    <a
+                    <WhatsAppLink
                       href={whatsappLinks.phone()}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-sm text-gray-900 hover:text-[#25D366] transition-colors"
+                      className="text-sm text-gray-900 hover:text-[#25D366] transition-colors text-left"
                     >
                       {contactInfo.phone}
-                    </a>
+                    </WhatsAppLink>
                   </li>
                   <li>
                     <p className="text-[10px] font-bold tracking-widest text-gray-400 mb-1">
@@ -84,17 +83,19 @@ export default function ContactPage() {
                   FOLLOW US
                 </p>
                 <div className="flex flex-wrap gap-3">
-                  {socialLinks.map((social) => (
-                    <a
-                      key={social.label}
-                      href={social.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-xs font-medium text-gray-600 border border-gray-200 px-4 py-2 rounded-full hover:border-primary hover:text-primary transition-colors"
-                    >
-                      {social.label}
-                    </a>
-                  ))}
+                  {socialLinks
+                    .filter((social) => social.icon !== "whatsapp")
+                    .map((social) => (
+                      <a
+                        key={social.label}
+                        href={social.href}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs font-medium text-gray-600 border border-gray-200 px-4 py-2 rounded-full hover:border-primary hover:text-primary transition-colors"
+                      >
+                        {social.label}
+                      </a>
+                    ))}
                 </div>
               </div>
 
@@ -103,7 +104,7 @@ export default function ContactPage() {
                   PREFER WHATSAPP?
                 </h3>
                 <p className="text-gray-500 text-sm mb-6 leading-relaxed">
-                  Skip the form — chat with us directly. We&apos;re online Mon–Sat
+                  Skip the form, chat with us directly. We&apos;re online Mon–Sat
                   and happy to discuss your project in real time.
                 </p>
                 <WhatsappButton />

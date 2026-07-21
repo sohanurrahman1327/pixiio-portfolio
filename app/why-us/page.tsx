@@ -19,7 +19,7 @@ export default function WhyUsPage() {
       <PageHero
         label="THE PIXIIO DIFFERENCE"
         title="WHY CHOOSE US"
-        description="We're not just designers — we're partners invested in your brand's success. Here's what sets Pixiio apart from the rest."
+        description="We're not just designers, we're partners invested in your brand's success. Here's what sets Pixiio apart from the rest."
       />
 
       <section className="py-16 bg-background border-b border-gray-100">

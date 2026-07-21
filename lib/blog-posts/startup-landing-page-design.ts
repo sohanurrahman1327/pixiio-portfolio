@@ -8,7 +8,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "This is one of the most common challenges startups face. In many cases, the problem isn't the product—it's the landing page.",
+    text: "This is one of the most common challenges startups face. In many cases, the problem isn't the product, it's the landing page.",
   },
   {
     type: "paragraph",
@@ -49,7 +49,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "If any of these elements are missing, people are likely to leave—even if your product is excellent. Think of your landing page as a conversation with a potential customer. Every section should answer the next question they're likely to have.",
+    text: "If any of these elements are missing, people are likely to leave, even if your product is excellent. Think of your landing page as a conversation with a potential customer. Every section should answer the next question they're likely to have.",
   },
 
   {
@@ -93,7 +93,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Founders naturally love talking about features. Customers care about results. Instead of saying, \"AI-powered workflow automation platform,\" explain the benefit: \"Automate repetitive work so your team can focus on growing the business.\" People buy outcomes—not feature lists.",
+    text: "Founders naturally love talking about features. Customers care about results. Instead of saying, \"AI-powered workflow automation platform,\" explain the benefit: \"Automate repetitive work so your team can focus on growing the business.\" People buy outcomes, not feature lists.",
   },
   {
     type: "heading",
@@ -261,7 +261,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "There's no universal template, but the highest-performing startup landing pages follow a similar structure because they're built around user psychology—not trends.",
+    text: "There's no universal template, but the highest-performing startup landing pages follow a similar structure because they're built around user psychology, not trends.",
   },
 
   {
@@ -322,15 +322,15 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   {
     type: "list",
     items: [
-      "Headline — State the biggest outcome.",
-      "Subheadline — Explain how you deliver that outcome.",
-      "Primary CTA — Guide visitors to one clear action.",
-      "Supporting Visual — Show the product, service, or result—not just decorative graphics.",
+      "Headline, State the biggest outcome.",
+      "Subheadline, Explain how you deliver that outcome.",
+      "Primary CTA, Guide visitors to one clear action.",
+      "Supporting Visual, Show the product, service, or result, not just decorative graphics.",
     ],
   },
   {
     type: "paragraph",
-    text: "Example — Instead of: We Build Digital Experiences.",
+    text: "Example, Instead of: We Build Digital Experiences.",
   },
   {
     type: "paragraph",
@@ -444,7 +444,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "The goal isn't to make the page longer—it's to make every section more useful.",
+    text: "The goal isn't to make the page longer, it's to make every section more useful.",
   },
 
   {
@@ -536,7 +536,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A mobile-friendly experience isn't optional—it's expected.",
+    text: "A mobile-friendly experience isn't optional, it's expected.",
   },
 
   {
@@ -601,7 +601,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Even startups with excellent products lose potential customers because of avoidable landing page mistakes. Here are the most common ones—and how to fix them.",
+    text: "Even startups with excellent products lose potential customers because of avoidable landing page mistakes. Here are the most common ones, and how to fix them.",
   },
   {
     type: "heading",
@@ -955,11 +955,11 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   {
     type: "callout",
     title: "Get a Free Landing Page Audit",
-    text: "If you're unsure whether your current landing page is helping—or hurting—your business, start with a free audit. We'll review your messaging and value proposition, user experience and visual hierarchy, conversion opportunities, mobile usability, SEO fundamentals, and page speed and performance. You'll receive practical recommendations that can help improve your landing page, whether you choose to work with us or implement the changes yourself.",
+    text: "If you're unsure whether your current landing page is helping, or hurting, your business, start with a free audit. We'll review your messaging and value proposition, user experience and visual hierarchy, conversion opportunities, mobile usability, SEO fundamentals, and page speed and performance. You'll receive practical recommendations that can help improve your landing page, whether you choose to work with us or implement the changes yourself.",
   },
   {
     type: "paragraph",
-    text: "A high-converting landing page isn't built by chance—it's built through strategy, testing, and continuous improvement.",
+    text: "A high-converting landing page isn't built by chance, it's built through strategy, testing, and continuous improvement.",
   },
 
   {
@@ -970,7 +970,7 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your landing page is more than a design asset—it's a critical part of your sales and marketing strategy. A successful landing page doesn't rely on flashy visuals or the latest design trends. It succeeds because it communicates clearly, builds trust, and makes it easy for visitors to take the next step.",
+    text: "Your landing page is more than a design asset, it's a critical part of your sales and marketing strategy. A successful landing page doesn't rely on flashy visuals or the latest design trends. It succeeds because it communicates clearly, builds trust, and makes it easy for visitors to take the next step.",
   },
   {
     type: "paragraph",
@@ -982,6 +982,6 @@ export const startupLandingPageDesignSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "That simple shift in perspective often leads to better decisions—and better results.",
+    text: "That simple shift in perspective often leads to better decisions, and better results.",
   },
 ];

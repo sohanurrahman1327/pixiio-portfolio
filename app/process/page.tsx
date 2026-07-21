@@ -56,7 +56,7 @@ export default function ProcessPage() {
       <PageHero
         label="HOW WE WORK"
         title="DESIGN PROCESS"
-        description="A transparent, proven workflow — from first sketch on paper to a polished live website your audience will love."
+        description="A transparent, proven workflow, from first sketch on paper to a polished live website your audience will love."
       />
 
       <DesignProcess />

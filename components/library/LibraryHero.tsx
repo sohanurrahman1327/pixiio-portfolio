@@ -18,7 +18,7 @@ export default function LibraryHero({
             {title}
           </h1>
           <p className="text-sm text-gray-600 leading-relaxed mb-5">
-            Browse hundreds of ready-made components, blocks, and templates —
+            Browse hundreds of ready-made components, blocks, and templates,
             crafted for modern brands and built to ship fast.
           </p>
           <div className="flex flex-wrap items-center gap-3">

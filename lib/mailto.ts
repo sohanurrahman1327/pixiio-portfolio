@@ -53,7 +53,7 @@ export const mailtoLinks = {
   /** Privacy / terms inquiry */
   legal: () =>
     buildMailtoUrl({
-      subject: "Legal Inquiry — Pixiio Website",
+      subject: "Legal Inquiry, Pixiio Website",
       body: "Hi Pixiio Team,\n\nI have a question regarding your policies:\n\n",
     }),
 };
@@ -64,7 +64,9 @@ export function mailtoContactInquiry(data: {
   email: string;
   project: string;
   budget: string;
+  package?: string;
   message: string;
+  hasReferenceImage?: boolean;
 }): string {
   return buildMailtoUrl({
     subject: `New Project Inquiry from ${data.name}`,
@@ -73,10 +75,14 @@ export function mailtoContactInquiry(data: {
       `Email: ${data.email}`,
       `Project: ${data.project}`,
       `Budget: ${data.budget}`,
+      data.package ? `Package: ${data.package}` : "",
       "",
       "Message:",
       data.message,
-    ].join("\n"),
+      data.hasReferenceImage ? "\n(Please remember to attach your reference image, it couldn't be included automatically.)" : "",
+    ]
+      .filter(Boolean)
+      .join("\n"),
   });
 }
 
@@ -103,7 +109,7 @@ export function mailtoBookingRequest(data: {
 }): string {
   const guestList = data.guests.length > 0 ? data.guests.join(", ") : "None";
   return buildMailtoUrl({
-    subject: `Booking Request — ${data.name} · ${data.service}`,
+    subject: `Booking Request, ${data.name} · ${data.service}`,
     body: [
       `Name: ${data.name}`,
       `Email: ${data.email}`,

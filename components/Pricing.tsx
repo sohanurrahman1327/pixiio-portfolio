@@ -1,14 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { pricingPlans } from "@/lib/content";
+import { useMemo, useState } from "react";
+import { getPricingPlans, pricingTabs } from "@/lib/content";
 
 const NOCODE_ADDON = 5000;
 
-/* ─── Format price number → "$X,XXX+" ─── */
-function formatPrice(n: number) {
+type PricingPlan = ReturnType<typeof getPricingPlans>[number];
+
+/* ─── Format price number → "$X,XXX+" or "$XX" (custom/enterprise) ─── */
+function formatPrice(n: number | null) {
+  if (n === null) return "$XX";
   return "$" + n.toLocaleString("en-US") + "+";
+}
+
+/* ─── Build a /contact link that prefills the "Selected Package" field ─── */
+function buildContactHref(packageName: string, price: number | null, pagesLabel?: string) {
+  const params = new URLSearchParams({ package: packageName });
+  if (price !== null) params.set("price", formatPrice(price));
+  if (pagesLabel) params.set("pages", pagesLabel);
+  return `/contact?${params.toString()}`;
 }
 
 /* ─── Feature-row icons ─── */
@@ -133,8 +144,16 @@ function NoCodeAddon({
   );
 }
 
-/* ─── Purchase Now button ─── */
-function ScheduleButton({ href, highlighted = false }: { href: string; highlighted?: boolean }) {
+/* ─── Purchase Now / Book a Call button ─── */
+function ScheduleButton({
+  href,
+  highlighted = false,
+  label = "Purchase Now",
+}: {
+  href: string;
+  highlighted?: boolean;
+  label?: string;
+}) {
   return (
     <Link
       href={href}
@@ -144,7 +163,7 @@ function ScheduleButton({ href, highlighted = false }: { href: string; highlight
           : "bg-gray-900 hover:bg-gray-800 dark:bg-white/10 dark:hover:bg-white/15 text-white"
         }`}
     >
-      <span className="text-sm font-semibold">Purchase Now</span>
+      <span className="text-sm font-semibold">{label}</span>
       <span className={`relative flex items-center justify-center w-9 h-9 rounded-full bg-white shrink-0 overflow-hidden ${highlighted ? "text-primary" : "text-[#111111]"}`}>
         <span className="absolute inset-0 flex items-center justify-center transition-transform duration-300 ease-in-out group-hover:-translate-x-full">
           <svg width="13" height="13" viewBox="0 0 16 16" fill="none" aria-hidden="true">
@@ -183,11 +202,12 @@ function PriceDisplay({
   addonEnabled,
   highlighted,
 }: {
-  basePrice: number;
+  basePrice: number | null;
   addonEnabled: boolean;
   highlighted?: boolean;
 }) {
-  const total = addonEnabled ? basePrice + NOCODE_ADDON : basePrice;
+  const isCustom = basePrice === null;
+  const total = !isCustom && addonEnabled ? basePrice + NOCODE_ADDON : basePrice;
   return (
     <div className="mt-5 flex flex-col gap-1.5">
       <div className="flex items-baseline gap-2 flex-wrap">
@@ -197,9 +217,9 @@ function PriceDisplay({
         >
           {formatPrice(total)}
         </span>
-        <span className="text-gray-400 text-sm">Fixed</span>
+        {isCustom && <span className="text-gray-400 text-sm">Negotiation</span>}
       </div>
-      {addonEnabled && (
+      {!isCustom && addonEnabled && (
         <span className={`self-start text-xs font-medium px-2 py-0.5 rounded-full transition-all duration-300
           ${highlighted ? "bg-primary/10 text-primary" : "bg-gray-100 text-gray-500"}`}>
           +$5k No-code Dev included
@@ -210,8 +230,11 @@ function PriceDisplay({
 }
 
 /* ─── Highlighted card — animated spinning border ─── */
-function HighlightedCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
+function HighlightedCard({ plan, pagesLabel }: { plan: PricingPlan; pagesLabel: string }) {
   const [noCode, setNoCode] = useState(false);
+  const basePrice = plan.basePrice;
+  const isCustom = basePrice === null;
+  const total = basePrice !== null && noCode ? basePrice + NOCODE_ADDON : basePrice;
   return (
     <div className="relative p-[2px] rounded-3xl pricing-glow-border overflow-hidden">
       <article className="relative bg-surface-elevated rounded-[22px] p-8 flex flex-col h-full">
@@ -234,16 +257,25 @@ function HighlightedCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
           ))}
         </ul>
 
-        <ScheduleButton href="/contact" highlighted />
-        <NoCodeAddon enabled={noCode} onToggle={() => setNoCode((v) => !v)} highlighted />
+        <ScheduleButton
+          href={buildContactHref(plan.name, total, pagesLabel)}
+          highlighted
+          label={isCustom ? "Book a Call" : "Purchase Now"}
+        />
+        {!isCustom && (
+          <NoCodeAddon enabled={noCode} onToggle={() => setNoCode((v) => !v)} highlighted />
+        )}
       </article>
     </div>
   );
 }
 
 /* ─── Regular card ─── */
-function RegularCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
+function RegularCard({ plan, pagesLabel }: { plan: PricingPlan; pagesLabel: string }) {
   const [noCode, setNoCode] = useState(false);
+  const basePrice = plan.basePrice;
+  const isCustom = basePrice === null;
+  const total = basePrice !== null && noCode ? basePrice + NOCODE_ADDON : basePrice;
   return (
     <article className="relative bg-surface-elevated rounded-3xl p-8 border border-gray-100 flex flex-col h-full overflow-hidden">
       {/* Subtle top-left glow blob */}
@@ -269,13 +301,54 @@ function RegularCard({ plan }: { plan: (typeof pricingPlans)[number] }) {
         ))}
       </ul>
 
-      <ScheduleButton href="/contact" />
-      <NoCodeAddon enabled={noCode} onToggle={() => setNoCode((v) => !v)} />
+      <ScheduleButton
+        href={buildContactHref(plan.name, total, pagesLabel)}
+        label={isCustom ? "Book a Call" : "Purchase Now"}
+      />
+      {!isCustom && (
+        <NoCodeAddon enabled={noCode} onToggle={() => setNoCode((v) => !v)} />
+      )}
     </article>
   );
 }
 
+/* ─── Page-count tab selector ─── */
+function TabSelector({
+  active,
+  onChange,
+}: {
+  active: string;
+  onChange: (id: string) => void;
+}) {
+  return (
+    <div className="flex flex-wrap items-center justify-center gap-2.5">
+      {pricingTabs.map((tab) => {
+        const isActive = tab.id === active;
+        return (
+          <button
+            key={tab.id}
+            type="button"
+            onClick={() => onChange(tab.id)}
+            aria-pressed={isActive}
+            className={`px-5 py-2.5 rounded-full text-sm font-semibold border transition-colors duration-200
+              ${isActive
+                ? "bg-primary border-primary text-white shadow-sm"
+                : "bg-transparent border-gray-200 text-gray-500 hover:border-gray-300 hover:text-gray-700"
+              }`}
+          >
+            {tab.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
 export default function Pricing() {
+  const [activeTab, setActiveTab] = useState<string>(pricingTabs[0].id);
+  const plans = useMemo(() => getPricingPlans(activeTab), [activeTab]);
+  const activeTabLabel = pricingTabs.find((tab) => tab.id === activeTab)?.label ?? "";
+
   return (
     <section id="pricing" className="bg-gray-50 py-[50px] md:py-[80px] lg:py-30">
       <div className="max-w-7xl mx-auto px-6 flex flex-col gap-[30px] lg:gap-[42px]">
@@ -284,17 +357,18 @@ export default function Pricing() {
           <h2 className="font-display text-5xl md:text-6xl text-center text-gray-900 tracking-wide mb-4">
             SELECT PACKAGE
           </h2>
-          <p className="text-center text-gray-500 text-sm max-w-md mx-auto">
-            Transparent pricing with no hidden fees. Pick the plan that fits your project scope.
+          <p className="text-center text-gray-500 text-sm max-w-md mx-auto mb-6">
+            Premium quality with affordability & flexibility. Personalize your plan for custom solutions according to your business needs.
           </p>
+          <TabSelector active={activeTab} onChange={setActiveTab} />
         </div>
 
         <div className="grid md:grid-cols-3 gap-5 items-stretch">
-          {pricingPlans.map((plan) =>
+          {plans.map((plan) =>
             plan.highlighted ? (
-              <HighlightedCard key={plan.name} plan={plan} />
+              <HighlightedCard key={plan.name} plan={plan} pagesLabel={activeTabLabel} />
             ) : (
-              <RegularCard key={plan.name} plan={plan} />
+              <RegularCard key={plan.name} plan={plan} pagesLabel={activeTabLabel} />
             )
           )}
         </div>
@@ -303,14 +377,14 @@ export default function Pricing() {
         <aside className="bg-primary rounded-3xl p-10 flex flex-col md:flex-row items-center justify-between gap-6">
           <div>
             <h3 className="font-display text-3xl text-white tracking-wide mb-2">
-              NEED A CUSTOM PLAN?
+              CUSTOM PRICING, TAILORED FOR YOU
             </h3>
             <p className="text-white/80 text-sm">
-              We offer tailored packages for enterprise clients and long-term partnerships.
+              Share your design vision, and we&apos;ll provide a quote that fits your needs and budget.
             </p>
           </div>
           <Link
-            href="/contact"
+            href={buildContactHref("Custom Package", null)}
             className="group inline-flex items-center gap-3 bg-surface-elevated text-primary text-[13px] font-bold tracking-[0.12em] uppercase pl-2 pr-6 py-2 rounded-full hover:bg-gray-100 transition-colors overflow-hidden whitespace-nowrap"
           >
             <span className="relative flex items-center justify-center w-9 h-9 rounded-full bg-primary shrink-0 overflow-hidden">

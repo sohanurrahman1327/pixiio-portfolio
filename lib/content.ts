@@ -8,7 +8,7 @@ export const services = [
     description:
       "Building memorable brand identities that stand out. From logos to full brand guidelines, we define who you are.",
     longDescription:
-      "Your brand is more than a logo. We craft cohesive visual identities — color, typography, voice, and assets — that make your business instantly recognizable and trusted.",
+      "Your brand is more than a logo. We craft cohesive visual identities, color, typography, voice, and assets, that make your business instantly recognizable and trusted.",
     image: serviceImages.branding,
     bg: "bg-background",
     deliverables: [
@@ -25,7 +25,7 @@ export const services = [
     description:
       "Crafting intuitive, beautiful interfaces that users love. We turn complex ideas into seamless digital experiences.",
     longDescription:
-      "From wireframes to high-fidelity screens, we design interfaces that feel effortless. Every pixel is intentional — built for clarity, conversion, and delight across web and mobile.",
+      "From wireframes to high-fidelity screens, we design interfaces that feel effortless. Every pixel is intentional, built for clarity, conversion, and delight across web and mobile.",
     image: serviceImages.uiDesign,
     bg: "bg-gray-50",
     deliverables: [
@@ -42,7 +42,7 @@ export const services = [
     description:
       "Designing and developing stunning websites that convert. Fast, responsive, and built for performance.",
     longDescription:
-      "We design and build websites that look premium and perform flawlessly. From landing pages to full multi-page sites on WordPress or Framer — optimized for speed and SEO.",
+      "We design and build websites that look premium and perform flawlessly. From landing pages to full multi-page sites on WordPress or Framer, optimized for speed and SEO.",
     image: serviceImages.website,
     bg: "bg-background",
     deliverables: [
@@ -79,7 +79,7 @@ export const whyChooseReasons = [
     description:
       "Every project starts with design. We believe great design drives business results.",
     detail:
-      "Strategy and aesthetics work together from day one — not as an afterthought.",
+      "Strategy and aesthetics work together from day one, not as an afterthought.",
   },
   {
     icon: "◎",
@@ -95,7 +95,7 @@ export const whyChooseReasons = [
     description:
       "We move quickly without compromising quality. Your timeline is our priority.",
     detail:
-      "Clear milestones, weekly updates, and on-time delivery — every single time.",
+      "Clear milestones, weekly updates, and on-time delivery, every single time.",
   },
   {
     icon: "◇",
@@ -122,59 +122,111 @@ export const stats = [
   { value: "24/7", label: "WhatsApp Support" },
 ];
 
-export const pricingPlans = [
+/* ─── Pricing: page-count tabs ─── */
+export const pricingTabs = [
+  { id: "1-4", label: "1-4 Pages" },
+  { id: "5-9", label: "5-9 Pages" },
+  { id: "10-15", label: "10-15 Pages" },
+  { id: "16-25", label: "16-25 Pages" },
+  { id: "enterprise", label: "Enterprise" },
+];
+
+/* Package definitions — identical across every page-count tier, only price scales */
+const pricingPackageMeta = [
   {
-    name: "Landing Page",
-    basePrice: 1200,
-    price: "$1,200+",
-    idealFor: "Ideal for designing or redesigning a website to increase conversion rates.",
+    name: "Launch Package",
+    idealFor: "Design only, ideal for founders who need a polished UI before they build.",
     features: [
-      "1x Senior designer",
-      "2 – 4 Weeks Delivery",
-      "3 Design Concepts",
-      "SEO optimization",
+      "UX research",
+      "High-fidelity designs",
+      "Responsive Design",
+      "Figma Prototype",
+      "Design System",
+      "Developer Handoff",
       "Unlimited Revisions",
-      "50/50 Secure Payment",
     ],
     highlighted: false,
   },
   {
-    name: "Multi-Page Website",
-    basePrice: 3200,
-    price: "$3,200+",
-    idealFor: "Perfect for a multi-page design to increase conversions and engagement.",
+    name: "Growth Package",
+    idealFor: "Design + Development, everything you need to go from concept to a live site.",
     features: [
-      "3x Senior designer",
-      "Depends on Project",
-      "5 – 20 Multi-Page",
-      "SEO optimization",
-      "Unlimited Revisions",
-      "50/50 Secure Payment",
+      "Everything from Launch",
+      "Design Documentation",
+      "Framer / Webflow / WordPress Development",
+      "Hosting & Domain Setup",
+      "Analytics Setup",
+      "2 Months Maintenance",
     ],
     highlighted: true,
   },
   {
-    name: "Brand Identity",
-    basePrice: 2000,
-    price: "$2,000+",
-    idealFor: "Complete brand system for agencies, startups, and growing businesses.",
+    name: "Signature Package",
+    idealFor: "Design + Dev + Branding, a complete digital presence built to scale.",
     features: [
-      "1x Senior designer",
-      "3 – 5 Weeks Delivery",
-      "Logo + Full Brand Kit",
-      "Figma source files",
-      "Unlimited Revisions",
-      "50/50 Secure Payment",
+      "Everything from Growth",
+      "SEO Setup",
+      "3 Months Maintenance",
+      "Logo and Essentials",
+      "AI Brand Photoshoot",
+      "Color Theme Support",
+      "Multilingual Support",
     ],
     highlighted: false,
   },
-];
+] as const;
+
+/* Base price (USD) per package, per page-count tier — null = custom / contact us */
+const pricingTierPrices: Record<string, (number | null)[]> = {
+  "1-4": [300, 500, 900],
+  "5-9": [600, 800, 999],
+  "10-15": [1200, 1400, 1700],
+  "16-25": [1600, 1800, 2100],
+  enterprise: [null, null, null],
+};
+
+export function getPricingPlans(tabId: string) {
+  const prices = pricingTierPrices[tabId] ?? pricingTierPrices["1-4"];
+  return pricingPackageMeta.map((meta, i) => ({
+    ...meta,
+    basePrice: prices[i],
+  }));
+}
+
+/** Package names, used to prefill the contact form's "Selected Package" field. */
+export const pricingPackageNames = pricingPackageMeta.map((meta) => meta.name);
+
+export const pricingPlans = getPricingPlans("1-4");
+
+/* ─── Bonuses — free extras bundled with every package ─── */
+export const bonuses = [
+  {
+    icon: "prototype",
+    title: "Free Design Prototype",
+    description: "Experience your design in action before development.",
+  },
+  {
+    icon: "handoff",
+    title: "Developer Handoff",
+    description: "We ensure what we design is exactly what gets built.",
+  },
+  {
+    icon: "management",
+    title: "Project Management",
+    description: "Stay on track with our expert project management.",
+  },
+  {
+    icon: "consultation",
+    title: "Project Consultation",
+    description: "Get professional advice to enhance your project.",
+  },
+] as const;
 
 export const faqs = [
   {
     question: "What services do you offer?",
     answer:
-      "We offer UI/UX design, branding, website design, and digital marketing. From logo creation in Illustrator to live sites on WordPress or Framer — we handle the full creative pipeline.",
+      "We offer UI/UX design, branding, website design, and digital marketing. From logo creation in Illustrator to live sites on WordPress or Framer, we handle the full creative pipeline.",
   },
   {
     question: "How long does a typical project take?",

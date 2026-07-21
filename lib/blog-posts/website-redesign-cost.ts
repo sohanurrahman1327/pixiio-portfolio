@@ -265,7 +265,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A website should support your business for years—not create problems six months after launch.",
+    text: "A website should support your business for years, not create problems six months after launch.",
   },
 
   {
@@ -282,12 +282,12 @@ export const websiteRedesignCostSections: BlogSection[] = [
     type: "list",
     ordered: true,
     items: [
-      "Discover — Understand business goals, customers, and competitors.",
-      "Audit — Evaluate UX, SEO, content, speed, and conversion opportunities.",
-      "Strategy — Plan information architecture, customer journeys, and website goals.",
-      "Design — Create a modern, conversion-focused user experience.",
-      "Develop — Build a fast, scalable, SEO-friendly website.",
-      "Grow — Measure performance and continuously improve after launch.",
+      "Discover, Understand business goals, customers, and competitors.",
+      "Audit, Evaluate UX, SEO, content, speed, and conversion opportunities.",
+      "Strategy, Plan information architecture, customer journeys, and website goals.",
+      "Design, Create a modern, conversion-focused user experience.",
+      "Develop, Build a fast, scalable, SEO-friendly website.",
+      "Grow, Measure performance and continuously improve after launch.",
     ],
   },
   {
@@ -323,7 +323,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   {
     type: "callout",
     title: "The Real Cost Question",
-    text: "The cheapest redesign may have the lowest price—but the highest long-term cost. The best redesign is the one that creates measurable business growth.",
+    text: "The cheapest redesign may have the lowest price, but the highest long-term cost. The best redesign is the one that creates measurable business growth.",
   },
 
   // ——— Part 2 ———
@@ -339,7 +339,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "The difference lies in the scope—not just the design. Let's explore the biggest factors that influence pricing.",
+    text: "The difference lies in the scope, not just the design. Let's explore the biggest factors that influence pricing.",
   },
 
   {
@@ -365,7 +365,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "More pages mean more work—not just more design.",
+    text: "More pages mean more work, not just more design.",
   },
 
   {
@@ -650,7 +650,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A redesign should be evaluated by its return—not just its price. For example, imagine your current website generates 10 qualified leads per month. After a strategic redesign, it generates 25 qualified leads per month.",
+    text: "A redesign should be evaluated by its return, not just its price. For example, imagine your current website generates 10 qualified leads per month. After a strategic redesign, it generates 25 qualified leads per month.",
   },
   {
     type: "paragraph",
@@ -670,12 +670,12 @@ export const websiteRedesignCostSections: BlogSection[] = [
   {
     type: "list",
     items: [
-      "Strategy — Is discovery included?",
-      "Design — Is the UI custom or template-based?",
-      "Development — Is performance optimization included?",
-      "SEO — Will existing rankings be protected?",
-      "Support — What happens after launch?",
-      "Growth — Can the website scale with my business?",
+      "Strategy, Is discovery included?",
+      "Design, Is the UI custom or template-based?",
+      "Development, Is performance optimization included?",
+      "SEO, Will existing rankings be protected?",
+      "Support, What happens after launch?",
+      "Growth, Can the website scale with my business?",
     ],
   },
   {
@@ -752,7 +752,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Investing in a website redesign is a major business decision. However, many companies don't lose money because they spend too much—they lose money because they invest in the wrong things. Here are the most common budgeting mistakes to avoid.",
+    text: "Investing in a website redesign is a major business decision. However, many companies don't lose money because they spend too much, they lose money because they invest in the wrong things. Here are the most common budgeting mistakes to avoid.",
   },
 
   {
@@ -804,7 +804,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A website should support where your business is going—not just where it is today. Ask yourself:",
+    text: "A website should support where your business is going, not just where it is today. Ask yourself:",
   },
   {
     type: "list",
@@ -855,7 +855,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your redesign is the foundation—not the finish line.",
+    text: "Your redesign is the foundation, not the finish line.",
   },
 
   {
@@ -963,7 +963,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A redesign should prepare your business for the next stage of growth—not simply replace an outdated website.",
+    text: "A redesign should prepare your business for the next stage of growth, not simply replace an outdated website.",
   },
 
   {
@@ -1010,7 +1010,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Yes. With proper planning—including URL mapping, 301 redirects, metadata preservation, and technical SEO reviews—you can protect your existing rankings while improving your website.",
+    text: "Yes. With proper planning, including URL mapping, 301 redirects, metadata preservation, and technical SEO reviews, you can protect your existing rankings while improving your website.",
   },
   {
     type: "heading",
@@ -1047,7 +1047,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "At Pixiio, we approach every redesign as a business growth project—not just a design project. Our redesign services include:",
+    text: "At Pixiio, we approach every redesign as a business growth project, not just a design project. Our redesign services include:",
   },
   {
     type: "list",
@@ -1074,7 +1074,7 @@ export const websiteRedesignCostSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "The true cost of a website redesign isn't what you pay today—it's what your business misses if your website continues underperforming tomorrow.",
+    text: "The true cost of a website redesign isn't what you pay today, it's what your business misses if your website continues underperforming tomorrow.",
   },
 
   {

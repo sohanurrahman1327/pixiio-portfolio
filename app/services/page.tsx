@@ -19,7 +19,7 @@ export default function ServicesPage() {
       <PageHero
         label="WHAT WE DO"
         title="OUR SERVICES"
-        description="End-to-end design services — from brand identity and UI design to live websites and marketing assets that help your business grow."
+        description="End-to-end design services, from brand identity and UI design to live websites and marketing assets that help your business grow."
       />
 
       <section className="py-20 bg-background">

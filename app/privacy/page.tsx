@@ -22,7 +22,7 @@ export default function PrivacyPage() {
         <div className="max-w-3xl mx-auto px-6 prose prose-gray">
           <h2 className="font-display text-2xl text-gray-900 tracking-wide mb-4">1. Information We Collect</h2>
           <p className="text-gray-600 text-sm leading-relaxed mb-8">
-            When you contact us through our website or email, we collect the information you voluntarily provide — such as your name, email address, and project details. We do not collect any data automatically beyond standard server logs.
+            When you contact us through our website or email, we collect the information you voluntarily provide, such as your name, email address, and project details. We do not collect any data automatically beyond standard server logs.
           </p>
 
           <h2 className="font-display text-2xl text-gray-900 tracking-wide mb-4">2. How We Use Your Information</h2>

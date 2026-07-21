@@ -50,7 +50,7 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "However, choosing Elementor doesn't automatically guarantee a high-performing website. The platform provides flexibility—but strategy determines results.",
+    text: "However, choosing Elementor doesn't automatically guarantee a high-performing website. The platform provides flexibility, but strategy determines results.",
   },
 
   {
@@ -99,7 +99,7 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Every successful project starts with questions—not templates. A good agency should understand:",
+    text: "Every successful project starts with questions, not templates. A good agency should understand:",
   },
   {
     type: "list",
@@ -253,23 +253,23 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "At Pixiio, we believe websites should be built around business growth—not just design trends. That's why every project follows a structured process.",
+    text: "At Pixiio, we believe websites should be built around business growth, not just design trends. That's why every project follows a structured process.",
   },
   {
     type: "list",
     ordered: true,
     items: [
-      "Discover — Understand your business, audience, competitors, and goals.",
-      "Strategize — Plan the information architecture, user journey, SEO, and conversion flow.",
-      "Design — Create modern, conversion-focused interfaces that reflect your brand.",
-      "Develop — Build a clean, scalable Elementor website using best practices.",
-      "Optimize — Improve speed, accessibility, SEO, and user experience before launch.",
-      "Grow — Monitor performance, gather user insights, and continuously improve the website over time.",
+      "Discover, Understand your business, audience, competitors, and goals.",
+      "Strategize, Plan the information architecture, user journey, SEO, and conversion flow.",
+      "Design, Create modern, conversion-focused interfaces that reflect your brand.",
+      "Develop, Build a clean, scalable Elementor website using best practices.",
+      "Optimize, Improve speed, accessibility, SEO, and user experience before launch.",
+      "Grow, Monitor performance, gather user insights, and continuously improve the website over time.",
     ],
   },
   {
     type: "paragraph",
-    text: "A successful website isn't finished on launch day—it evolves as your business grows.",
+    text: "A successful website isn't finished on launch day, it evolves as your business grows.",
   },
 
   {
@@ -300,7 +300,7 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "The difference isn't always visible on day one—but it becomes obvious after six months when one website is generating leads and the other is collecting dust. Before hiring an Elementor website design agency, evaluate them using the following criteria.",
+    text: "The difference isn't always visible on day one, but it becomes obvious after six months when one website is generating leads and the other is collecting dust. Before hiring an Elementor website design agency, evaluate them using the following criteria.",
   },
   {
     type: "heading",
@@ -377,7 +377,7 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A custom Elementor website doesn't necessarily mean everything is coded from scratch—it means the experience is designed specifically for your business rather than copied from a generic layout.",
+    text: "A custom Elementor website doesn't necessarily mean everything is coded from scratch, it means the experience is designed specifically for your business rather than copied from a generic layout.",
   },
 
   {
@@ -437,7 +437,7 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Choosing the right platform isn't about trends—it's about your business requirements.",
+    text: "Choosing the right platform isn't about trends, it's about your business requirements.",
   },
   {
     type: "table",
@@ -541,7 +541,7 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Visitors remember how quickly they found what they needed—not how many animations they saw.",
+    text: "Visitors remember how quickly they found what they needed, not how many animations they saw.",
   },
 
   {
@@ -557,12 +557,12 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   {
     type: "list",
     items: [
-      "Strategy — How do you understand our business before designing?",
-      "Design — Do you create custom designs or use templates?",
-      "Development — How do you optimize Elementor for speed?",
-      "SEO — Is SEO included during development?",
-      "Support — What happens after launch?",
-      "Scalability — Can the website grow with our business?",
+      "Strategy, How do you understand our business before designing?",
+      "Design, Do you create custom designs or use templates?",
+      "Development, How do you optimize Elementor for speed?",
+      "SEO, Is SEO included during development?",
+      "Support, What happens after launch?",
+      "Scalability, Can the website grow with our business?",
     ],
   },
   {
@@ -723,7 +723,7 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "SEO should be integrated into the project from day one—not added after launch.",
+    text: "SEO should be integrated into the project from day one, not added after launch.",
   },
   {
     type: "heading",
@@ -997,7 +997,7 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   {
     type: "callout",
     title: "Get Your Free Elementor Website Audit",
-    text: "If you're planning a new website—or wondering whether your current Elementor site is helping your business grow—we're happy to help. Our Free Website Audit includes UX & UI review, SEO health check, performance analysis, mobile experience review, conversion opportunity report, speed & Core Web Vitals assessment, and actionable improvement recommendations. Whether you choose to work with Pixiio or not, you'll leave with practical insights you can use to improve your website.",
+    text: "If you're planning a new website, or wondering whether your current Elementor site is helping your business grow, we're happy to help. Our Free Website Audit includes UX & UI review, SEO health check, performance analysis, mobile experience review, conversion opportunity report, speed & Core Web Vitals assessment, and actionable improvement recommendations. Whether you choose to work with Pixiio or not, you'll leave with practical insights you can use to improve your website.",
   },
   {
     type: "paragraph",
@@ -1027,6 +1027,6 @@ export const elementorWebsiteDesignAgencySections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "When strategy, design, development, and optimization work together, Elementor becomes much more than a page builder—it becomes the foundation of a scalable digital presence.",
+    text: "When strategy, design, development, and optimization work together, Elementor becomes much more than a page builder, it becomes the foundation of a scalable digital presence.",
   },
 ];

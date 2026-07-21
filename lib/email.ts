@@ -46,6 +46,11 @@ export async function sendAgencyEmail(options: {
   subject: string;
   html: string;
   replyTo?: string;
+  attachments?: {
+    filename: string;
+    content: Buffer;
+    contentType?: string;
+  }[];
 }) {
   const transporter = createMailTransporter();
   await transporter.sendMail({
@@ -54,6 +59,7 @@ export async function sendAgencyEmail(options: {
     replyTo: options.replyTo,
     subject: options.subject,
     html: options.html,
+    attachments: options.attachments,
   });
 }
 

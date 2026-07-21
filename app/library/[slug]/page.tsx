@@ -19,11 +19,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     return { title: "Design Not Found" };
   }
   return {
-    title: `${item.title} — Design Library`,
+    title: `${item.title}, Design Library`,
     description: item.excerpt,
     alternates: { canonical: `/library/${item.slug}` },
     openGraph: {
-      title: `${item.title} — Design Library`,
+      title: `${item.title}, Design Library`,
       description: item.excerpt,
       url: `/library/${item.slug}`,
       images: [{ url: item.previewImage }],

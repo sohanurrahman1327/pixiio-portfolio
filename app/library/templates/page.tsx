@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LibraryListing from "@/components/library/LibraryListing";
 
 export const metadata: Metadata = {
-  title: "Templates — Design Library",
+  title: "Templates, Design Library",
   description:
     "Full-page website templates for digital agencies, SaaS, and modern brands.",
   alternates: { canonical: "/library/templates" },

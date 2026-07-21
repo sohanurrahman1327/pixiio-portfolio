@@ -279,29 +279,32 @@ export default function OffcanvasMenu() {
             {/* Social — mt-4 provides the visual gap, no extra border needed */}
             <div className="shrink-0 mt-4 pt-4 border-t border-gray-100">
               <p className="text-[10px] font-bold tracking-[0.2em] text-gray-400 mb-3">FOLLOW US</p>
-              <div className="flex flex-wrap gap-2">
-                {socialLinks.map((social) => (
-                  <Link
-                    key={social.label}
-                    href={social.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={close}
-                    className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-[11px] font-medium text-gray-600 hover:border-primary hover:text-primary transition-colors duration-200 overflow-hidden"
-                  >
-                    <SocialIcon icon={social.icon} />
-                    {/* Text slides — slowed down */}
-                    <span className="relative overflow-hidden" style={{ minWidth: `${social.label.length * 6.5}px` }}>
-                      <span className="block transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
-                        {social.label}
+              <div className="flex flex-wrap gap-2 mb-3">
+                {socialLinks
+                  .filter((social) => social.icon !== "whatsapp")
+                  .map((social) => (
+                    <Link
+                      key={social.label}
+                      href={social.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={close}
+                      className="group inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-[11px] font-medium text-gray-600 hover:border-primary hover:text-primary transition-colors duration-200 overflow-hidden"
+                    >
+                      <SocialIcon icon={social.icon} />
+                      {/* Text slides — slowed down */}
+                      <span className="relative overflow-hidden" style={{ minWidth: `${social.label.length * 6.5}px` }}>
+                        <span className="block transition-all duration-500 ease-in-out group-hover:-translate-x-full group-hover:opacity-0">
+                          {social.label}
+                        </span>
+                        <span className="absolute inset-0 translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
+                          {social.label}
+                        </span>
                       </span>
-                      <span className="absolute inset-0 translate-x-full opacity-0 transition-all duration-500 ease-in-out group-hover:translate-x-0 group-hover:opacity-100">
-                        {social.label}
-                      </span>
-                    </span>
-                  </Link>
-                ))}
+                    </Link>
+                  ))}
               </div>
+              <WhatsappButton className="w-full justify-center" onClick={close} />
             </div>
           </div>
 

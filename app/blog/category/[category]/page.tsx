@@ -22,7 +22,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const category = getCategory(categorySlug);
 
   if (!category) {
-    return { title: "Category Not Found — Pixiio Blog" };
+    return { title: "Category Not Found, Pixiio Blog" };
   }
 
   const hasPosts = getPostsByCategory(category.slug).length > 0;
@@ -35,7 +35,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     // Thin/empty category pages shouldn't be indexed until they have content.
     robots: hasPosts ? undefined : { index: false, follow: true },
     openGraph: {
-      title: `${category.label} Articles — Pixiio Blog`,
+      title: `${category.label} Articles, Pixiio Blog`,
       description: category.description,
       url: `/blog/category/${category.slug}`,
     },
@@ -102,7 +102,7 @@ export default async function BlogCategoryPage({ params }: Props) {
           {posts.length === 0 ? (
             <div className="text-center py-16">
               <p className="text-gray-500 text-sm mb-6">
-                No articles published in this category yet — check back soon.
+                No articles published in this category yet, check back soon.
               </p>
               <Link
                 href="/blog"

@@ -32,7 +32,7 @@ export default function WorkPage() {
                   <figure className="rounded-3xl overflow-hidden mb-5 aspect-[4/3] border border-gray-100 shadow-sm">
                     <WorkImageLens
                       src={project.image}
-                      alt={`${project.subtitle} — ${project.title}`}
+                      alt={`${project.subtitle}, ${project.title}`}
                     />
                   </figure>
                   <div className="flex items-start justify-between gap-4">

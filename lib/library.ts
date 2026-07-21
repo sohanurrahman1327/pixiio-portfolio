@@ -42,7 +42,7 @@ function item(
 export const libraryItems: LibraryItem[] = [
   item(
     "utosia-a-digital-agency-2",
-    "Utosia — A Digital Agency",
+    "Utosia, A Digital Agency",
     "From branding to web design, we craft solutions that connect businesses with their audience.",
     "template",
     "figma",
@@ -67,8 +67,8 @@ export const libraryItems: LibraryItem[] = [
   item("cycle-testimonial-02", "Cycle Testimonial 02", "Carousel testimonial slider with avatars.", "component", "figma", "testimonial", { tags: ["carousel", "testimonial"], publishedAt: "2026-06-11" }),
   item("agency-hero-block", "Agency Hero Block", "Full-width hero with video background placeholder.", "block", "figma", "header", { publishedAt: "2026-06-10" }),
   item("saas-pricing-block", "SaaS Pricing Block", "Comparison pricing block for SaaS products.", "block", "figma", "pricing", { industry: "SaaS", publishedAt: "2026-06-09" }),
-  item("kyan-personal-portfolio", "Kyan — Personal Portfolio", "Minimal portfolio landing for creatives.", "template", "figma", "landing-page", { industry: "Digital Agency", isPro: true, publishedAt: "2026-06-08" }),
-  item("taskly-task-management", "Taskly — Task Management", "SaaS task management landing page.", "template", "figma", "landing-page", { industry: "SaaS", isPro: true, publishedAt: "2026-06-07" }),
+  item("kyan-personal-portfolio", "Kyan, Personal Portfolio", "Minimal portfolio landing for creatives.", "template", "figma", "landing-page", { industry: "Digital Agency", isPro: true, publishedAt: "2026-06-08" }),
+  item("taskly-task-management", "Taskly, Task Management", "SaaS task management landing page.", "template", "figma", "landing-page", { industry: "SaaS", isPro: true, publishedAt: "2026-06-07" }),
   item("elementor-agency-kit", "Elementor Agency Kit", "Complete agency website template for Elementor.", "template", "elementor", "landing-page", { isPro: true, publishedAt: "2026-06-06" }),
   item("elementor-pricing-table", "Elementor Pricing Table", "Responsive pricing widget for Elementor.", "component", "elementor", "pricing", { publishedAt: "2026-06-05" }),
   item("elementor-hero-section", "Elementor Hero Section", "Animated hero with gradient background.", "block", "elementor", "header", { publishedAt: "2026-06-04" }),

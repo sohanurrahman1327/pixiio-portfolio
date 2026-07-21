@@ -1,18 +1,18 @@
-import Link from "next/link";
+import WhatsAppLink from "@/components/WhatsAppLink";
 import { buildWhatsAppUrl } from "@/lib/whatsapp";
 
 type WhatsappButtonProps = {
   className?: string;
+  onClick?: () => void;
 };
 
-export default function WhatsappButton({ className = "" }: WhatsappButtonProps) {
+export default function WhatsappButton({ className = "", onClick }: WhatsappButtonProps) {
   const href = buildWhatsAppUrl();
 
   return (
-    <Link
+    <WhatsAppLink
       href={href}
-      target="_blank"
-      rel="noopener noreferrer"
+      onClick={onClick}
       className={`inline-flex items-center gap-3 bg-[#25D366] text-white text-xs font-semibold tracking-wider pl-2 pr-6 py-2 rounded-full hover:bg-[#1fb855] transition-colors ${className}`}
     >
       <span className="flex items-center justify-center w-9 h-9 rounded-full bg-white shrink-0">
@@ -28,6 +28,6 @@ export default function WhatsappButton({ className = "" }: WhatsappButtonProps) 
         </svg>
       </span>
       CONNECT ON WHATSAPP
-    </Link>
+    </WhatsAppLink>
   );
 }

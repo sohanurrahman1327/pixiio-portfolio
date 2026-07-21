@@ -16,7 +16,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A successful redesign should improve how people discover, understand, and trust your business. It should remove friction, strengthen your online presence, and increase the likelihood that visitors become customers. At Pixiio, we believe a redesign is a business decision—not just a design project.",
+    text: "A successful redesign should improve how people discover, understand, and trust your business. It should remove friction, strengthen your online presence, and increase the likelihood that visitors become customers. At Pixiio, we believe a redesign is a business decision, not just a design project.",
   },
   {
     type: "paragraph",
@@ -89,7 +89,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Your website should help your team—not slow them down. If publishing a blog, updating services, or changing content feels frustrating, your CMS or page structure may need improvement.",
+    text: "Your website should help your team, not slow them down. If publishing a blog, updating services, or changing content feels frustrating, your CMS or page structure may need improvement.",
   },
   {
     type: "heading",
@@ -202,12 +202,12 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Every redesign project should begin with strategy—not software. At Pixiio, our redesign process follows six stages.",
+    text: "Every redesign project should begin with strategy, not software. At Pixiio, our redesign process follows six stages.",
   },
   {
     type: "heading",
     level: 3,
-    text: "Phase 1 — Discover",
+    text: "Phase 1, Discover",
     id: "phase-1-discover",
   },
   {
@@ -231,7 +231,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   {
     type: "heading",
     level: 3,
-    text: "Phase 2 — Audit",
+    text: "Phase 2, Audit",
     id: "phase-2-audit",
   },
   {
@@ -251,12 +251,12 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "The goal is to identify what should be improved—and what should be preserved.",
+    text: "The goal is to identify what should be improved, and what should be preserved.",
   },
   {
     type: "heading",
     level: 3,
-    text: "Phase 3 — Strategy",
+    text: "Phase 3, Strategy",
     id: "phase-3-strategy",
   },
   {
@@ -281,7 +281,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   {
     type: "heading",
     level: 3,
-    text: "Phase 4 — Design",
+    text: "Phase 4, Design",
     id: "phase-4-design",
   },
   {
@@ -381,7 +381,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A redesign should strengthen your SEO—not reset it.",
+    text: "A redesign should strengthen your SEO, not reset it.",
   },
   {
     type: "callout",
@@ -428,11 +428,11 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Better Navigation — Reduce unnecessary menu items. Group related pages together. Make important pages easier to find.",
+    text: "Better Navigation, Reduce unnecessary menu items. Group related pages together. Make important pages easier to find.",
   },
   {
     type: "paragraph",
-    text: "Stronger Headlines — Instead of writing about your company, explain the value customers receive.",
+    text: "Stronger Headlines, Instead of writing about your company, explain the value customers receive.",
   },
   {
     type: "paragraph",
@@ -444,7 +444,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Clear Calls-to-Action — Every page should guide visitors toward one primary action.",
+    text: "Clear Calls-to-Action, Every page should guide visitors toward one primary action.",
   },
   {
     type: "list",
@@ -461,7 +461,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Faster Decision-Making — Reduce unnecessary choices. The easier the decision feels, the more likely visitors are to take action.",
+    text: "Faster Decision-Making, Reduce unnecessary choices. The easier the decision feels, the more likely visitors are to take action.",
   },
 
   {
@@ -594,12 +594,12 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   {
     type: "list",
     items: [
-      "Business Goals — Why are we redesigning?",
-      "Audience — Who is the website built for?",
-      "Success Metrics — How will we measure success?",
-      "Content — Which pages should stay? Which pages need improvement?",
-      "SEO — Which rankings must be protected?",
-      "Budget — Are we investing in business growth or only visual changes?",
+      "Business Goals, Why are we redesigning?",
+      "Audience, Who is the website built for?",
+      "Success Metrics, How will we measure success?",
+      "Content, Which pages should stay? Which pages need improvement?",
+      "SEO, Which rankings must be protected?",
+      "Budget, Are we investing in business growth or only visual changes?",
     ],
   },
   {
@@ -814,7 +814,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "More animations. More sliders. More effects. More popups. None of these guarantee better performance. Modern websites succeed because they're clear—not because they're complicated. A clean, focused design usually converts better than a visually overloaded one.",
+    text: "More animations. More sliders. More effects. More popups. None of these guarantee better performance. Modern websites succeed because they're clear, not because they're complicated. A clean, focused design usually converts better than a visually overloaded one.",
   },
   {
     type: "heading",
@@ -1031,7 +1031,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "Not if the project is planned correctly. By preserving important URLs, implementing proper 301 redirects, maintaining valuable content, and following SEO best practices, many businesses maintain—or even improve—their search visibility after launch.",
+    text: "Not if the project is planned correctly. By preserving important URLs, implementing proper 301 redirects, maintaining valuable content, and following SEO best practices, many businesses maintain, or even improve, their search visibility after launch.",
   },
   {
     type: "heading",
@@ -1114,7 +1114,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A successful redesign doesn't start with a new homepage—it starts with understanding your business goals and creating a strategy to achieve them.",
+    text: "A successful redesign doesn't start with a new homepage, it starts with understanding your business goals and creating a strategy to achieve them.",
   },
 
   {
@@ -1125,7 +1125,7 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "A website redesign is one of the most valuable investments you can make in your business—when it's approached strategically. The goal isn't simply to create a website that looks modern. The goal is to create a website that:",
+    text: "A website redesign is one of the most valuable investments you can make in your business, when it's approached strategically. The goal isn't simply to create a website that looks modern. The goal is to create a website that:",
   },
   {
     type: "list",
@@ -1140,6 +1140,6 @@ export const wordpressWebsiteRedesignServiceSections: BlogSection[] = [
   },
   {
     type: "paragraph",
-    text: "When strategy, UX, SEO, content, and performance work together, your website becomes more than a digital brochure—it becomes one of your most effective business assets.",
+    text: "When strategy, UX, SEO, content, and performance work together, your website becomes more than a digital brochure, it becomes one of your most effective business assets.",
   },
 ];
